@@ -3,10 +3,11 @@
 </script>
 
 <template>
-
-  <div>test</div>
+  <div>
+    this is a navbar
+  </div>
 </template>
 
-<style>
+<style scoped>
 
 </style>

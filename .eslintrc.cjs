@@ -7,5 +7,10 @@ module.exports = {
   ],
   "env": {
     "vue/setup-compiler-macros": true
-  }
+  },
+  "rules": {
+    "vue/no-unused-components": "off", // Turn off error reporting when there are components defined but not used
+    "no-unused-vars": "off" // turn off error reporting when there are defined but unused variables
+  },
+  lintOnSave: false
 }
