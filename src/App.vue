@@ -1,12 +1,13 @@
 <script setup>
 import NavBar from '@/components/NavBar.vue'
+import CardNews from '@/components/CardNews.vue'
 </script>
 
 <template>
 
   <NavBar></NavBar>
-
-  <RouterView />
+  <CardNews />
+  <!-- <RouterView /> -->
   
 </template>
 
