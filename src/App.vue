@@ -5,7 +5,6 @@ import NavBar from '@/components/NavBar.vue'
 <template>
 
   <NavBar></NavBar>
-  <CardNews />
   <RouterView />
   
 </template>
