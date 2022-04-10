@@ -4,7 +4,7 @@
 
 <template>
 
-  <div>test</div>
+  <div>This is About Page</div>
 </template>
 
 <style>

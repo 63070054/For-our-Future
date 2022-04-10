@@ -8,6 +8,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@splidejs/vue-splide": "^0.6.3",
     "vue": "^3.2.31",
     "vue-router": "^4.0.14"
   },
