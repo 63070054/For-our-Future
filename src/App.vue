@@ -6,6 +6,7 @@ import CardUniversity from './components/CardUniversity.vue'
 import CardRound from '@/components/CardRound.vue'
 import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
+import AddRoundView from '@/views/AddRoundView.vue'
 </script>
 
 <template>
@@ -17,7 +18,8 @@ import RegisterView from '@/views/RegisterView.vue'
   <div class="container">
     <!-- <RouterView /> -->
     <!-- <LoginView/> -->
-    <RegisterView/>
+    <!-- <RegisterView/> -->
+    <AddRoundView />
   </div>
   
 </template>

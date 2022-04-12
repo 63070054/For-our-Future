@@ -93,7 +93,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="column is-3 mt-auto py-0 pr-0">
+                <div class="column is-3 py-0 pr-0">
                     <div class="field">
                         <label class="label is-size-4 has-text-left">BLOOD</label>
                         <div class="select is-fullwidth">
