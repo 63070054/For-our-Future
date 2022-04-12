@@ -2,16 +2,17 @@
 import { Splide, SplideSlide, SplideTrack } from "@splidejs/vue-splide";
 import "@splidejs/vue-splide/css/skyblue";
 import "@splidejs/vue-splide/css/sea-green";
+import CardCampNews from "../components/CardCampNews.vue";
 </script>
 
 <template>
-  <main>
+  <main style="background-color: #DBF6E9">
     <Splide
       aria-labelledby="autoplay-example-heading"
       :options="options"
       :has-track="false"
     >
-      <div style="position: relative">
+      <div style="position: relative;">
         <SplideTrack>
           <SplideSlide v-for="(slide, index) in slides" :key="index">
             <img
@@ -27,7 +28,24 @@ import "@splidejs/vue-splide/css/sea-green";
         <div class="splide__progress__bar"></div>
       </div>
     </Splide>
-    This is homePage
+    <div class="columns">
+      <div class="column is-half px-6">
+        <h1 class="title ">ค่ายกิจกรรมที่แนะนำ</h1>
+        <div class="container px-3 py-1 has-background-white-bis has-text-black">
+          <CardCampNews></CardCampNews>
+          <CardCampNews></CardCampNews>
+          <CardCampNews></CardCampNews>
+          <div class="level-right">
+            <p>อ่านเพิ่มเติม</p>
+          </div>
+        </div>
+      </div>
+      <div class="column is-half px-6">
+        <div class="container" style="background-color:#DE8971;">
+          col2
+        </div>
+      </div>
+    </div>
   </main>
 </template>
 
