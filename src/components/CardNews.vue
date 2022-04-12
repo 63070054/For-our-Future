@@ -40,11 +40,6 @@
 .camp {
   background-color: #114e60;
   border-radius: 3px;
-  /* background: white; */
-  /* font-size: 15px; */
-  /* margin: 0; */
-  /* padding: 2px 10px; */
-  /* width: fit-content; */
 }
 .date {
   position: absolute;
@@ -52,9 +47,5 @@
   right: 0;
   border-radius: 3px;
   background-color: #de8971;
-  /* font-size: 15px; */
-  /* color: white; */
-  /* padding: 2px 10px; */
-  /* width: fit-content; */
 }
 </style>
