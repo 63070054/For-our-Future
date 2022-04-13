@@ -10,13 +10,24 @@ import AddRoundView from '@/views/AddRoundView.vue'
 import EditRoundView from '@/views/EditRoundView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import HomeView from './views/HomeView.vue'
+import UniversityView from './views/UniversityView.vue'
+import AddFacultyView from './views/AddFacultyView.vue'
+import FacultyView from './views/FacultyView.vue'
+import NewsView from './views/NewsView.vue'
+import AddNewsView from './views/AddNewsView.vue'
 </script>
 
 <template>
 
   <NavBar></NavBar>
   <div class="container">
-    <RouterView />
+    <!-- <RouterView /> -->
+    <!-- <LoginView/> -->
+    <!-- <RegisterView/> -->
+    <!-- <FacultyView></FacultyView> -->
+    <!-- <UniversityView></UniversityView> -->
+    <AddNewsView></AddNewsView>
+    
   </div>
   
 </template>
