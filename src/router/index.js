@@ -24,6 +24,38 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/NewsView.vue')
+    },
+    {
+      path: '/university',
+      name: 'university',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/UniversityView.vue')
+    },
+    {
+      path: '/addUniversity',
+      name: 'addUniversity',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/AddUniversityView.vue')
+    },
+    {
+      path: '/addFaculty',
+      name: 'addFaculty',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/AddFacultyView.vue')
+    },
+    {
+      path: '/round',
+      name: 'round',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/RoundView.vue')
     }
   ]
 })
