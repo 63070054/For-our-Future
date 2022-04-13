@@ -15,17 +15,8 @@ import HomeView from './views/HomeView.vue'
 <template>
 
   <NavBar></NavBar>
-  <!-- <CardNews /> -->
-  <!-- <CardRound /> -->
-  <!-- <RouterView /> -->
   <div class="container">
-    <!-- <RouterView /> -->
-    <!-- <LoginView/> -->
-    <!-- <RegisterView/> -->
-    <!-- <AddRoundView /> -->
-    <!-- <EditRoundView/> -->
-    <ProfileView/>
-    <!-- <HomeView></HomeView> -->
+    <RouterView />
   </div>
   
 </template>
