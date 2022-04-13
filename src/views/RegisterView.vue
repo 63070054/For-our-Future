@@ -6,7 +6,7 @@
         <div class="column is-half">
             <div class="field">
                 <div class="control">
-                    <label class="label is-size-4">USERNAME</label>
+                    <label class="label is-size-4">USERNAME <span class="has-text-danger">*</span></label>
                     <input class="input" type="text" placeholder="USERNAME">
                 </div>
             </div>
@@ -14,7 +14,7 @@
                 <div class="column is-6 pl-0 py-0">
                     <div class="field">
                         <div class="control">
-                            <label class="label is-size-4 has-text-left">PASSWORD</label>
+                            <label class="label is-size-4 has-text-left">PASSWORD <span class="has-text-danger">*</span></label>
                             <input class="input" type="text" placeholder="PASSWORD">
                         </div>
                     </div>
@@ -22,7 +22,7 @@
                 <div class="column is-6 pr-0 py-0">
                     <div class="field">
                         <div class="control">
-                            <label class="label is-size-4 has-text-left">CONFIRM PASSWORD</label>
+                            <label class="label is-size-4 has-text-left">CONFIRM PASSWORD <span class="has-text-danger">*</span></label>
                             <input class="input" type="text" placeholder="CONFIRM PASSWORD">
                         </div>
                     </div>
@@ -62,7 +62,7 @@
                 <div class="column is-4 py-0 pl-0">
                     <div class="field">
                         <div class="control">
-                            <label class="label is-size-4 has-text-left">FIRST NAME</label>
+                            <label class="label is-size-4 has-text-left">FIRST NAME <span class="has-text-danger">*</span></label>
                             <input class="input" type="text" placeholder="FIRST NAME">
                         </div>
                     </div>
@@ -70,7 +70,7 @@
                 <div class="column is-6 pr-0 py-0">
                     <div class="field">
                         <div class="control">
-                            <label class="label is-size-4 has-text-left">LAST NAME</label>
+                            <label class="label is-size-4 has-text-left">LAST NAME <span class="has-text-danger">*</span></label>
                             <input class="input" type="text" placeholder="LAST NAME">
                         </div>
                     </div>
