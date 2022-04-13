@@ -7,6 +7,7 @@ import CardRound from '@/components/CardRound.vue'
 import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import AddRoundView from '@/views/AddRoundView.vue'
+import EditRoundView from '@/views/EditRoundView.vue'
 </script>
 
 <template>
@@ -19,7 +20,8 @@ import AddRoundView from '@/views/AddRoundView.vue'
     <!-- <RouterView /> -->
     <!-- <LoginView/> -->
     <!-- <RegisterView/> -->
-    <AddRoundView />
+    <!-- <AddRoundView /> -->
+    <EditRoundView/>
   </div>
   
 </template>
