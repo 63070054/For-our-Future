@@ -12,7 +12,7 @@ const menusNavbar = {
 </script>
 
 <template>
-  <nav class="navbar mx-3" role="navigation" aria-label="main navigation">
+  <nav class="navbar px-5" role="navigation" aria-label="main navigation" style="background-color: #114E60;">
     <div class="navbar-brand">
       <router-link class="navbar-item" to="/">
         <h1>For our Future</h1>
@@ -33,8 +33,9 @@ const menusNavbar = {
     </div>
 
     <div
-      id="navbarBasicExample"
+      id="navBar"
       class="navbar-menu"
+      style="background-color: #114E60"
       :class="{ 'is-active': showNavBar }"
     >
       <div class="navbar-start">
@@ -80,4 +81,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.navbar-start a{
+  color: white;
+}
+.navbar-brand a{
+  color: white;
+}
+</style>

@@ -2,6 +2,7 @@
 </script>
 
 <template>
+
     <div style="background-color: #F9F7F0; width:100%; height: calc(100vh - 53px)">
         <div style="background-color: #DE8971; width:100%; height:315px;">
             <div style="background-color: #0F1123; width:100%; height:300px;">
@@ -82,7 +83,7 @@
 
                 <div class="mt-3 has-text-centered">
                     <button
-                        class="button is-warning has-text-black has-text-centered is-3 is-size-4 has-text-weight-bold is-fullwidth">Create Round</button>
+                        class="button is-warning has-text-black has-text-centered is-3 is-size-4 has-text-weight-bold is-fullwidth">Edit Round</button>
                 </div>
             </div>
         </div>
