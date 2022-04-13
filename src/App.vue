@@ -7,6 +7,7 @@ import CardRound from '@/components/CardRound.vue'
 import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import HomeView from './views/HomeView.vue'
+import UniversityView from './views/UniversityView.vue'
 </script>
 
 <template>
@@ -20,6 +21,7 @@ import HomeView from './views/HomeView.vue'
     <!-- <LoginView/> -->
     <!-- <RegisterView/> -->
     <HomeView></HomeView>
+    <!-- <UniversityView></UniversityView> -->
   </div>
   
 </template>
