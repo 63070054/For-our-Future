@@ -16,7 +16,7 @@
         <div class="columns is-centered">
             <div class="column is-half">
                 <div class="field">
-                    <label class="label is-size-4">ROUND</label>
+                    <label class="label is-size-4">ROUND <span class="has-text-danger">*</span></label>
                     <div class="select is-fullwidth">
                         <select>
                             <option></option>

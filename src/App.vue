@@ -8,6 +8,7 @@ import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import AddRoundView from '@/views/AddRoundView.vue'
 import EditRoundView from '@/views/EditRoundView.vue'
+import ProfileView from '@/views/ProfileView.vue'
 import HomeView from './views/HomeView.vue'
 </script>
 
@@ -22,8 +23,9 @@ import HomeView from './views/HomeView.vue'
     <!-- <LoginView/> -->
     <!-- <RegisterView/> -->
     <!-- <AddRoundView /> -->
-    <EditRoundView/>
-    <HomeView></HomeView>
+    <!-- <EditRoundView/> -->
+    <ProfileView/>
+    <!-- <HomeView></HomeView> -->
   </div>
   
 </template>
