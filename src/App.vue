@@ -11,6 +11,9 @@ import EditRoundView from '@/views/EditRoundView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import HomeView from './views/HomeView.vue'
 import UniversityView from './views/UniversityView.vue'
+import AddFacultyView from './views/AddFacultyView.vue'
+import FacultyView from './views/FacultyView.vue'
+import NewsView from './views/NewsView.vue'
 </script>
 
 <template>
@@ -20,8 +23,10 @@ import UniversityView from './views/UniversityView.vue'
     <!-- <RouterView /> -->
     <!-- <LoginView/> -->
     <!-- <RegisterView/> -->
-    <HomeView></HomeView>
+    <!-- <FacultyView></FacultyView> -->
     <!-- <UniversityView></UniversityView> -->
+    <!-- <NewsView></NewsView> -->
+    <HomeView></HomeView>
   </div>
   
 </template>

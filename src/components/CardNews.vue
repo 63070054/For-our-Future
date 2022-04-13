@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <main>
+  <main class="m-3">
     <div class="card has-text-black">
       <div class="card-image">
         <div class="date is-size-6 has-text-white px-2 py-1 mt-1 mr-1">

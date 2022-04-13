@@ -8,9 +8,9 @@
                   <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrqlbdKffhIO6z9r4nz-576As4odORM797QqADx62SdfoMXqZCxFQ65bcgEF8bpsGNB2E&usqp=CAU">
                 </figure>
             </div>
-            <div class="column is-two-thirds" style="position:relative;">
-                <div class="card-content ">
-                    <div class="title is-size-3">IT CAMP 18 kmitl</div>
+            <div class="column is-four-fifths" style="position:relative;">
+                <div class="content ">
+                    <div class="is-size-5 has-text-weight-bold">IT CAMP 18 kmitl</div>
                     <div class="textlimit is-size-5">
                         Text messaging, or texting, is the act of composing and 
                         sending electronic messages, typically consisting of alphabetic 
