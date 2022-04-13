@@ -51,7 +51,6 @@
                     <div class="field ">
                         <div class="select is-fullwidth">
                             <select>
-                                <option></option>
                                 <option>Mr.</option>
                                 <option>Mrs.</option>
                                 <option>Miss</option>
@@ -98,7 +97,6 @@
                         <label class="label is-size-4 has-text-left">BLOOD</label>
                         <div class="select is-fullwidth">
                             <select>
-                                <option></option>
                                 <option>A</option>
                                 <option>B</option>
                                 <option>O</option>

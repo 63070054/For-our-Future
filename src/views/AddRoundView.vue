@@ -19,7 +19,6 @@
                     <label class="label is-size-4">ROUND <span class="has-text-danger">*</span></label>
                     <div class="select is-fullwidth">
                         <select>
-                            <option></option>
                             <option>ROUND 1</option>
                             <option>ROUND 2</option>
                             <option>ROUND 3</option>
@@ -44,7 +43,6 @@
                         <div class="field ">
                             <div class="select is-fullwidth">
                                 <select>
-                                    <option></option>
                                     <option>O-NET</option>
                                     <option>GAT</option>
                                     <option>PAT</option>
@@ -56,7 +54,6 @@
                         <div class="field">
                             <div class="select is-fullwidth">
                                 <select>
-                                    <option></option>
                                     <option>ภาษาไทย</option>
                                     <option>คณิต</option>
                                     <option>สังคม</option>
@@ -71,10 +68,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="column is-1 pt-2">
+                    <div class="column is-1 py-0 pr-0">
                         <div class="field">
                             <div class="control">
-                                <input type="checkbox" style="transform : scale(3);">
+                                <button class="button is-white has-text-centered is-fullwidth">
+                                    <span style="color: #6EBF8B;">
+                                        <i class="fas fa-check fa-2x"></i>
+                                    </span>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -82,7 +83,9 @@
 
                 <div class="mt-3 has-text-centered">
                     <button
-                        class="button is-warning has-text-black has-text-centered is-3 is-size-4 has-text-weight-bold is-fullwidth">Create Round</button>
+                        class="button is-warning has-text-black has-text-centered is-3 is-size-4 has-text-weight-bold is-fullwidth">Create
+                        Round
+                    </button>
                 </div>
             </div>
         </div>
