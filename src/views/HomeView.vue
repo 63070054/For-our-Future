@@ -28,9 +28,9 @@ import CardCampNews from "../components/CardCampNews.vue";
         <div class="splide__progress__bar"></div>
       </div>
     </Splide>
-    <div class="columns">
-      <div class="column is-half px-6">
-        <h1 class="title ">ค่ายกิจกรรมที่แนะนำ</h1>
+    <div class="columns px-6">
+      <div class="column is-half ">
+        <h1 class="title has-text-weight-bold">ค่ายกิจกรรมที่แนะนำ</h1>
         <div class="container px-3 py-1 has-background-white-bis has-text-black">
           <CardCampNews></CardCampNews>
           <CardCampNews></CardCampNews>
@@ -40,9 +40,14 @@ import CardCampNews from "../components/CardCampNews.vue";
           </div>
         </div>
       </div>
-      <div class="column is-half px-6">
-        <div class="container" style="background-color:#DE8971;">
-          col2
+      <div class="column is-half ">
+        <div class="container pb-3 mt-4" style="background-color:#DE8971; ">
+          <h1 class="py-3 title has-text-weight-bold has-text-centered">Top 5 University</h1>
+          <div class="mx-4 my-3" style="background-color:#F9F7F0; height:50px"></div>
+          <div class="mx-4 my-3" style="background-color:#F9F7F0; height:50px"></div>
+          <div class="mx-4 my-3" style="background-color:#F9F7F0; height:50px"></div>
+          <div class="mx-4 my-3" style="background-color:#F9F7F0; height:50px"></div>
+          <div class="mx-4 my-3" style="background-color:#F9F7F0; height:50px"></div>
         </div>
       </div>
     </div>
