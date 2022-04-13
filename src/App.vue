@@ -14,6 +14,7 @@ import UniversityView from './views/UniversityView.vue'
 import AddFacultyView from './views/AddFacultyView.vue'
 import FacultyView from './views/FacultyView.vue'
 import NewsView from './views/NewsView.vue'
+import AddNewsView from './views/AddNewsView.vue'
 </script>
 
 <template>
@@ -25,8 +26,8 @@ import NewsView from './views/NewsView.vue'
     <!-- <RegisterView/> -->
     <!-- <FacultyView></FacultyView> -->
     <!-- <UniversityView></UniversityView> -->
-    <!-- <NewsView></NewsView> -->
-    <HomeView></HomeView>
+    <AddNewsView></AddNewsView>
+    
   </div>
   
 </template>
