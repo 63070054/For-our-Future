@@ -23,10 +23,10 @@
                             <div class="input"></div>
                         </div>
                         <div class="column">
-                            <button class="button" type="button">
-                            <span class="icon">
-                                <i class="fas fa-2x fa-check" style="background-color: #6EBF8B"></i>
-                            </span></button>
+                            <button class="button" type="button" style="background-color: #6EBF8B">
+                                <span class="icon">
+                                    <i class="fas fa-2x fa-check"></i>
+                                </span></button>
                         </div>
                     </div>
                 </div>
@@ -40,10 +40,11 @@
                             <div class="input"></div>
                         </div>
                         <div class="column">
-                            <button class="button" type="button">
-                            <span class="icon">
-                                <i class="fas fa-2x fa-check " style="background-color: #6EBF8B"></i>
-                            </span></button>
+                            <button class="button" type="button" style="background-color: #6EBF8B">
+                                <span class="icon">
+                                    <i class="fas fa-2x fa-check "></i>
+                                </span>
+                            </button>
                         </div>
                     </div>
                 </div>

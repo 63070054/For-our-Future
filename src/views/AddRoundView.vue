@@ -70,10 +70,10 @@
                     </div>
                     <div class="column is-1 py-0 px-0">
                         <div class="field">
-                            <div class="control">
-                                <button class="button is-white has-text-centered is-fullwidth">
-                                    <span style="background-color: #6EBF8B;">
-                                        <i class="fas fa-check fa-2x p-1"></i>
+                            <div class="control has-text-centered">
+                                <button class="button" type="button" style="background-color: #6EBF8B;">
+                                    <span class="icon">
+                                        <i class="fas fa-check fa-2x"></i>
                                     </span>
                                 </button>
                             </div>
