@@ -29,7 +29,7 @@ import IconAdd from "@/components/icons/IconAdd.vue";
         <CardNews :news_info="news"></CardNews>
       </div>
     </div>
-    <IconAdd></IconAdd>
+    <router-link to="/news/add"><IconAdd></IconAdd></router-link>
   </div>
 </template>
 
