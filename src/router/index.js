@@ -10,7 +10,7 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/:newsName',
+      path: '/news',
       name: 'news',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
@@ -18,7 +18,7 @@ const router = createRouter({
       component: () => import('../views/NewsView.vue')
     },
     {
-      path: '/:profileName',
+      path: '/profile/',
       name: 'profile',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
@@ -26,7 +26,7 @@ const router = createRouter({
       component: () => import('../views/ProfileView.vue')
     },
     {
-      path: '/:uniName',
+      path: '/university',
       name: 'university',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
@@ -34,7 +34,7 @@ const router = createRouter({
       component: () => import('../views/UniversityView.vue')
     },
     {
-      path: '/addUni',
+      path: '/university/add',
       name: 'addUniversity',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
@@ -42,7 +42,7 @@ const router = createRouter({
       component: () => import('../views/AddUniversityView.vue')
     },
     {
-      path: '/:uniName/editUni',
+      path: '/:uniName/edit',
       name: 'editUniversity',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
@@ -50,7 +50,7 @@ const router = createRouter({
       component: () => import('../views/EditUniversityView.vue')
     },
     {
-      path: '/:uniName/:facName',
+      path: '/:uniName/factory',
       name: 'faculty',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
@@ -58,7 +58,7 @@ const router = createRouter({
       component: () => import('../views/FacultyView.vue')
     },
     {
-      path: '/:uniName/addFaculty',
+      path: '/:uniName/factory/add',
       name: 'addFaculty',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
@@ -66,7 +66,7 @@ const router = createRouter({
       component: () => import('../views/AddFacultyView.vue')
     },
     {
-      path: '/:uniName/:facName/editFac',
+      path: '/:uniName/:facName/edit',
       name: 'editFaculty',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
@@ -74,7 +74,7 @@ const router = createRouter({
       component: () => import('../views/EditFacultyView.vue')
     },
     {
-      path: '/:uniName/:facName/:round',
+      path: '/:uniName/:facName/round',
       name: 'round',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
@@ -82,7 +82,7 @@ const router = createRouter({
       component: () => import('../views/RoundView.vue')
     },
     {
-      path: '/:uniName/:facName/addRound',
+      path: '/:uniName/:facName/round/add',
       name: 'addRound',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
@@ -90,7 +90,7 @@ const router = createRouter({
       component: () => import('../views/AddRoundView.vue')
     },
     {
-      path: '/:uniName/:facName/:round/editRound',
+      path: '/:uniName/:facName/:round/edit',
       name: 'editRound',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route

@@ -6,7 +6,7 @@
     <div class="card has-text-black">
       <div class="card-image">
         <div class="date is-size-6 has-text-white px-2 py-1 mt-1 mr-1">
-          วันที่ลงข่าว
+          {{news_info.createdDate}}
         </div>
         <figure class="image is-5by3">
           // 600*480
@@ -17,18 +17,24 @@
       </div>
       <div class="card-content">
         <div class="content">
-          <h1>ชื่อข่าวสาร</h1>
-          <p>รายละเอียดข่าวสาร</p>
+          <h1>{{news_info.title}}</h1>
+          <p>{{news_info.description}}</p>
         </div>
       </div>
-      <footer class="card-footer p-1">
-        <div class="camp is-size-6 has-text-white px-2 py-1 mt-1 mr-1">
-          ค่าย
+      <footer class="card-footer tags pb-2">
+        <div class="camp is-size-6 has-text-white px-2 py-1 ml-2 mt-2" v-for="(cate, index) in news_info.categories" :key="index">
+          {{cate}}
         </div>
       </footer>
     </div>
   </main>
 </template>
+
+<script>
+export default {
+    props: ['news_info'],
+}
+</script>
 
 <style scoped>
 .card {
