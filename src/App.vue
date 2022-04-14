@@ -15,18 +15,21 @@ import AddFacultyView from './views/AddFacultyView.vue'
 import FacultyView from './views/FacultyView.vue'
 import NewsView from './views/NewsView.vue'
 import AddNewsView from './views/AddNewsView.vue'
+import AddUniversityView from './views/AddUniversityView.vue'
+
 </script>
 
 <template>
 
   <NavBar></NavBar>
   <div class="container">
-    <!-- <RouterView /> -->
+    <RouterView />
     <!-- <LoginView/> -->
+    <!-- <AddRoundView/> -->
     <!-- <RegisterView/> -->
     <!-- <FacultyView></FacultyView> -->
     <!-- <UniversityView></UniversityView> -->
-    <AddNewsView></AddNewsView>
+    <!-- <AddNewsView></AddNewsView> -->
     
   </div>
   

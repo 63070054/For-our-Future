@@ -2,7 +2,7 @@
 </script>
 
 <template>
-    <div style="background-color: #F9F7F0; width:100%; height: calc(100vh - 53px)">
+    <div style="background-color: #F9F7F0; width:100%; min-height: calc(100vh - 53px)">
         <div style="background-color: #DE8971; width:100%; height:315px;">
             <div style="background-color: #0F1123; width:100%; height:300px;">
                 <img src="https://static.trueplookpanya.com/tppy/member/m_525000_527500/525016/cms/images/%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%9A%E0%B8%A3%E0%B8%A3%E0%B8%A2%E0%B8%B2%E0%B8%81%E0%B8%B2%E0%B8%A8%E0%B8%AA%E0%B8%88%E0%B8%A5%20(7).jpg"
@@ -19,7 +19,6 @@
                     <label class="label is-size-4">ROUND <span class="has-text-danger">*</span></label>
                     <div class="select is-fullwidth">
                         <select>
-                            <option></option>
                             <option>ROUND 1</option>
                             <option>ROUND 2</option>
                             <option>ROUND 3</option>
@@ -44,7 +43,6 @@
                         <div class="field ">
                             <div class="select is-fullwidth">
                                 <select>
-                                    <option></option>
                                     <option>O-NET</option>
                                     <option>GAT</option>
                                     <option>PAT</option>
@@ -56,7 +54,6 @@
                         <div class="field">
                             <div class="select is-fullwidth">
                                 <select>
-                                    <option></option>
                                     <option>ภาษาไทย</option>
                                     <option>คณิต</option>
                                     <option>สังคม</option>
@@ -71,10 +68,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="column is-1 pt-2">
+                    <div class="column is-1 py-0 px-0">
                         <div class="field">
                             <div class="control">
-                                <input type="checkbox" style="transform : scale(3);">
+                                <button class="button is-white has-text-centered is-fullwidth">
+                                    <span style="background-color: #6EBF8B;">
+                                        <i class="fas fa-check fa-2x p-1"></i>
+                                    </span>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -82,7 +83,9 @@
 
                 <div class="mt-3 has-text-centered">
                     <button
-                        class="button is-warning has-text-black has-text-centered is-3 is-size-4 has-text-weight-bold is-fullwidth">Create Round</button>
+                        class="button is-warning has-text-black has-text-centered is-3 is-size-4 has-text-weight-bold is-fullwidth">Create
+                        Round
+                    </button>
                 </div>
             </div>
         </div>
