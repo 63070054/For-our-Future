@@ -1,4 +1,44 @@
-<script setup>
+<script>
+export default {
+    data() {
+        return {
+            inputs_CATEGORYS: [{id: 1,category: ''}],
+            inputs_REFERENCES: [{id: 1,reference: ''}],
+            idCounter_CATEGORY: 0,
+            idCounter_REFERENCE: 0
+        }
+    },
+    created() {
+        this.idCounter_CATEGORY = this.inputs_CATEGORYS.length
+        this.idCounter_REFERENCE = this.inputs_REFERENCES.length
+    },
+    methods: {
+        addCategory() {
+            this.idCounter_CATEGORY +=1
+            this.inputs_CATEGORYS.push({id: this.idCounter_CATEGORY,category: ''})
+            console.log(this.inputs_CATEGORYS)
+            console.log(this.inputs_REFERENCES)
+        },
+        delCategory(item){
+            let index = this.inputs_CATEGORYS.findIndex((val) => val.id === item.id)
+            this.inputs_CATEGORYS.splice(index, 1)
+            console.log(this.inputs_CATEGORYS)
+            console.log(this.inputs_REFERENCES)
+        },
+        addReference() {
+            this.idCounter_REFERENCE +=1
+            this.inputs_REFERENCES.push({id: this.idCounter_REFERENCE,reference: ''})
+            console.log(this.inputs_CATEGORYS)
+            console.log(this.inputs_REFERENCES)
+        },
+        delReference(item){
+            let index = this.inputs_REFERENCES.findIndex((val) => val.id === item.id)
+            this.inputs_REFERENCES.splice(index, 1)
+            console.log(this.inputs_CATEGORYS)
+            console.log(this.inputs_REFERENCES)
+        }
+    },
+}
 </script>
 <template>
     <div style="background-color: #DBF6E9 ; min-height: calc(100vh - 3.25rem);" class=" p-3">
@@ -15,36 +55,35 @@
                 </div>
 
                 <div class="field">
-                    <label class="label is-size-4">NEWS CATEGORY <span class="icon">
+                    <label class="label is-size-4">NEWS CATEGORY <span class="icon" @click="addCategory">
                             <i class="fas fa-plus"></i>
                         </span></label>
-                    <div class="columns">
+                    <div class="columns" v-for="item_c in inputs_CATEGORYS" :key="item_c.id">
                         <div class="column is-11">
-                            <div class="input"></div>
+                            <input class="input" type="text" v-model="item_c.category">
                         </div>
-                        <div class="column">
-                            <button class="button" type="button" style="background-color: #6EBF8B">
+                        <div class="column" >
+                            <button @click="delCategory" class="button has-background-danger" type="button">
                                 <span class="icon">
-                                    <i class="fas fa-2x fa-check"></i>
+                                    <i class="fas fa-2x fa-trash-alt"></i>
                                 </span></button>
                         </div>
                     </div>
                 </div>
 
                 <div class="field">
-                    <label class="label is-size-4">NEWS REFFERENCES <span class="icon">
+                    <label class="label is-size-4">NEWS REFFERENCES <span @click="addReference" class="icon">
                             <i class="fas fa-plus"></i>
                         </span></label>
-                    <div class="columns">
+                    <div class="columns"  v-for="item_r in inputs_REFERENCES" :key="item_r.id">
                         <div class="column is-11">
-                            <div class="input"></div>
+                            <input class="input" type="text" v-model="item_r.reference">
                         </div>
                         <div class="column">
-                            <button class="button" type="button" style="background-color: #6EBF8B">
+                            <button @click="delReference" class="button has-background-danger" type="button">
                                 <span class="icon">
-                                    <i class="fas fa-2x fa-check "></i>
-                                </span>
-                            </button>
+                                    <i class="fas fa-2x fa-trash-alt"></i>
+                                </span></button>
                         </div>
                     </div>
                 </div>
