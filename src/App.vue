@@ -30,7 +30,6 @@ import AddUniversityView from './views/AddUniversityView.vue'
     <!-- <FacultyView></FacultyView> -->
     <!-- <UniversityView></UniversityView> -->
     <!-- <AddNewsView></AddNewsView> -->
-    
   </div>
   
 </template>
