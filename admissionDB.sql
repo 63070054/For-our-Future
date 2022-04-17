@@ -239,7 +239,7 @@ CREATE TABLE `user` (
     `u_id` int(10) primary key AUTO_INCREMENT,
     `prefix` varchar(255) not null,
     `f_name` varchar(255) not null,
-    `l_name1` varchar(255) not null,
+    `l_name` varchar(255) not null,
     `type_user` enum('student', 'admin'),
     `birth_date` date,
     `sex` enum('male', 'female'),
