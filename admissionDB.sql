@@ -90,6 +90,8 @@ CREATE TABLE `R_SPECIFIC` (
     `r_spe_percentage` float(3,2) NOT NULL,
     PRIMARY KEY(`r_spe_no`,`r_id`),
     foreign key (r_id) references ROUND(r_id)
+);
+x
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
     `u_id` int(10) primary key AUTO_INCREMENT,
