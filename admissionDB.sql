@@ -10,7 +10,7 @@ CREATE TABLE `FACULTY` (
     `uni_id` int(10),
     `fac_name` varchar(255) NOT NULL,
     `fac_desc` varchar(255),
-    PRIMARY KEY(`fac_id`,`uni_id`),
+    PRIMARY KEY(`fac_id`, `uni_id`),
     foreign key (uni_id) references UNIVERSITY(uni_id)
 );
 
@@ -21,8 +21,8 @@ CREATE TABLE `ROUND` (
     `fac_id` int(10),
     `round` int(1) NOT NULL,
     `r_desc` varchar(255),
-    `r_gpax` float(3,2),
-    PRIMARY KEY(`r_id`,`fac_id`),
+    `r_gpax` float(3, 2),
+    PRIMARY KEY(`r_id`, `fac_id`),
     foreign key (fac_id) references FACULTY(fac_id)
 );
 
@@ -32,8 +32,8 @@ CREATE TABLE `R_GAT` (
     `r_gat_no` int(10) AUTO_INCREMENT,
     `r_id` int(10),
     `r_gat_type` enum('THAI', 'ENG') NOT NULL,
-    `r_gat_percentage` float(3,2) NOT NULL,
-    PRIMARY KEY(`r_gat_no`,`r_id`),
+    `r_gat_percentage` float(3, 2) NOT NULL,
+    PRIMARY KEY(`r_gat_no`, `r_id`),
     foreign key (r_id) references ROUND(r_id)
 );
 
@@ -42,9 +42,18 @@ DROP TABLE IF EXISTS `R_ONET`;
 CREATE TABLE `R_ONET` (
     `r_onet_no` int(10) AUTO_INCREMENT,
     `r_id` int(10),
-    `r_onet_type` enum('ภาษาไทย','สังคมศึกษา','ภาษาอังกฤษ','คณิตศาสตร์','วิทยาศาสตร์','สุขศึกษาและพลศึกษา','การงานอาชีพและเทคโนโลยี','ศิลปะ') NOT NULL,
-    `r_onet_percentage` float(3,2) NOT NULL,
-    PRIMARY KEY(`r_onet_no`,`r_id`),
+    `r_onet_type` enum(
+        'ภาษาไทย',
+        'สังคมศึกษา',
+        'ภาษาอังกฤษ',
+        'คณิตศาสตร์',
+        'วิทยาศาสตร์',
+        'สุขศึกษาและพลศึกษา',
+        'การงานอาชีพและเทคโนโลยี',
+        'ศิลปะ'
+    ) NOT NULL,
+    `r_onet_percentage` float(3, 2) NOT NULL,
+    PRIMARY KEY(`r_onet_no`, `r_id`),
     foreign key (r_id) references ROUND(r_id)
 );
 
@@ -54,8 +63,8 @@ CREATE TABLE `R_LANG` (
     `r_lang_no` int(10) AUTO_INCREMENT,
     `r_id` int(10),
     `r_lang_type` varchar(255) NOT NULL,
-    `r_lang_percentage` float(3,2) NOT NULL,
-    PRIMARY KEY(`r_lang_no`,`r_id`),
+    `r_lang_percentage` float(3, 2) NOT NULL,
+    PRIMARY KEY(`r_lang_no`, `r_id`),
     foreign key (r_id) references ROUND(r_id)
 );
 
@@ -63,7 +72,7 @@ DROP TABLE IF EXISTS `student`;
 
 CREATE TABLE `student` (
     `u_id` INT(10),
-    `u_gpax` FLOAT(2,2) NOT NULL,
+    `u_gpax` FLOAT(2, 2) NOT NULL,
     PRIMARY KEY (`u_id`),
     FOREIGN KEY (`u_id`) REFERENCES user(u_id)
 );
@@ -73,9 +82,18 @@ DROP TABLE IF EXISTS `u_onet`;
 CREATE TABLE `u_onet` (
     `u_onet_no` int(10) AUTO_INCREMENT,
     `u_id` INT(10),
-    `u_onet_type` enum('ภาษาไทย','สังคมศึกษา','ภาษาอังกฤษ','คณิตศาสตร์','วิทยาศาสตร์','สุขศึกษาและพลศึกษา','การงานอาชีพและเทคโนโลยี','ศิลปะ') NOT NULL,
-    `u_onet_score` FLOAT(2,2) NOT NULL,
-    PRIMARY KEY (`u_id`,`u_onet_no`),
+    `u_onet_type` enum(
+        'ภาษาไทย',
+        'สังคมศึกษา',
+        'ภาษาอังกฤษ',
+        'คณิตศาสตร์',
+        'วิทยาศาสตร์',
+        'สุขศึกษาและพลศึกษา',
+        'การงานอาชีพและเทคโนโลยี',
+        'ศิลปะ'
+    ) NOT NULL,
+    `u_onet_score` FLOAT(2, 2) NOT NULL,
+    PRIMARY KEY (`u_onet_no`, `u_id`),
     FOREIGN KEY (`u_id`) REFERENCES student(u_id)
 );
 
@@ -84,59 +102,98 @@ DROP TABLE IF EXISTS `u_gat`;
 CREATE TABLE `u_gat` (
     `u_gat_no` int(10) AUTO_INCREMENT,
     `u_id` INT(10),
-    `u_gat_type` enum('THAI','ENG') NOT NULL,
-    `u_gat_score` FLOAT(3,2) NOT NULL,
-    PRIMARY KEY (`u_id`,`u_gat_no`),
+    `u_gat_type` enum('THAI', 'ENG') NOT NULL,
+    `u_gat_score` FLOAT(3, 2) NOT NULL,
+    PRIMARY KEY (`u_gat_no`, `u_id`),
     FOREIGN KEY (`u_id`) REFERENCES student(u_id)
 );
+
 DROP TABLE IF EXISTS `u_pat`;
 
 CREATE TABLE `u_pat` (
     `u_pat_no` int(10) AUTO_INCREMENT,
     `u_id` INT(10),
-    `u_pat_type` enum('1','2','3','4','5','6','7','7.1','7.2','7.3','7.4','7.5','7.6') NOT NULL,
-    `u_pat_score` FLOAT(3,2) NOT NULL,
-    PRIMARY KEY (`u_id`,`u_pat_no`),
+    `u_pat_type` enum(
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '7.1',
+        '7.2',
+        '7.3',
+        '7.4',
+        '7.5',
+        '7.6'
+    ) NOT NULL,
+    `u_pat_score` FLOAT(3, 2) NOT NULL,
+    PRIMARY KEY (`u_pat_no`, `u_id`),
     FOREIGN KEY (`u_id`) REFERENCES student(u_id)
 );
+
 DROP TABLE IF EXISTS `u_sub`;
 
 CREATE TABLE `u_sub` (
     `u_sub_no` int(10) AUTO_INCREMENT,
     `u_id` INT(10),
-    `u_sub_type` enum('ภาษาไทย','สังคมศึกษา','ภาษาอังกฤษ','คณิตศาสตร์1','ฟิสิกส์','เคมี','ชีววิทยา','คณิตศาสตร์2','วิทยาศาสตร์ทั่วไป') NOT NULL,
-    `u_sub_score` FLOAT(3,2) NOT NULL,
-    PRIMARY KEY (`u_id`,`u_sub_no`),
+    `u_sub_type` enum(
+        'ภาษาไทย',
+        'สังคมศึกษา',
+        'ภาษาอังกฤษ',
+        'คณิตศาสตร์1',
+        'ฟิสิกส์',
+        'เคมี',
+        'ชีววิทยา',
+        'คณิตศาสตร์2',
+        'วิทยาศาสตร์ทั่วไป'
+    ) NOT NULL,
+    `u_sub_score` FLOAT(3, 2) NOT NULL,
+    PRIMARY KEY (`u_sub_no`, `u_id`),
     FOREIGN KEY (`u_id`) REFERENCES student(u_id)
 );
+
 DROP TABLE IF EXISTS `u_lang`;
 
 CREATE TABLE `u_lang` (
     `u_lang_no` int(10) AUTO_INCREMENT,
     `u_id` INT(10),
     `u_lang_type` varchar(255) NOT NULL,
-    `u_lang_score` FLOAT(3,2) NOT NULL,
-    PRIMARY KEY (`u_id`,`u_lang_no`),
+    `u_lang_score` FLOAT(3, 2) NOT NULL,
+    PRIMARY KEY (`u_lang_no`, `u_id`),
     FOREIGN KEY (`u_id`) REFERENCES student(u_id)
 );
+
 DROP TABLE IF EXISTS `u_specific`;
 
 CREATE TABLE `u_specific` (
     `u_specific_no` int(10) AUTO_INCREMENT,
     `u_id` INT(10),
     `u_specific_type` varchar(255) NOT NULL,
-    `u_specific_score` FLOAT(3,2) NOT NULL,
-    PRIMARY KEY (`u_id`,`u_specific_no`),
+    `u_specific_score` FLOAT(3, 2) NOT NULL,
+    PRIMARY KEY (`u_specific_no`, `u_id`),
     FOREIGN KEY (`u_id`) REFERENCES student(u_id)
 );
+
 DROP TABLE IF EXISTS `R_SUB`;
 
 CREATE TABLE `R_SUB` (
     `r_sub_no` int(10) AUTO_INCREMENT,
     `r_id` int(10),
-    `r_sub_type` enum('ภาษาไทย','สังคมศึกษา','ภาษาอังกฤษ','คณิตศาสตร์1','ฟิสิกส์','เคมี','ชีววิทยา','คณิตศาสตร์2','วิทยาศาสตร์ทั่วไป') NOT NULL,
-    `r_sub_percentage` float(3,2) NOT NULL,
-    PRIMARY KEY(`r_sub_no`,`r_id`),
+    `r_sub_type` enum(
+        'ภาษาไทย',
+        'สังคมศึกษา',
+        'ภาษาอังกฤษ',
+        'คณิตศาสตร์1',
+        'ฟิสิกส์',
+        'เคมี',
+        'ชีววิทยา',
+        'คณิตศาสตร์2',
+        'วิทยาศาสตร์ทั่วไป'
+    ) NOT NULL,
+    `r_sub_percentage` float(3, 2) NOT NULL,
+    PRIMARY KEY(`r_sub_no`, `r_id`),
     foreign key (r_id) references ROUND(r_id)
 );
 
@@ -145,9 +202,23 @@ DROP TABLE IF EXISTS `R_PAT`;
 CREATE TABLE `R_PAT` (
     `r_pat_no` int(10) AUTO_INCREMENT,
     `r_id` int(10),
-    `r_pat_type` enum('1','2','3','4','5','6','7','7.1','7.2','7.3','7.4','7.5','7.6') NOT NULL,
-    `r_pat_percentage` float(3,2) NOT NULL,
-    PRIMARY KEY(`r_pat_no`,`r_id`),
+    `r_pat_type` enum(
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '7.1',
+        '7.2',
+        '7.3',
+        '7.4',
+        '7.5',
+        '7.6'
+    ) NOT NULL,
+    `r_pat_percentage` float(3, 2) NOT NULL,
+    PRIMARY KEY(`r_pat_no`, `r_id`),
     foreign key (r_id) references ROUND(r_id)
 );
 
@@ -157,12 +228,13 @@ CREATE TABLE `R_SPECIFIC` (
     `r_spe_no` int(10) AUTO_INCREMENT,
     `r_id` int(10),
     `r_spe_type` varchar(255) NOT NULL,
-    `r_spe_percentage` float(3,2) NOT NULL,
-    PRIMARY KEY(`r_spe_no`,`r_id`),
+    `r_spe_percentage` float(3, 2) NOT NULL,
+    PRIMARY KEY(`r_spe_no`, `r_id`),
     foreign key (r_id) references ROUND(r_id)
 );
-x
+
 DROP TABLE IF EXISTS `user`;
+
 CREATE TABLE `user` (
     `u_id` int(10) primary key AUTO_INCREMENT,
     `prefix` varchar(255) not null,
@@ -239,7 +311,7 @@ CREATE TABLE `admin_university` (
     `manage_type` enum('create', 'edit') not null,
     foreign key (`u_id`) references `admin`(u_id),
     foreign key (`uni_id`) references `university`(uni_id),
-    primary key (`u_id`,`uni_id`)
+    primary key (`u_id`, `uni_id`)
 );
 
 DROP TABLE IF EXISTS `university`;
