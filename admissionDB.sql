@@ -72,7 +72,7 @@ DROP TABLE IF EXISTS `student`;
 
 CREATE TABLE `student` (
     `u_id` INT(10),
-    `u_gpax` FLOAT(2, 2) NOT NULL,
+    `u_gpax` FLOAT(2, 2),
     PRIMARY KEY (`u_id`),
     FOREIGN KEY (`u_id`) REFERENCES user(u_id)
 );
