@@ -32,7 +32,7 @@ CREATE TABLE `R_GAT` (
     `r_gat_no` int(10) AUTO_INCREMENT,
     `r_id` int(10),
     `r_gat_type` enum('THAI', 'ENG') NOT NULL,
-    `r_gat_percentage` float(3, 2) NOT NULL,
+    `r_gat_percentage` float(5, 2) NOT NULL,
     PRIMARY KEY(`r_gat_no`, `r_id`),
     foreign key (r_id) references ROUND(r_id)
 );
@@ -52,7 +52,7 @@ CREATE TABLE `R_ONET` (
         'การงานอาชีพและเทคโนโลยี',
         'ศิลปะ'
     ) NOT NULL,
-    `r_onet_percentage` float(3, 2) NOT NULL,
+    `r_onet_percentage` float(5, 2) NOT NULL,
     PRIMARY KEY(`r_onet_no`, `r_id`),
     foreign key (r_id) references ROUND(r_id)
 );
@@ -63,7 +63,7 @@ CREATE TABLE `R_LANG` (
     `r_lang_no` int(10) AUTO_INCREMENT,
     `r_id` int(10),
     `r_lang_type` varchar(255) NOT NULL,
-    `r_lang_percentage` float(3, 2) NOT NULL,
+    `r_lang_percentage` float(5, 2) NOT NULL,
     PRIMARY KEY(`r_lang_no`, `r_id`),
     foreign key (r_id) references ROUND(r_id)
 );
@@ -72,7 +72,7 @@ DROP TABLE IF EXISTS `student`;
 
 CREATE TABLE `student` (
     `u_id` INT(10),
-    `u_gpax` FLOAT(2, 2),
+    `u_gpax` FLOAT(3, 2),
     PRIMARY KEY (`u_id`),
     FOREIGN KEY (`u_id`) REFERENCES user(u_id)
 );
@@ -92,7 +92,7 @@ CREATE TABLE `u_onet` (
         'การงานอาชีพและเทคโนโลยี',
         'ศิลปะ'
     ) NOT NULL,
-    `u_onet_score` FLOAT(2, 2) NOT NULL,
+    `u_onet_score` FLOAT(5, 2) NOT NULL,
     PRIMARY KEY (`u_onet_no`, `u_id`),
     FOREIGN KEY (`u_id`) REFERENCES student(u_id)
 );
@@ -103,7 +103,7 @@ CREATE TABLE `u_gat` (
     `u_gat_no` int(10) AUTO_INCREMENT,
     `u_id` INT(10),
     `u_gat_type` enum('THAI', 'ENG') NOT NULL,
-    `u_gat_score` FLOAT(3, 2) NOT NULL,
+    `u_gat_score` FLOAT(5, 2) NOT NULL,
     PRIMARY KEY (`u_gat_no`, `u_id`),
     FOREIGN KEY (`u_id`) REFERENCES student(u_id)
 );
@@ -128,7 +128,7 @@ CREATE TABLE `u_pat` (
         '7.5',
         '7.6'
     ) NOT NULL,
-    `u_pat_score` FLOAT(3, 2) NOT NULL,
+    `u_pat_score` FLOAT(5, 2) NOT NULL,
     PRIMARY KEY (`u_pat_no`, `u_id`),
     FOREIGN KEY (`u_id`) REFERENCES student(u_id)
 );
@@ -149,7 +149,7 @@ CREATE TABLE `u_sub` (
         'คณิตศาสตร์2',
         'วิทยาศาสตร์ทั่วไป'
     ) NOT NULL,
-    `u_sub_score` FLOAT(3, 2) NOT NULL,
+    `u_sub_score` FLOAT(5, 2) NOT NULL,
     PRIMARY KEY (`u_sub_no`, `u_id`),
     FOREIGN KEY (`u_id`) REFERENCES student(u_id)
 );
@@ -160,7 +160,7 @@ CREATE TABLE `u_lang` (
     `u_lang_no` int(10) AUTO_INCREMENT,
     `u_id` INT(10),
     `u_lang_type` varchar(255) NOT NULL,
-    `u_lang_score` FLOAT(3, 2) NOT NULL,
+    `u_lang_score` FLOAT(5, 2) NOT NULL,
     PRIMARY KEY (`u_lang_no`, `u_id`),
     FOREIGN KEY (`u_id`) REFERENCES student(u_id)
 );
@@ -171,7 +171,7 @@ CREATE TABLE `u_specific` (
     `u_specific_no` int(10) AUTO_INCREMENT,
     `u_id` INT(10),
     `u_specific_type` varchar(255) NOT NULL,
-    `u_specific_score` FLOAT(3, 2) NOT NULL,
+    `u_specific_score` FLOAT(5, 2) NOT NULL,
     PRIMARY KEY (`u_specific_no`, `u_id`),
     FOREIGN KEY (`u_id`) REFERENCES student(u_id)
 );
@@ -192,7 +192,7 @@ CREATE TABLE `R_SUB` (
         'คณิตศาสตร์2',
         'วิทยาศาสตร์ทั่วไป'
     ) NOT NULL,
-    `r_sub_percentage` float(3, 2) NOT NULL,
+    `r_sub_percentage` float(5, 2) NOT NULL,
     PRIMARY KEY(`r_sub_no`, `r_id`),
     foreign key (r_id) references ROUND(r_id)
 );
@@ -217,7 +217,7 @@ CREATE TABLE `R_PAT` (
         '7.5',
         '7.6'
     ) NOT NULL,
-    `r_pat_percentage` float(3, 2) NOT NULL,
+    `r_pat_percentage` float(5, 2) NOT NULL,
     PRIMARY KEY(`r_pat_no`, `r_id`),
     foreign key (r_id) references ROUND(r_id)
 );
@@ -228,7 +228,7 @@ CREATE TABLE `R_SPECIFIC` (
     `r_spe_no` int(10) AUTO_INCREMENT,
     `r_id` int(10),
     `r_spe_type` varchar(255) NOT NULL,
-    `r_spe_percentage` float(3, 2) NOT NULL,
+    `r_spe_percentage` float(5, 2) NOT NULL,
     PRIMARY KEY(`r_spe_no`, `r_id`),
     foreign key (r_id) references ROUND(r_id)
 );
