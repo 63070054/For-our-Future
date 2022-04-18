@@ -275,18 +275,6 @@ CREATE TABLE `admin_news` (
     primary key(`u_id`, `news_id`)
 );
 
-DROP TABLE IF EXISTS `news`;
-
-CREATE TABLE `news` (
-    `news_id` int(10) primary key AUTO_INCREMENT,
-    `news_title` varchar(255) not null,
-    `news_desc` varchar(255),
-    `news_picture` varchar(255),
-    `news_created_date` date not null,
-    `news_created_by` int(10) not null,
-    `news_edited_date` date not null,
-    `news_edited_by` int(10) not null
-);
 
 DROP TABLE IF EXISTS `news_category`;
 
