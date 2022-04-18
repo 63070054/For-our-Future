@@ -63,7 +63,7 @@ export default {
                             <input class="input" type="text" v-model="item_c.category">
                         </div>
                         <div class="column" >
-                            <button @click="delCategory" class="button has-background-danger" type="button">
+                            <button @click="delCategory(item_c)" class="button has-background-danger" type="button">
                                 <span class="icon">
                                     <i class="fas fa-2x fa-trash-alt"></i>
                                 </span></button>
@@ -80,7 +80,7 @@ export default {
                             <input class="input" type="text" v-model="item_r.reference">
                         </div>
                         <div class="column">
-                            <button @click="delReference" class="button has-background-danger" type="button">
+                            <button @click="delReference(item_r)" class="button has-background-danger" type="button">
                                 <span class="icon">
                                     <i class="fas fa-2x fa-trash-alt"></i>
                                 </span></button>

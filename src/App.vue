@@ -29,8 +29,6 @@ import AddUniversityView from './views/AddUniversityView.vue'
     <!-- <RegisterView/> -->
     <!-- <FacultyView></FacultyView> -->
     <!-- <UniversityView></UniversityView> -->
-    <!-- <AddNewsView></AddNewsView> -->
-    
   </div>
   
 </template>
