@@ -3,6 +3,9 @@
 -- Database: admission
 --
 -- -------------------------------------------------------------
+SET
+    FOREIGN_KEY_CHECKS = 0;
+
 DROP TABLE IF EXISTS `FACULTY`;
 
 CREATE TABLE `FACULTY` (
@@ -240,6 +243,8 @@ CREATE TABLE `user` (
     `prefix` varchar(255) not null,
     `f_name` varchar(255) not null,
     `l_name` varchar(255) not null,
+    `username` varchar(255) not null,
+    `password` varchar(255) not null,
     `type_user` enum('student', 'admin'),
     `birth_date` date,
     `sex` enum('male', 'female'),
@@ -256,7 +261,7 @@ DROP TABLE IF EXISTS `admin`;
 
 CREATE TABLE `admin` (
     `u_id` int(10) primary key,
-    foreign key (`u_id`) references student(u_id)
+    foreign key (`u_id`) references user(u_id)
 );
 
 DROP TABLE IF EXISTS `admin_news`;
@@ -318,7 +323,7 @@ DROP TABLE IF EXISTS `university`;
 
 CREATE TABLE `university` (
     `uni_id` int(10) primary key AUTO_INCREMENT,
-    `uni_name` varchar(255),
+    `uni_name` varchar(255) not null,
     `province` int(3) not null,
     `u_created_date` date not null,
     `u_created_by` int(10) not null,
@@ -333,3 +338,6 @@ CREATE TABLE `province` (
     `province_id` int(3) primary key AUTO_INCREMENT,
     `province_name` varchar(255) not null
 );
+
+SET
+    FOREIGN_KEY_CHECKS = 1;
