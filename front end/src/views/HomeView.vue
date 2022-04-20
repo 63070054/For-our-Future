@@ -12,7 +12,8 @@ import CardCampNews from "../components/CardCampNews.vue";
         <div style="position: relative;">
           <SplideTrack>
             <SplideSlide v-for="(slide, index) in slides" :key="index">
-              <img :src="slide" style="width: 100%; aspect-ratio: 10/2; background-size: cover" />
+              <!-- <img :src="slide" style="width: 100%; aspect-ratio: 10/2; background-size: cover" /> -->
+              <div style="width: 100%; aspect-ratio: 10/2; background-color: black;" />
             </SplideSlide>
           </SplideTrack>
 

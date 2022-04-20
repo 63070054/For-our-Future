@@ -3,9 +3,9 @@
 <template>
     <!-- <div class="has-background-danger p-2" > -->
         <div class="card is-full my-3 mx-2  columns green1">
-            <div class="card-image column ">
-                <figure class="image image is-1by1">
-                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrqlbdKffhIO6z9r4nz-576As4odORM797QqADx62SdfoMXqZCxFQ65bcgEF8bpsGNB2E&usqp=CAU">
+            <div class="card-image column">
+                <figure class="image image is-1by1" style="background-color: black; height: 100%;">
+                  <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrqlbdKffhIO6z9r4nz-576As4odORM797QqADx62SdfoMXqZCxFQ65bcgEF8bpsGNB2E&usqp=CAU"> -->
                 </figure>
             </div>
             <div class="column is-four-fifths" style="position:relative;">
