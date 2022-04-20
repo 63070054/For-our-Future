@@ -16,6 +16,7 @@ import FacultyView from './views/FacultyView.vue'
 import NewsView from './views/NewsView.vue'
 import AddNewsView from './views/AddNewsView.vue'
 import AddUniversityView from './views/AddUniversityView.vue'
+import EditUniversityView from './views/EditUniversityView.vue'
 
 </script>
 
@@ -25,15 +26,14 @@ import AddUniversityView from './views/AddUniversityView.vue'
   <div class="container">
     <RouterView />
     <!-- <LoginView/> -->
-    <!-- <AddRoundView/> -->
+    <!-- <AddUniversityView/> -->
     <!-- <RegisterView/> -->
     <!-- <FacultyView></FacultyView> -->
     <!-- <UniversityView></UniversityView> -->
   </div>
-  
+
 </template>
 
 <style>
 @import '@/assets/base.css';
-
 </style>

@@ -1,8 +1,28 @@
-<script setup>
+<script>
+export default {
+    data() {
+        return {
+            inputs: [{id: 1,test: 'O-NET', subject: 'ภาษาไทย',percent: ''}],
+            idCounter: 0,
+        }
+    },
+    created() {
+        this.idCounter = this.inputs.length
+    },
+    methods: {
+        addDescition() {
+            this.idCounter +=1
+            this.inputs.push({id: this.idCounter, test: 'O-NET',subject: 'ภาษาไทย',percent: ''})
+        },
+        delDescition(item){
+            let index = this.inputs.findIndex((val) => val.id === item.id)
+            this.inputs.splice(index, 1)
+        }
+    }
+}
 </script>
 
 <template>
-
     <div style="background-color: #F9F7F0; width:100%; height: calc(100vh - 53px)">
         <div style="background-color: #DE8971; width:100%; height:315px;">
             <div style="background-color: #0F1123; width:100%; height:300px;">
@@ -35,15 +55,15 @@
                     </div>
                 </div>
                 <label class="label is-size-4 has-text-left">ROUND DESCIPTION
-                    <span>
+                    <span @click="addDescition" style="cursor: pointer">
                         <i class="fa fa-plus "></i>
                     </span>
                 </label>
-                <div class="field-body mb-2">
+                <div class="field-body mb-2" v-for="item in inputs" :key="item.id">
                     <div class="column is-3 py-0 pl-0 pr-2">
                         <div class="field ">
                             <div class="select is-fullwidth">
-                                <select>
+                                <select v-model="item.test">
                                     <option>O-NET</option>
                                     <option>GAT</option>
                                     <option>PAT</option>
@@ -54,7 +74,7 @@
                     <div class="column is-6 py-0 pl-0">
                         <div class="field">
                             <div class="select is-fullwidth">
-                                <select>
+                                <select v-model="item.subject">
                                     <option>ภาษาไทย</option>
                                     <option>คณิต</option>
                                     <option>สังคม</option>
@@ -65,16 +85,16 @@
                     <div class="column is-2 pl-0 py-0">
                         <div class="field">
                             <div class="control">
-                                <input class="input" type="text">
+                                <input class="input" type="text" v-model="item.percent">
                             </div>
                         </div>
                     </div>
                     <div class="column is-1 py-0 pr-0">
                         <div class="field">
-                            <div class="control">
-                                <button class="button is-white has-text-centered is-fullwidth">
-                                    <span style="color: #6EBF8B;">
-                                        <i class="fas fa-check fa-2x"></i>
+                            <div class="control has-text-centered">
+                                <button class="button is-danger" type="button">
+                                    <span class="icon" @click="delDescition(item)">
+                                        <i class="fas fa-trash-alt fa-2x"></i>
                                     </span>
                                 </button>
                             </div>
