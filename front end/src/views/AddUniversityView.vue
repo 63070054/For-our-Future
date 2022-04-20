@@ -3,7 +3,7 @@
 <template>
   <div style="background-color: #f9f7f0" class="hero is-fullheight-with-navbar p-3">
 
-    <form action="localhost:5000/adduni" enctype="multipart/form-data" method="POST">
+    <form action="http://localhost:5000/adduni" enctype="multipart/form-data" method="POST">
       <div class="columns is-centered">
         <div class="column is-half">
           <div class="field">
