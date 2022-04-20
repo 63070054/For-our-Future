@@ -7,11 +7,27 @@
   font-weight: normal;
 }
 
-.button-checkbox{
+.button-checkbox {
   background-color: #114E60;
   color: white;
 }
 
 .button-checkbox .checkbox:hover {
   color: white;
+}
+
+.navbar-item:hover {
+  color: #9DDFD3 !important;
+  background-color: transparent !important;
+}
+
+.navbar-item:focus {
+  color: #9DDFD3 !important;
+  background-color: transparent !important;
+}
+
+@media screen and (min-width: 1024px) {
+  .navbar-dropdown {
+    left: -50%;
+  }
 }
