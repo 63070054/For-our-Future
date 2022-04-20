@@ -1,4 +1,5 @@
 <script setup>
+
 </script>
 
 <template>
@@ -8,11 +9,11 @@
         <div class="date is-size-6 has-text-white px-2 py-1 mt-1 mr-1">
           {{news_info.createdDate}}
         </div>
-        <figure class="image is-5by3">
-          // 600*480
+        <figure class="image is-5by3" style="background-color: black;">
+          <!-- // 600*480
           <img
             src="https://i0.wp.com/anitrendz.net/news/wp-content/uploads/2022/02/aharensanwahakarenai_pv2screenshot.png?resize=696%2C392&ssl=1"
-          />
+          /> -->
         </figure>
       </div>
       <div class="card-content">

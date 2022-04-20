@@ -53,10 +53,9 @@ const menusNavbar = {
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">
             <img
-              src="https://bulma.io/images/bulma-logo.png"
-              width="112"
-              height="28"
-              alt="Bulma"
+              src="../assets/default_profile.jpg"
+              alt=""
+              style="height: 100%; aspect-ratio: 1/1;"
             />
           </a>
 
