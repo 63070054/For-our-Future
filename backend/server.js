@@ -1,5 +1,6 @@
 const express = require("express")
 const path = require("path")
+const cors = require("cors")
 
 const app = express();
 
@@ -11,7 +12,7 @@ app.set('views', path.join(__dirname, 'views'))
 // Statics
 app.use(express.static(path.join(__dirname, 'static')))
 
-
+app.use(cors())
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 

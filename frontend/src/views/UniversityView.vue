@@ -47,6 +47,8 @@ import IconAdd from "@/components/icons/IconAdd.vue";
   </div>
 </template>
 <script>
+import axios from 'axios'
+
 export default {
   data() {
     return {
@@ -62,38 +64,37 @@ export default {
         "ภาคอีสาน",
         "ภาคกลาง",
       ],
-      universities: [
-        {
-          id: 1,
-          name: "สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง",
-          province: "กรุงเทพ",
-          region: "ภาคกลาง",
-          picture: "",
-          editedDate: "2022-04-30",
-        },
-        {
-          id: 2,
-          name: "เป็ด",
-          province: "สุพรรณบุรี",
-          region: "ภาคกลาง",
-          picture: "",
-          editedDate: "2022-01-30",
-        },
-      ],
+      universities: [],
     };
   },
   computed: {
     filterUniversities() {
       let universities = this.universities
+      
       if (this.regionSelected.length != 0) {
         universities = universities.filter((uni) =>
-          Object.values(this.regionSelected).includes(uni.region)
+          Object.values(this.regionSelected).includes(uni.region_name)
         );
       }
-      universities = universities.filter(uni => uni.name.includes(this.keyword) || uni.province.includes(this.keyword) || uni.region.includes(this.keyword))
+      universities = universities.filter(uni => uni.uni_name.includes(this.keyword) || uni.province_name.includes(this.keyword) || uni.region_name.includes(this.keyword))
       return universities;
     },
   },
+  mounted() {
+        this.getuniversity(this.$route);
+    },
+    methods: {
+        getuniversity() {
+            axios.get(`http://localhost:5000/university`)
+                .then((response) => {
+                    this.universities = response.data
+                    // console.log(this.universities)
+                })
+                .catch((error) => {
+                    alert(error.response.data.message)
+                });
+        }
+    }
 };
 </script>
 <style>

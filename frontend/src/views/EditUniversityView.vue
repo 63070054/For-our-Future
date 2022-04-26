@@ -4,7 +4,7 @@
   <div style="background-color: #f9f7f0" class="hero is-fullheight-with-navbar p-3">
     <div class="columns is-centered">
       <div class="column is-half">
-        <form action="localhost:5000/EditUni" >
+        <form action="localhost:5000/EditUni">
           <div class="field">
             <label class="label is-size-4">UNIVERSITY NAME <span style="color: red">*</span></label>
             <input class="input" type="text" />
@@ -14,9 +14,9 @@
             <label class="label is-size-4">PROVINCE <span style="color: red">*</span></label>
             <div class="select is-fullwidth">
               <select>
-                <option>ภาษาไทย</option>
-                <option>คณิต</option>
-                <option>สังคม</option>
+                <option value="1">กรุงเทพ</option>
+                <option value="2">อยุธยา</option>
+                <option value="3">สระบุรี</option>
               </select>
             </div>
           </div>

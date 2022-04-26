@@ -312,19 +312,29 @@ DROP TABLE IF EXISTS `university`;
 CREATE TABLE `university` (
     `uni_id` int(10) primary key AUTO_INCREMENT,
     `uni_name` varchar(255) not null,
-    `province` int(3) not null,
+    `province_id` int(3) not null,
     `u_created_date` date not null,
     `u_created_by` int(10) not null,
     `u_edited_date` date not null,
     `u_edited_by` int(10) not null,
-    foreign key (`province`) references `province`(province_id)
+    `file_path` varchar(255),
+    foreign key (`province_id`) references `province`(province_id)
 );
 
 DROP TABLE IF EXISTS `province`;
 
 CREATE TABLE `province` (
     `province_id` int(3) primary key AUTO_INCREMENT,
-    `province_name` varchar(255) not null
+    `province_name` varchar(255) not null,
+    `region_id` int(1) not null,
+    foreign key (`region_id`) references `region`(region_id)
+);
+
+DROP TABLE IF EXISTS `region`;
+
+CREATE TABLE `region` (
+    `region_id` int(1) primary key AUTO_INCREMENT,
+    `region_name` varchar(255) not null
 );
 
 SET
