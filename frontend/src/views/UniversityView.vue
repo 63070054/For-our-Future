@@ -43,6 +43,7 @@ import IconAdd from "@/components/icons/IconAdd.vue";
       v-for="uni in filterUniversities"
       :key="uni.id"
       :uni_info="uni"
+      @delete-university="deleteUniversity(uni)"
     />
   </div>
 </template>
@@ -70,7 +71,7 @@ export default {
   computed: {
     filterUniversities() {
       let universities = this.universities
-      
+
       if (this.regionSelected.length != 0) {
         universities = universities.filter((uni) =>
           Object.values(this.regionSelected).includes(uni.region_name)
@@ -81,20 +82,32 @@ export default {
     },
   },
   mounted() {
-        this.getuniversity(this.$route);
+    this.getuniversity();
+  },
+  methods: {
+    getuniversity() {
+      axios.get(`http://localhost:5000/university`)
+        .then((response) => {
+          this.universities = response.data
+        })
+        .catch((error) => {
+          alert(error.response.data.message)
+        });
     },
-    methods: {
-        getuniversity() {
-            axios.get(`http://localhost:5000/university`)
-                .then((response) => {
-                    this.universities = response.data
-                    // console.log(this.universities)
-                })
-                .catch((error) => {
-                    alert(error.response.data.message)
-                });
-        }
-    }
+    deleteUniversity(uni) {
+      let result = confirm('are u sure u want to delete')
+      if (result) {
+        axios.delete(`http://localhost:5000/deleteUniversity/${uni.uni_id}`,)
+          .then((response) => {
+            this.universities = this.universities.filter(val => val.uni_id != uni.uni_id)
+            alert("คุณลบสำเร็จแล้ว")
+          })
+          .catch((error) => {
+            alert(error.response.data.message)
+          });
+      }
+    },
+  }
 };
 </script>
 <style>

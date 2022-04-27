@@ -34,7 +34,6 @@
             </label>
           </div>
         </div>
-        <!-- type="button" @click="adduni()" -->
         <div class="mt-3 has-text-centered">
           <button class="button has-text-black has-text-centered is-3 is-size-4 has-text-weight-bold is-fullwidth"
             style="background-color: #DE8971" type="button" @click="adduni">

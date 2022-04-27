@@ -10,7 +10,7 @@ app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 
 // Statics
-app.use(express.static(path.join(__dirname, 'static')))
+app.use(express.static(path.join(__dirname, 'src')))
 
 app.use(cors())
 app.use(express.json()) // for parsing application/json
