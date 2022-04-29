@@ -41,7 +41,6 @@
     <!-- </div> -->
 </template>
 <script>
-import axios from 'axios';
 
 export default {
     props: ['uni_info'],
@@ -50,22 +49,10 @@ export default {
             universities: [],
         }
     },
-    // mounted() {
-    //     this.getuniversity();
-    // },
     methods: {
         deleteUniversity(uni) {
             this.$emit("delete-university");
         },
-        // getuniversity() {
-        //     axios.get(`http://localhost:5000/university`)
-        //         .then((response) => {
-        //             this.universities = response.data
-        //         })
-        //         .catch((error) => {
-        //             alert(error.response.data.message)
-        //         });
-        // }
     }
 }
 </script>

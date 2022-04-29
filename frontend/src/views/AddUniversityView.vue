@@ -25,7 +25,7 @@
         <div class="field">
           <div class="file is-large is-boxed mt-auto">
             <label class="file-label" style="width: 100%;">
-              <input class="file-input" type="file" name="resume" id="resume" accept="image/png, image/jpeg" />
+              <input class="file-input" type="file" name="univer" id="univer" accept="image/png, image/jpeg" />
               <span class="file-cta has-text-centered" style="height: 160px; justify-content: center">
                 <span class="file-icon m-0">
                   <i class="fa fa-plus"></i>
@@ -58,8 +58,8 @@ export default {
   methods: {
     adduni() {
       var formData = new FormData();
-      var imagefile = document.querySelector('#resume');
-      formData.append("resume", imagefile.files[0]);
+      var imagefile = document.querySelector('#univer');
+      formData.append("univer", imagefile.files[0]);
       formData.append('uni_name', this.uname);
       formData.append('province', this.province);
       axios.post(`http://localhost:5000/adduni`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })

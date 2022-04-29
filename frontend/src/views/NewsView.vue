@@ -23,10 +23,10 @@ import IconAdd from "@/components/icons/IconAdd.vue";
     <div class="columns is-multiline">
       <div
         class="column is-one-third"
-        v-for="news in filterNewes"
-        :key="news.id"
+        v-for="news in filterNewes.news"
+        :key="news.news_id"
       >
-        <CardNews :news_info="news"></CardNews>
+        <CardNews :news_info="news" :category="filterCategory(news.news_id, filterNewes.category)"></CardNews>
       </div>
     </div>
     <router-link to="/news/add"><IconAdd></IconAdd></router-link>
@@ -34,53 +34,57 @@ import IconAdd from "@/components/icons/IconAdd.vue";
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data() {
     return {
       // variable for input
       keyword: "",
       // variable for loop only
-      newses: [
-        {
-          id: 1,
-          title: "เป็ดกินไก่หน้าปากซอย",
-          description:
-            "พบเป็ดกินไก่หน้าปากซอยซึ่ง ไก่จริงๆแล้วคือแมว ที่กำลังกินเป็ดต่างหาก",
-          categories: ["ข่าวสด", "ไก่แดกเป็ด หรือเป็ดแดกไก่"],
-          createdDate: "2022-04-30",
-        },
-
-        {
-          id: 2,
-          title: "ผู้ร้ายคลั่งทำร้ายเจ้าหน้าที่ เนื่องอยากแดกกะเพราไก่",
-          description:
-            "พบอดีตผู้ร้ายกลับมาอาละวาดหลังถูกปล่อยตัวได้ 7 วัน คลั่งบุกร้านกะเพราไก่พร้อมทำร้านเจ้าหน้าที่ตำรวจที่มาห้ามเนื่องจากอยากกินกะเพราไก่",
-          categories: ["กะเพราไก่", "ข่าวเชี่ยไรไม่รู้"],
-          createdDate: "2022-08-30",
-        },
-      ],
+      newses: [],
     };
   },
   computed: {
     filterNewes() {
       let newses = this.newses;
-      newses = newses.filter((news) => {
-        let categoriesIncludesKeyword = false;
-        let filterCategories = news.categories.filter((cate) =>
-          cate.includes(this.keyword)
-        );
-        if (filterCategories.length != 0) {
-          categoriesIncludesKeyword = true;
-        }
-        return (
-          news.title.includes(this.keyword) ||
-          news.description.includes(this.keyword) ||
-          categoriesIncludesKeyword
-        );
-      });
+      // newses = newses.filter((news) => {
+      //   // let categoriesIncludesKeyword = false;
+      //   // let filterCategories = news.category_name.filter((cate) =>
+      //   //   cate.includes(this.keyword)
+      //   // );
+      //   // if (filterCategories.length != 0) {
+      //   //   categoriesIncludesKeyword = true;
+      //   // }
+      //   return (
+      //     news.news_title.includes(this.keyword) ||
+      //     news.news_desc.includes(this.keyword)
+      //     // news.category_name.includes(this.keyword)
+      //     // categoriesIncludesKeyword
+      //   );
+      // });
       return newses;
     },
   },
+  mounted() {
+    this.getNews();
+  },
+  methods: {
+    getNews() {
+      axios.get(`http://localhost:5000/news`)
+        .then((response) => {
+          this.newses = response.data
+          console.log(this.newses.news)
+        })
+        .catch((error) => {
+          alert(error.response.data.message)
+        });
+    },
+    filterCategory(Id, category){
+      console.log(Id)
+      return category.filter(cat => cat.news_id === Id)
+    }
+  }
 };
 </script>
 

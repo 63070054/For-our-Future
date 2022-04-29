@@ -5,26 +5,31 @@
 <template>
   <main class="m-3">
     <div class="card has-text-black">
+      <router-link :to="`/news/${news_info.news_id}/edit`" style="position:absolute;left: 5px; top: 5px; z-index: 2;">
+        <button class="button is-info is-small" type="button">
+          <span class="icon">
+            <i class="fas fa-pen" style="font-size: 16px;"></i>
+          </span>
+        </button>
+      </router-link>
       <div class="card-image">
         <div class="date is-size-6 has-text-white px-2 py-1 mt-1 mr-1">
-          {{news_info.createdDate}}
+          {{ news_info.news_created_date.substr(0, 10) }}
         </div>
-        <figure class="image is-5by3" style="background-color: black;">
-          <!-- // 600*480
-          <img
-            src="https://i0.wp.com/anitrendz.net/news/wp-content/uploads/2022/02/aharensanwahakarenai_pv2screenshot.png?resize=696%2C392&ssl=1"
-          /> -->
+        <figure class="image is-5by3">
+          <!-- 600*480 -->
+          <img :src="`http://localhost:5000/` + news_info.news_picture">
         </figure>
       </div>
       <div class="card-content">
         <div class="content">
-          <h1>{{news_info.title}}</h1>
-          <p>{{news_info.description}}</p>
+          <h1>{{ news_info.news_title }}</h1>
+          <p>{{ news_info.news_desc }}</p>
         </div>
       </div>
       <footer class="card-footer tags pb-2">
-        <div class="camp is-size-6 has-text-white px-2 py-1 ml-2 mt-2" v-for="(cate, index) in news_info.categories" :key="index">
-          {{cate}}
+        <div class="camp is-size-6 has-text-white px-2 py-1 ml-2 mt-2" v-for="(cate, index) in category" :key="index">
+          {{ cate.category_name }}
         </div>
       </footer>
     </div>
@@ -32,8 +37,13 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
-    props: ['news_info'],
+  props: ['news_info', 'category'],
+  data() {
+    return {}
+  }
 }
 </script>
 
@@ -41,13 +51,16 @@ export default {
 .card {
   width: 400px;
 }
+
 .card-footer {
   background-color: #9ddfd3;
 }
+
 .camp {
   background-color: #114e60;
   border-radius: 3px;
 }
+
 .date {
   position: absolute;
   z-index: 1;

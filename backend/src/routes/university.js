@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path")
 const pool = require("../config/pool");
 const multer = require('multer');
-var fileupload = require("express-fileupload");
+// var fileupload = require("express-fileupload");
 
 
 router = express.Router();
@@ -39,7 +39,8 @@ router.get("/university", async function (req, res, next) {
         conn.release()
     }
 });
-router.post("/adduni", upload.single('resume'), async function (req, res, next) {
+
+router.post("/adduni", upload.single('univer'), async function (req, res, next) {
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     // console.log('-----------------')

@@ -20,10 +20,12 @@ app.use(express.urlencoded({ extended: true })) // for parsing application/x-www
 const universityRouter = require('./src/routes/university')
 const facultyRouter = require('./src/routes/faculty')
 const roundRouter = require('./src/routes/round')
+const newsRounter = require('./src/routes/news')
 
 app.use(universityRouter.router)
 app.use(facultyRouter.router)
 app.use(roundRouter.router)
+app.use(newsRounter.router)
 
 app.listen(5000, () => {
     console.log(`Example app listening at http://localhost:5000`)
