@@ -64,15 +64,16 @@ export default {
       formData.append('province', this.province);
       axios.post(`http://localhost:5000/adduni`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
         .then((response) => {
-          console.log(response.data.message)
           if (response.data.message) {
             const result = confirm("มีมหาวิทยาลัยนี้อยู่ในระบบอยู่แล้ว")
             if (result) {
               this.$router.push(`/${response.data.uni_name}/faculty`)
             }
           }
+          else if(response.data.e){
+            alert("มีปัญหาในการเพิ่มข้อมูลมหาวิทยาลัยค่ะ")
+          }
           else {
-            console.log('ดีใจด้วย')
             this.$router.push(`/university`)
           }
         })

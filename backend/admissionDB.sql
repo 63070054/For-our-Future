@@ -21,12 +21,14 @@ DROP TABLE IF EXISTS `ROUND`;
 
 CREATE TABLE `ROUND` (
     `r_id` int(10) AUTO_INCREMENT,
+    `uni_id` int(10),
     `fac_id` int(10),
     `round` int(1) NOT NULL,
     `r_desc` varchar(255),
     `r_gpax` float(3, 2),
-    PRIMARY KEY(`r_id`, `fac_id`),
-    foreign key (fac_id) references FACULTY(fac_id)
+    PRIMARY KEY(`r_id`, `fac_id`, `uni_id`),
+    foreign key (fac_id) references FACULTY(fac_id),
+    foreign key (uni_id) references university(uni_id)
 );
 
 DROP TABLE IF EXISTS `R_GAT`;
@@ -240,7 +242,6 @@ DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
     `u_id` int(10) primary key AUTO_INCREMENT,
-    `prefix` varchar(255) not null,
     `f_name` varchar(255) not null,
     `l_name` varchar(255) not null,
     `username` varchar(255) not null,
@@ -248,6 +249,7 @@ CREATE TABLE `user` (
     `type_user` enum('student', 'admin'),
     `birth_date` date,
     `sex` enum('male', 'female'),
+    `email` varchar(255),
     `nationality` varchar(30),
     `blood_type` enum('A', 'B', 'AB', 'O'),
     `address` text,
@@ -274,7 +276,6 @@ CREATE TABLE `admin_news` (
     foreign key (`news_id`) references `news`(news_id),
     primary key(`u_id`, `news_id`)
 );
-
 
 DROP TABLE IF EXISTS `news_category`;
 
@@ -350,6 +351,97 @@ CREATE TABLE `region` (
     `region_id` int(1) primary key AUTO_INCREMENT,
     `region_name` varchar(255) not null
 );
+
+INSERT INTO
+    `region` (`region_id`, `region_name`)
+VALUES
+    (1, 'ภาคเหนือ'),
+    (2, 'ภาคกลาง'),
+    (3, 'ภาคตะวันออกเฉียงเหนือ'),
+    (4, 'ภาคตะวันตก'),
+    (5, 'ภาคตะวันออก'),
+    (6, 'ภาคใต้');
+
+INSERT INTO
+    `province` (`province_id`, `province_name`, `region_id`)
+VALUES
+    (1, 'กรุงเทพมหานคร', 2),
+    (2, 'สมุทรปราการ', 2),
+    (3, 'นนทบุรี', 2),
+    (4, 'ปทุมธานี', 2),
+    (5, 'พระนครศรีอยุธยา', 2),
+    (6, 'อ่างทอง', 2),
+    (7, 'ลพบุรี', 2),
+    (8, 'สิงห์บุรี', 2),
+    (9, 'ชัยนาท', 2),
+    (10, 'สระบุรี', 2),
+    (11, 'ชลบุรี', 5),
+    (12, 'ระยอง', 5),
+    (13, 'จันทบุรี', 5),
+    (14, 'ตราด', 5),
+    (15, 'ฉะเชิงเทรา', 5),
+    (16, 'ปราจีนบุรี', 5),
+    (17, 'นครนายก', 2),
+    (18, 'สระแก้ว', 5),
+    (19, 'นครราชสีมา', 3),
+    (20, 'บุรีรัมย์', 3),
+    (21, 'สุรินทร์', 3),
+    (22, 'ศรีสะเกษ', 3),
+    (23, 'อุบลราชธานี', 3),
+    (24, 'ยโสธร', 3),
+    (25, 'ชัยภูมิ', 3),
+    (26, 'อำนาจเจริญ', 3),
+    (27, 'หนองบัวลำภู', 3),
+    (28, 'ขอนแก่น', 3),
+    (29, 'อุดรธานี', 3),
+    (30, 'เลย', 3),
+    (31, 'หนองคาย', 3),
+    (32, 'มหาสารคาม', 3),
+    (33, 'ร้อยเอ็ด', 3),
+    (34, 'กาฬสินธุ์', 3),
+    (35, 'สกลนคร', 3),
+    (36, 'นครพนม', 3),
+    (37, 'มุกดาหาร', 3),
+    (38, 'เชียงใหม่', 1),
+    (39, 'ลำพูน', 1),
+    (40, 'ลำปาง', 1),
+    (41, 'อุตรดิตถ์', 1),
+    (42, 'แพร่', 1),
+    (43, 'น่าน', 1),
+    (44, 'พะเยา', 1),
+    (45, 'เชียงราย', 1),
+    (46, 'แม่ฮ่องสอน', 1),
+    (47, 'นครสวรรค์', 2),
+    (48, 'อุทัยธานี', 2),
+    (49, 'กำแพงเพชร', 2),
+    (50, 'ตาก', 4),
+    (51, 'สุโขทัย', 2),
+    (52, 'พิษณุโลก', 2),
+    (53, 'พิจิตร', 2),
+    (54, 'เพชรบูรณ์', 2),
+    (55, 'ราชบุรี', 4),
+    (56, 'กาญจนบุรี', 4),
+    (57, 'สุพรรณบุรี', 2),
+    (58, 'นครปฐม', 2),
+    (59, 'สมุทรสาคร', 2),
+    (60, 'สมุทรสงคราม', 2),
+    (61, 'เพชรบุรี', 4),
+    (62, 'ประจวบคีรีขันธ์', 4),
+    (63, 'นครศรีธรรมราช', 6),
+    (64, 'กระบี่', 6),
+    (65, 'พังงา', 6),
+    (66, 'ภูเก็ต', 6),
+    (67, 'สุราษฎร์ธานี', 6),
+    (68, 'ระนอง', 6),
+    (69, 'ชุมพร', 6),
+    (70, 'สงขลา', 6),
+    (71, 'สตูล', 6),
+    (72, 'ตรัง', 6),
+    (73, 'พัทลุง', 6),
+    (74, 'ปัตตานี', 6),
+    (75, 'ยะลา', 6),
+    (76, 'นราธิวาส', 6),
+    (77, 'บึงกาฬ', 3);
 
 SET
     FOREIGN_KEY_CHECKS = 1;
