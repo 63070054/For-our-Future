@@ -26,7 +26,9 @@ import IconAdd from "@/components/icons/IconAdd.vue";
         v-for="news in filterNewes.news"
         :key="news.news_id"
       >
-        <CardNews :news_info="news" :category="filterCategory(news.news_id, filterNewes.category)"></CardNews>
+        <router-link :to="{path: '/news/' + news.news_id}">
+          <CardNews :news_info="news" :category="filterCategory(news.news_id, filterNewes.category)"></CardNews>
+        </router-link>
       </div>
     </div>
     <router-link to="/news/add"><IconAdd></IconAdd></router-link>
