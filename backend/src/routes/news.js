@@ -22,9 +22,17 @@ router.get("/news", async function (req, res, next) {
         const selectNews = await conn.query(`select * from news`);
         const selectCat = await conn.query(`select * from news_category`);
 
+        selectNews[0].map(news => {
+            news['category_name'] = []
+            selectCat[0].map(cate => {
+                if (news.news_id == cate.news_id) {
+                    news['category_name'].push(cate)
+                }
+            })
+        })
+
         res.json({
-            news: selectNews[0],
-            category: selectCat[0]
+            news: selectNews[0]
         })
         conn.commit()
 
