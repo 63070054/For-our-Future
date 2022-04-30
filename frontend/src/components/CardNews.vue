@@ -18,7 +18,8 @@
         </div>
         <figure class="image is-5by3">
           <!-- 600*480 -->
-          <img :src="`http://localhost:5000/` + news_info.news_picture">
+          <img :src="`http://localhost:5000/` + news_info.news_picture" style="object-fit: cover;
+    object-position: top center;">
         </figure>
       </div>
       <div class="card-content">
