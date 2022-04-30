@@ -37,7 +37,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
   props: ['news_info', 'category'],

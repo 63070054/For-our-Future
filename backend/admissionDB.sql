@@ -332,7 +332,7 @@ CREATE TABLE `university` (
     `u_created_by` int(10) not null,
     `u_edited_date` date not null,
     `u_edited_by` int(10) not null,
-    `file_path` varchar(255),
+    `file_path` varchar(255) default "images\\university.png",
     foreign key (`province_id`) references `province`(province_id)
 );
 
