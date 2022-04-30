@@ -64,7 +64,7 @@
                     <button
                         class="button has-text-black has-text-centered is-3 is-size-4 has-text-weight-bold is-fullwidth"
                         style="background-color: #9DDFD3" type="button" @click="editnews">
-                        Create News
+                        Edit News
                     </button>
                 </div>
             </div>
@@ -117,6 +117,7 @@ export default {
             formData.append('news_des', this.newsdes);
             formData.append('news_cat', JSON.stringify(this.inputs_CATEGORYS));
             formData.append('news_ref', JSON.stringify(this.inputs_REFERENCES));
+            console.log(this.inputs_CATEGORYS)
             axios.put(`http://localhost:5000/editnews`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
                 .then((response) => {
                     console.log(response.data.message)
@@ -128,27 +129,19 @@ export default {
         },
         addCategory() {
             this.idCounter_CATEGORY += 1
-            this.inputs_CATEGORYS.push({ id: this.idCounter_CATEGORY, category: '' })
-            console.log(this.inputs_CATEGORYS)
-            console.log(this.inputs_REFERENCES)
+            this.inputs_CATEGORYS.push({ id: this.idCounter_CATEGORY, category: '', update: false})
         },
         delCategory(item) {
             let index = this.inputs_CATEGORYS.findIndex((val) => val.id === item.id)
             this.inputs_CATEGORYS.splice(index, 1)
-            console.log(this.inputs_CATEGORYS)
-            console.log(this.inputs_REFERENCES)
         },
         addReference() {
             this.idCounter_REFERENCE += 1
-            this.inputs_REFERENCES.push({ id: this.idCounter_REFERENCE, reference: '' })
-            console.log(this.inputs_CATEGORYS)
-            console.log(this.inputs_REFERENCES)
+            this.inputs_REFERENCES.push({ id: this.idCounter_REFERENCE, reference: '', update: false })
         },
         delReference(item) {
             let index = this.inputs_REFERENCES.findIndex((val) => val.id === item.id)
             this.inputs_REFERENCES.splice(index, 1)
-            console.log(this.inputs_CATEGORYS)
-            console.log(this.inputs_REFERENCES)
         }
     },
 }
