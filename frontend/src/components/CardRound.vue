@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     // async getFaculty(uniName) {
-    //   axios
+    //   await axios
     //     .get(`http://localhost:5000/${uniName}/faculty`)
     //     .then((response) => {
     //       this.faculty = response.data.faculty;
