@@ -79,8 +79,8 @@ export default {
         return {
             title: "",
             description: "",
-            inputs_CATEGORYS: [{ id: 1, category: '' }],
-            inputs_REFERENCES: [{ id: 1, reference: '' }],
+            inputs_CATEGORYS: [],
+            inputs_REFERENCES: [],
             idCounter_CATEGORY: 0,
             idCounter_REFERENCE: 0
         }

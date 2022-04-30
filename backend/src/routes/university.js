@@ -45,10 +45,9 @@ router.post("/adduni", upload.single('univer'), async function (req, res, next) 
     await conn.beginTransaction();
     // console.log('-----------------')
     // console.log(req.body.uni_name)
-    console.log(req.file)
     try {
         const [uni, _] = await conn.query('SELECT COUNT(uni_name) `ucount` FROM university where lower(university.uni_name) = ?', [req.body.uni_name])
-        // console.log(uni[0].ucount)
+        console.log(uni[0].ucount)
         if (uni[0].ucount === 0) {
             if (req.file) {
                 await conn.query(
@@ -76,7 +75,10 @@ router.post("/adduni", upload.single('univer'), async function (req, res, next) 
 
     } catch (e) {
         conn.rollback()
-        res.send(e)
+        res.send({
+            e: e,
+            'message': false
+        })
     } finally {
         conn.release()
     }
@@ -156,9 +158,11 @@ router.delete("/deleteUniversity/:uniId", async function (req, res, next) {
     await conn.beginTransaction();
     // console.log(req.params.uniId)
     try {
-        await conn.query(`DELETE FROM university WHERE uni_id = ?;`, [req.params.uniId]);
-        res.json({ "message": 'ok' });
+        await conn.query(`DELETE FROM round WHERE uni_id = ?`, [req.params.uniId]);
+        await conn.query(`DELETE FROM faculty WHERE uni_id = ?`, [req.params.uniId]);
+        await conn.query(`DELETE FROM university WHERE uni_id = ?`, [req.params.uniId]);
 
+        res.json({ "message": 'ok' });
         conn.commit()
 
     } catch (e) {

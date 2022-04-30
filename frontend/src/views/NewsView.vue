@@ -23,10 +23,12 @@ import IconAdd from "@/components/icons/IconAdd.vue";
     <div class="columns is-multiline">
       <div
         class="column is-one-third"
-        v-for="news in filterNewes.news"
+        v-for="news in filterNewes"
         :key="news.news_id"
       >
-        <CardNews :news_info="news" :category="filterCategory(news.news_id, filterNewes.category)"></CardNews>
+        <router-link :to="{path: '/news/' + news.news_id}">
+          <CardNews :news_info="news" :category="news.category_name"></CardNews>
+        </router-link>
       </div>
     </div>
     <router-link to="/news/add"><IconAdd></IconAdd></router-link>
@@ -48,21 +50,21 @@ export default {
   computed: {
     filterNewes() {
       let newses = this.newses;
-      // newses = newses.filter((news) => {
-      //   // let categoriesIncludesKeyword = false;
-      //   // let filterCategories = news.category_name.filter((cate) =>
-      //   //   cate.includes(this.keyword)
-      //   // );
-      //   // if (filterCategories.length != 0) {
-      //   //   categoriesIncludesKeyword = true;
-      //   // }
-      //   return (
-      //     news.news_title.includes(this.keyword) ||
-      //     news.news_desc.includes(this.keyword)
-      //     // news.category_name.includes(this.keyword)
-      //     // categoriesIncludesKeyword
-      //   );
-      // });
+      newses = newses.filter((news) => {
+        let categoriesIncludesKeyword = false;
+        let filterCategories = news.category_name.filter((cate) =>
+          cate.category_name.includes(this.keyword)
+        );
+        if (filterCategories.length != 0) {
+          categoriesIncludesKeyword = true;
+        }
+        return (
+          news.news_title.includes(this.keyword) ||
+          news.news_desc.includes(this.keyword) ||
+          news.category_name.includes(this.keyword) ||
+          categoriesIncludesKeyword
+        );
+      });
       return newses;
     },
   },
@@ -73,16 +75,11 @@ export default {
     getNews() {
       axios.get(`http://localhost:5000/news`)
         .then((response) => {
-          this.newses = response.data
-          console.log(this.newses.news)
+          this.newses = response.data.news
         })
         .catch((error) => {
           alert(error.response.data.message)
         });
-    },
-    filterCategory(Id, category){
-      console.log(Id)
-      return category.filter(cat => cat.news_id === Id)
     }
   }
 };
