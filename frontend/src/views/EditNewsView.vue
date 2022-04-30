@@ -80,6 +80,7 @@ export default {
         return {
             newstitle: "",
             newsdes: "",
+            newsid: "",
             inputs_CATEGORYS: [],
             inputs_REFERENCES: [],
             idCounter_CATEGORY: 0,
@@ -99,6 +100,7 @@ export default {
                 .then((response) => {
                     this.newstitle = response.data.news[0].news_title
                     this.newsdes = response.data.news[0].news_desc
+                    this.newsid = response.data.news[0].news_id
                     this.inputs_CATEGORYS = [...response.data.category]
                     this.inputs_REFERENCES = [...response.data.reference]
                 })
@@ -110,13 +112,15 @@ export default {
             var formData = new FormData();
             var imagefile = document.querySelector('#news');
             formData.append("news", imagefile.files[0]);
-            formData.append('new_title', this.title);
-            formData.append('new_des', this.description);
-            formData.append('new_cat', JSON.stringify(this.inputs_CATEGORYS));
-            formData.append('new_ref', JSON.stringify(this.inputs_REFERENCES));
+            formData.append('news_id', this.newsid);
+            formData.append('news_title', this.newstitle);
+            formData.append('news_des', this.newsdes);
+            formData.append('news_cat', JSON.stringify(this.inputs_CATEGORYS));
+            formData.append('news_ref', JSON.stringify(this.inputs_REFERENCES));
             axios.put(`http://localhost:5000/editnews`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
                 .then((response) => {
                     console.log(response.data.message)
+                    this.$router.push(`/news`)
                 })
                 .catch((error) => {
                     alert(error.response.data.message)

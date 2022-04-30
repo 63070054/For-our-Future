@@ -131,13 +131,28 @@ router.get("/news/:newsId/edit", async function (req, res, next) {
 router.put("/editnews", upload.single('news'), async function (req, res, next) {
     const conn = await pool.getConnection()
     await conn.beginTransaction();
-
+    const allcate = JSON.parse(req.body.news_cat);
+    const allref = JSON.parse(req.body.news_ref);
     try {
         console.log(req.body)
-        // console.log(req.body)
-        // const selectUni = await conn.query(`select * from university where uni_name = ?`, [req.params.uniName]);
-        // console.log(selectUni[0])
-        res.json({ "message": false });
+        console.log(allref.length)
+        await conn.query(`DELETE FROM news_category WHERE news_id = ?`, [req.body.news_id]);
+        await conn.query(`DELETE FROM news_ref WHERE news_id = ?`, [req.body.news_id]);
+
+        await conn.query(`UPDATE news 
+                SET news_title = ?,
+                    news_desc = ?,
+                    news_edited_date = CURRENT_TIMESTAMP
+                    WHERE news_id = ?`,
+            [req.body.news_title, req.body.news_des, req.body.news_id]);
+
+            for (let i = 0; i < allcate.length; i++) {
+                await conn.query(`insert into news_category(category_name, news_id) values(?, ?)`, [allcate[i].category_name, req.body.news_id])
+            }
+            for (let i = 0; i < allref.length; i++) {
+                await conn.query(`insert into news_ref(ref_name, news_id) values(?, ?)`, [allref[i].ref_name, req.body.news_id])
+            }
+        res.json({ "message": 'update' });
 
         conn.commit()
 
@@ -146,6 +161,25 @@ router.put("/editnews", upload.single('news'), async function (req, res, next) {
     } finally {
         conn.release()
     }
+});
+
+router.delete("/deleteNews/:newsId", async function (req, res, next) {
+    const conn = await pool.getConnection()
+    await conn.beginTransaction();
+    try {
+
+        await conn.query(`DELETE FROM news_category WHERE news_id = ?`, [req.params.newsId]);
+        await conn.query(`DELETE FROM news_ref WHERE news_id = ?`, [req.params.newsId]);
+        await conn.query(`DELETE FROM news WHERE news_id = ?`, [req.params.newsId]);
+        res.json({ "message": 'ok' });
+        conn.commit()
+
+    } catch (e) {
+        conn.rollback()
+    } finally {
+        conn.release()
+    }
+
 });
 
 exports.router = router;

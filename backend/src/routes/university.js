@@ -40,6 +40,25 @@ router.get("/university", async function (req, res, next) {
     }
 });
 
+router.get("/province", async function (req, res, next) {
+    const conn = await pool.getConnection()
+    await conn.beginTransaction();
+    try {
+
+        const selectPro = await conn.query(`select * from province`);
+
+
+        res.json({"province":selectPro[0]})
+
+        conn.commit()
+
+    } catch (e) {
+        conn.rollback()
+    } finally {
+        conn.release()
+    }
+});
+
 router.post("/adduni", upload.single('univer'), async function (req, res, next) {
     const conn = await pool.getConnection()
     await conn.beginTransaction();
@@ -102,7 +121,7 @@ router.get("/:uniName/edit", async function (req, res, next) {
     }
     
 });
-// UPDATE comments SET comment=? WHERE id=?
+
 router.put("/edituni", upload.single('resume'), async function (req, res, next) {
     const conn = await pool.getConnection()
     await conn.beginTransaction();
@@ -115,7 +134,7 @@ router.put("/edituni", upload.single('resume'), async function (req, res, next) 
         console.log(pro[0].province_id)
         // console.log(req.file.path.substring(4))
         if (uni[0].ucount === 0 || pro[0].province_id != req.body.province) {
-            
+            console.log('ok')
             // if (req.file) {
             //     console.log('file')
             //     await conn.query(`update university 
@@ -130,7 +149,8 @@ router.put("/edituni", upload.single('resume'), async function (req, res, next) 
                 // console.log('no file')
                 await conn.query(`update university 
                     set uni_name = ?,
-                    province_id = ?
+                    province_id = ?,
+                    u_edited_date = CURRENT_TIMESTAMP
                     where uni_name = ?`,
                     [req.body.uni_name, req.body.province, req.body.oldname]);
                 res.json({ "message": false });
@@ -156,7 +176,7 @@ router.put("/edituni", upload.single('resume'), async function (req, res, next) 
 router.delete("/deleteUniversity/:uniId", async function (req, res, next) {
     const conn = await pool.getConnection()
     await conn.beginTransaction();
-    // console.log(req.params.uniId)
+    console.log(req.params.uniId)
     try {
         await conn.query(`DELETE FROM round WHERE uni_id = ?`, [req.params.uniId]);
         await conn.query(`DELETE FROM faculty WHERE uni_id = ?`, [req.params.uniId]);

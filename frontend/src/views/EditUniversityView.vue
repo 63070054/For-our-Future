@@ -14,9 +14,7 @@
             <label class="label is-size-4">PROVINCE <span style="color: red">*</span></label>
             <div class="select is-fullwidth">
               <select v-model="province">
-                <option value="1">กรุงเทพ</option>
-                <option value="2">อยุธยา</option>
-                <option value="3">สระบุรี</option>
+                <option v-for="pro in all_province" :value="pro.province_id" :key="pro.province_id"> {{ pro.province_name }} </option>
               </select>
             </div>
           </div>
@@ -53,11 +51,13 @@ export default {
     return {
       univerName: "",
       province: "",
-      oldname: ""
+      oldname: "",
+      all_province: [],
     };
   },
   mounted() {
     this.getuniversity(this.$route.params.uniName)
+    this.getprovince()
   },
   methods: {
     getuniversity(uniName) {
@@ -97,7 +97,17 @@ export default {
         .catch((error) => {
           alert(error.response.data.message)
         });
-    }
+    },
+    getprovince() {
+      axios.get(`http://localhost:5000/province`)
+        .then((response) => {
+          this.all_province = response.data.province
+          console.log(this.all_province)
+        })
+        .catch((error) => {
+          alert(error.response.data)
+        });
+    },
   }
 }
 

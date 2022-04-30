@@ -26,9 +26,7 @@ import IconAdd from "@/components/icons/IconAdd.vue";
         v-for="news in filterNewes"
         :key="news.news_id"
       >
-        <router-link :to="{path: '/news/' + news.news_id}">
-          <CardNews :news_info="news" :category="news.category_name"></CardNews>
-        </router-link>
+          <CardNews :news_info="news" :path="`/news/${news.news_id}`" :category="news.category_name" @delete-news_category="deleteNews(news)"></CardNews>
       </div>
     </div>
     <router-link to="/news/add"><IconAdd></IconAdd></router-link>
@@ -80,7 +78,21 @@ export default {
         .catch((error) => {
           alert(error.response.data.message)
         });
-    }
+    },
+    deleteNews(newsId) {
+      let result = confirm('are u sure u want to delete')
+      if (result) {
+        axios.delete(`http://localhost:5000/deleteNews/${newsId.news_id}`,)
+          .then((response) => {
+            console.log(this.newses)
+            this.newses = this.newses.filter(val => val.news_id != newsId.news_id)
+            // alert("คุณลบสำเร็จแล้ว")
+          })
+          .catch((error) => {
+            alert(error.response.data.message)
+          });
+      }
+    },
   }
 };
 </script>
