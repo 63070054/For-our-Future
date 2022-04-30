@@ -10,7 +10,7 @@ import IconAdd from "@/components/icons/IconAdd.vue";
         <input
           class="input"
           type="text"
-          placeholder="ค้นหามหาวิทยาลัยที่คุณต้องการ"
+          placeholder="ค้นหาข่าวสารที่คุณต้องการ"
           v-model="keyword"
         />
       </div>

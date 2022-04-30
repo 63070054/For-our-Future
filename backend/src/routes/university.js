@@ -66,7 +66,6 @@ router.post("/adduni", upload.single('univer'), async function (req, res, next) 
     // console.log(req.body.uni_name)
     try {
         const [uni, _] = await conn.query('SELECT COUNT(uni_name) `ucount` FROM university where lower(university.uni_name) = ?', [req.body.uni_name])
-        console.log(uni[0].ucount)
         if (uni[0].ucount === 0) {
             if (req.file) {
                 await conn.query(
@@ -103,6 +102,24 @@ router.post("/adduni", upload.single('univer'), async function (req, res, next) 
     }
 
 });
+
+router.get("/recommendUniversities", async function (req, res, next) {
+    const conn = await pool.getConnection()
+    await conn.beginTransaction();
+    try {
+        const selectUniversities = await conn.query(`select * from university order by rand() limit 5`);
+        res.json({
+            recommendUniversities: selectUniversities[0]
+        })
+        conn.commit()
+
+    } catch (e) {
+        conn.rollback()
+    } finally {
+        conn.release()
+    }
+});
+
 router.get("/:uniName/edit", async function (req, res, next) {
     const conn = await pool.getConnection()
     await conn.beginTransaction();

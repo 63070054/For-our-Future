@@ -43,6 +43,43 @@ router.get("/news", async function (req, res, next) {
     }
 });
 
+router.get("/latestNews", async function (req, res, next) {
+    const conn = await pool.getConnection()
+    await conn.beginTransaction();
+    try {
+        const selectNews = await conn.query(`select * from news order by news_created_by desc limit 5`);
+        res.json({
+            news: selectNews[0]
+        })
+        conn.commit()
+
+    } catch (e) {
+        conn.rollback()
+    } finally {
+        conn.release()
+    }
+});
+
+router.get("/recommendCamps", async function (req, res, next) {
+    const conn = await pool.getConnection()
+    await conn.beginTransaction();
+    try {
+
+        const selectCat = await conn.query(`select * from news_category join news using (news_id) where category_name = 'ค่าย'`);
+
+        res.json({
+            recommendCamps: selectCat[0]
+        })
+        conn.commit()
+
+    } catch (e) {
+        conn.rollback()
+    } finally {
+        conn.release()
+    }
+});
+
+
 router.post("/addnews", upload.single('news'), async function (req, res, next) {
     const conn = await pool.getConnection()
     await conn.beginTransaction();
