@@ -24,28 +24,55 @@ import IconAdd from "@/components/icons/IconAdd.vue";
       </div>
     </div>
     <div class="container my-5" style="width: 80%">
-      <div class="select is-medium is-full" style="width: 100%">
-        <select
-          style="width: 100%"
-          v-model="facultySelected"
-          @change="getRound"
-        >
-          <option v-for="fac in faculty" :key="fac.fac_id" :value="{facId: fac.fac_id, facName: fac.fac_name}">
-            {{ fac.fac_name }}
-          </option>
-        </select>
+      <div class="field has-addons">
+        <div class="control is-expanded">
+          <div class="select is-fullwidth">
+            <select
+              style="width: 100%"
+              v-model="facultySelected"
+              @change="getRound"
+            >
+              <option
+                v-for="fac in faculty"
+                :key="fac.fac_id"
+                :value="{ facId: fac.fac_id, facName: fac.fac_name }"
+              >
+                {{ fac.fac_name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="control">
+          <router-link
+            :to="{
+              path: `/${this.$route.params.uniName}/faculty/add`,
+            }"
+          >
+            <button type="submit" class="button is-primary">
+              <i class="fa fa-plus">&nbsp;คณะ</i>
+            </button>
+          </router-link>
+        </div>
       </div>
       <h1 class="title has-text-weight-bold">รายละเอียดคณะ</h1>
       <div class="columns is-multiline">
         <div class="column is-6" v-for="round in round" :key="round.r_id">
-          <router-link :to="{path: `/${this.$route.params.uniName}/${facultySelected.facName}/${round.round}`}">
+          <router-link
+            :to="{
+              path: `/${this.$route.params.uniName}/${facultySelected.facName}/${round.round}`,
+            }"
+          >
             <CardRound :round="round.round"></CardRound>
           </router-link>
         </div>
       </div>
     </div>
-    <router-link :to="{path: `/${this.$route.params.uniName}/${facultySelected.facName}/round/add`}">
-        <IconAdd></IconAdd>
+    <router-link
+      :to="{
+        path: `/${this.$route.params.uniName}/${facultySelected.facName}/round/add`,
+      }"
+    >
+      <IconAdd message="รอบการสมัคร" />
     </router-link>
   </div>
 </template>
@@ -63,7 +90,10 @@ export default {
   },
   async mounted() {
     await this.getFaculty(this.$route.params.uniName);
-    this.facultySelected = {facId: this.faculty[0].fac_id, facName: this.faculty[0].fac_name};
+    this.facultySelected = {
+      facId: this.faculty[0].fac_id,
+      facName: this.faculty[0].fac_name,
+    };
     await this.getRound();
   },
   methods: {

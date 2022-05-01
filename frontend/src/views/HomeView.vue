@@ -20,7 +20,7 @@ import CardRecommendUniversity from "../components/CardRecommendUniversity.vue";
             <SplideSlide
               v-for="(slide, index) in slides"
               :key="index"
-              style="background-color: black"
+              style="background-color: #0a1822"
             >
               <router-link :to="{ path: '/news/' + slide.news_id }">
                 <div style="position: relative; height: 100%; width: 100%">
