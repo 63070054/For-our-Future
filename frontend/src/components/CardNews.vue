@@ -62,7 +62,7 @@ export default {
 
 <style scoped>
 .card {
-  width: 400px;
+  width: 100%;
 }
 
 .card-footer {
