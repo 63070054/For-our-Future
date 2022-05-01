@@ -35,7 +35,7 @@ import IconAdd from "@/components/icons/IconAdd.vue";
               <option
                 v-for="fac in faculty"
                 :key="fac.fac_id"
-                :value="{ facId: fac.fac_id, facName: fac.fac_name }"
+                :value="{ facId: fac.fac_id, facName: fac.fac_name, facDesc: fac.fac_desc }"
               >
                 {{ fac.fac_name }}
               </option>
@@ -66,6 +66,7 @@ import IconAdd from "@/components/icons/IconAdd.vue";
         </div>
       </div>
       <h1 class="title has-text-weight-bold">รายละเอียดคณะ</h1>
+      <p class="mb-4">{{facultySelected.facDesc}}</p>
       <div class="columns is-multiline">
         <div class="column is-6" v-for="round in round" :key="round.r_id">
           <router-link
@@ -104,6 +105,7 @@ export default {
     this.facultySelected = {
       facId: this.faculty[0].fac_id,
       facName: this.faculty[0].fac_name,
+      facDesc: this.faculty[0].fac_desc,
     };
     await this.getRound();
   },

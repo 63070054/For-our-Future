@@ -44,7 +44,7 @@ import CardRecommendUniversity from "../components/CardRecommendUniversity.vue";
                       transform: translate(-50%, -50%);
                     "
                   >
-                    <h1 style="color: white; border-bottom: 2px solid white">
+                    <h1 style="color: white;">
                       {{ slide.news_title }}
                     </h1>
                   </div>

@@ -47,7 +47,6 @@ router.get("/province", async function (req, res, next) {
 
         const selectPro = await conn.query(`select * from province`);
 
-
         res.json({"province":selectPro[0]})
 
         conn.commit()

@@ -8,10 +8,6 @@
   >
     <div style="background-color: #de8971; width: 100%; height: 315px">
       <div style="background-color: #0f1123; width: 100%; height: 300px">
-        <img
-          src="https://static.trueplookpanya.com/tppy/member/m_525000_527500/525016/cms/images/%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%9A%E0%B8%A3%E0%B8%A3%E0%B8%A2%E0%B8%B2%E0%B8%81%E0%B8%B2%E0%B8%A8%E0%B8%AA%E0%B8%88%E0%B8%A5%20(7).jpg"
-          style="height: 300px; width: 100%; opacity: 0.3"
-        />
         <div
           style="
             position: absolute;

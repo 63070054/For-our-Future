@@ -61,6 +61,9 @@ router.get("/:uniName/:facName/:round", async function (req, res, next) {
         selectRound[0][0].percentage.pat = [...selectRoundPat[0]]
         selectRound[0][0].percentage.sub = [...selectRoundSub[0]]
         selectRound[0][0].percentage.onet = [...selectRoundOnet[0]]
+
+        console.log(selectRound[0][0])
+
         res.send({
             round: selectRound[0][0]
         })
