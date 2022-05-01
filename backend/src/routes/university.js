@@ -145,33 +145,27 @@ router.put("/edituni", upload.single('resume'), async function (req, res, next) 
     
     try {
         const [uni, a] = await conn.query('SELECT COUNT(uni_name) `ucount` FROM university where lower(university.uni_name) = ?', [req.body.uni_name])
-        const [pro, b] = await conn.query('SELECT province_id FROM university where lower(university.uni_name) = ?', [req.body.oldname])
-        console.log('---------')
-        console.log(uni[0].ucount)
-        console.log(pro[0].province_id)
-        // console.log(req.file.path.substring(4))
-        if (uni[0].ucount === 0 || pro[0].province_id != req.body.province) {
+        const [pro, b] = await conn.query('SELECT province_id FROM university where uni_id = ?', [req.body.uniId])
+        // console.log('---------')
+        // console.log(uni[0].ucount)
+        // console.log(req.body.uniId)
+        // console.log(req.body.uni_name)
+        // console.log(req.file)
+        // console.log(pro[0].province_id)
+        if (uni[0].ucount === 0 || pro[0].province_id != req.body.province || req.file) {
             console.log('ok')
-            // if (req.file) {
-            //     console.log('file')
-            //     await conn.query(`update university 
-            //         set uni_name = ?,
-            //         province_id = ?,
-            //         file_path = ?
-            //         where uni_name = ?`,
-            //         [req.body.uni_name, req.body.province, req.body.oldname, req.file.path.substring(4)]);
-            //     res.json({ "message": false });
-            // }
-            // else{
-                // console.log('no file')
-                await conn.query(`update university 
-                    set uni_name = ?,
-                    province_id = ?,
-                    u_edited_date = CURRENT_TIMESTAMP
-                    where uni_name = ?`,
-                    [req.body.uni_name, req.body.province, req.body.oldname]);
+            if (req.file) {
+                console.log('file')
+                await conn.query(`update university set uni_name = ?, province_id = ?, u_edited_date = CURRENT_TIMESTAMP, file_path = ? where uni_id = ?`,
+                [req.body.uni_name, req.body.province, req.file.path.substring(4), req.body.uniId]);
                 res.json({ "message": false });
-            // }
+            }
+            else{
+                console.log('no file')
+                await conn.query(`update university set uni_name = ?, province_id = ?, u_edited_date = CURRENT_TIMESTAMP where uni_id = ?`,
+                    [req.body.uni_name, req.body.province, req.body.uniId]);
+                res.json({ "message": false });
+            }
         }
         else {
             console.log('no edit')
