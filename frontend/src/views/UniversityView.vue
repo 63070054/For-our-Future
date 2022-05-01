@@ -38,7 +38,9 @@ import IconAdd from "@/components/icons/IconAdd.vue";
         </label>
       </button>
     </div>
-    <router-link to="/university/add"><IconAdd></IconAdd></router-link>
+    <router-link to="/university/add">
+    <IconAdd message="มหาวิทยาลัย" />
+    </router-link>
     <CardUniversity
       v-for="uni in filterUniversities"
       :key="uni.id"

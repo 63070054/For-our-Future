@@ -2,20 +2,26 @@
 
 <template lang="">
   <div class="circle">
-    <i class="fa fa-plus"></i>
+    <i class="fa fa-plus">
+      &nbsp;{{message}}
+    </i>
   </div>
 </template>
 
+<script>
+export default {
+  props: ['message']
+  
+};
+</script>
+
 <style>
 .circle {
-  border-radius: 100%;
   position: fixed;
   bottom: 10px;
   left: 50%;
   transform: translate(-50%);
   z-index: 5;
-  height: 64px;
-  width: 64px;
   font-size: 24px;
   background-color: white;
   align-items: center;
@@ -24,5 +30,7 @@
   user-select: none;
   cursor: pointer;
   border: 2px solid black;
+  padding: 10px;
+  border-radius: 10px;
 }
 </style>

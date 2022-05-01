@@ -197,9 +197,7 @@ export default {
     },
     async createRound() {
       await axios
-        .post(`http://localhost:5000/round/add`, {
-          uniName: this.$route.params.uniName,
-          facName: this.$route.params.facName,
+        .post(`http://localhost:5000/${this.$route.params.uniName}/${this.$route.params.facName}/round/add`, {
           round: this.round,
           round_desc: this.roundDesc,
           roundPercentage: this.inputs,

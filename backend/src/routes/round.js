@@ -22,6 +22,38 @@ router.get("/:facId/round", async function (req, res, next) {
     }
 });
 
+router.get("/:uniName/:facName/:round", async function (req, res, next) {
+    const conn = await pool.getConnection()
+    await conn.beginTransaction();
+    try {
+
+        const [id, field2] = await conn.query("select uni_id, fac_id from faculty join university using (uni_id) where uni_name = ? and fac_name = ?", [
+            req.params.uniName, req.params.facName
+        ])
+
+        const selectRound = await conn.query(`select * from round where uni_id = ? and fac_id = ? and round = ?`, [
+            id[0].fac_id, id[0].uni_id, req.params.round
+        ]);
+        // id[0].uni_id, id[0].fac_id,
+        const selectRoundGat = await conn.query(`select * from r_gat where r_id`, [
+            selectRound[0][0].r_id
+        ]);
+
+        selectRound[0]
+
+        res.send({
+            round: selectRound[0]
+        })
+
+        conn.commit()
+
+    } catch (e) {
+        conn.rollback()
+    } finally {
+        conn.release()
+    }
+});
+
 router.post("/round/add", async function (req, res, next) {
     const conn = await pool.getConnection()
     await conn.beginTransaction();
