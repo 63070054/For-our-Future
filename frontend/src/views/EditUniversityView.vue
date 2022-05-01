@@ -51,7 +51,7 @@ export default {
     return {
       univerName: "",
       province: "",
-      oldname: "",
+      uniId: "",
       all_province: [],
     };
   },
@@ -66,7 +66,7 @@ export default {
           // this.univer = response.data
           // console.log(response.data[0].uni_id)
           this.univerName = response.data[0].uni_name
-          this.oldname = response.data[0].uni_name
+          this.uniId = response.data[0].uni_id
           this.province = response.data[0].province_id
         })
         .catch((error) => {
@@ -79,7 +79,7 @@ export default {
       formData.append("resume", imagefile.files[0]);
       formData.append('uni_name', this.univerName);
       formData.append('province', this.province);
-      formData.append('oldname', this.oldname);
+      formData.append('uniId', this.uniId);
       axios.put(`http://localhost:5000/edituni`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
         .then((response) => {
           // console.log(response.data.message)
