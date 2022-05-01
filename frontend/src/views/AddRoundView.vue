@@ -21,10 +21,10 @@
           "
         >
           <p class="is-size-1 has-text-centered has-text-white">
-            {{this.$route.params.uniName}}
+            {{ this.$route.params.uniName }}
           </p>
           <p class="is-size-2 has-text-centered" style="color: #83cfc1">
-            {{this.$route.params.facName}}
+            {{ this.$route.params.facName }}
           </p>
         </div>
       </div>
@@ -36,12 +36,12 @@
             >ROUND <span class="has-text-danger">*</span></label
           >
           <div class="select is-fullwidth">
-            <select>
-              <option>ROUND 1</option>
-              <option>ROUND 2</option>
-              <option>ROUND 3</option>
-              <option>ROUND 4</option>
-              <option>ROUND 5</option>
+            <select v-model="round">
+              <option value="1">ROUND 1</option>
+              <option value="2">ROUND 2</option>
+              <option value="3">ROUND 3</option>
+              <option value="4">ROUND 4</option>
+              <option value="5">ROUND 5</option>
             </select>
           </div>
         </div>
@@ -54,12 +54,13 @@
               class="textarea"
               type="text"
               placeholder="ROUND DESCIPTION"
+              v-model="roundDesc"
             ></textarea>
           </div>
         </div>
         <label class="label is-size-4 has-text-left"
           >Percentage
-          <span @click="addDescition" style="cursor: pointer">
+          <span @click="addPercentage" style="cursor: pointer">
             <i class="fa fa-plus"></i>
           </span>
         </label>
@@ -115,6 +116,7 @@
         <div class="mt-3 has-text-centered">
           <button
             class="button is-warning has-text-black has-text-centered is-3 is-size-4 has-text-weight-bold is-fullwidth"
+            @click="createRound"
           >
             Create Round
           </button>
@@ -124,22 +126,60 @@
   </div>
 </template>
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
       inputs: [],
       idCounter: 0,
       allType: {
-        "O-NET": ["ภาษาไทย", "คณิต"],
-        "GAT": ["ไทย", "อังกฤษ"],
+        "O-NET": [
+          "ภาษาไทย",
+          "คณิตศาสตร์",
+          "สังคมศึกษา",
+          "ภาษาอังกฤษ",
+          "วิทยาศาสตร์",
+          "สุขศึกษาพลศึกษา",
+          "ศิลปะ",
+          "การงานอาชีพและเทคโนโลยี",
+        ],
+        GAT: ["THAI", "ENG"],
+        PAT: [
+          "ความถนัดทางคณิตศาสตร์",
+          "ความถนัดทางวิทยาศาสตร์",
+          "ความถนัดทางวิศวกรรมศาสตร์",
+          "ความถนัดทางสถาปัตยกรรมศาสตร์",
+          "ความถนัดทางวิชาชีพครู",
+          "ความถนัดทางศิลปกรรมศาสตร์",
+          "ฝรั่งเศส",
+          "เยอรมัน",
+          "ญี่ปุ่น",
+          "จีน",
+          "อาหรับ",
+          "ภาษาบาลี",
+        ],
+        "9 วิชาสามัญ": [
+            "ภาษาไทย",
+            "สังคมศึกษา",
+            "ภาษาอังกฤษ",
+            "คณิตศาสตร์ 1",
+            "ฟิสิกส์",
+            "เคมี",
+            "ชีววิทยา",
+            "คณิตศาสตร์ 2 (สายศิลป์)",
+            "วิทยาศาสตร์ทั่วไป (สายศิลป์)",
+        ]
       },
+      roundDesc: "",
+      round: 1,
     };
   },
   created() {
     this.idCounter = this.inputs.length;
   },
   methods: {
-    addDescition() {
+    addPercentage() {
       this.idCounter += 1;
       this.inputs.push({
         id: this.idCounter,
@@ -153,8 +193,37 @@ export default {
       this.inputs.splice(index, 1);
     },
     changeSubject(item) {
-        item.subject = this.allType[item.type][0]
-    }
+      item.subject = this.allType[item.type][0];
+    },
+    async createRound() {
+      await axios
+        .post(`http://localhost:5000/round/add`, {
+          uniName: this.$route.params.uniName,
+          facName: this.$route.params.facName,
+          round: this.round,
+          round_desc: this.roundDesc,
+          roundPercentage: this.inputs,
+        })
+        .then((response) => {
+          if (response.data.isDuplicate) {
+            let result = confirm(
+              "มีข้อมูล ีรอบการสมัคร นี้อยู่แล้วค่ะ คลิก 'OK' เพื่อไปดูรายละเอียดข้อมูลรอบการสมัครค่ะ"
+            );
+            if (result) {
+              this.$router.push(
+                `/${this.$route.params.uniName}/${this.$route.params.facName}/${response.data.round}`
+              );
+            } else {
+              this.$router.push(`/${this.$route.params.uniName}/faculty`);
+            }
+          } else {
+            this.$router.push(`/${this.$route.params.uniName}/faculty`);
+          }
+        })
+        .catch((error) => {
+          alert(error.response.data.message);
+        });
+    },
   },
 };
 </script>
