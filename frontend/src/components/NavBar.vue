@@ -18,33 +18,17 @@ const menusNavbar = {
         <h1>For our Future</h1>
       </router-link>
 
-      <a
-        role="button"
-        class="navbar-burger"
-        aria-label="menu"
-        aria-expanded="false"
-        data-target="navbarBasicExample"
-        @click="showNavBar = !showNavBar"
-      >
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample"
+        @click="showNavBar = !showNavBar">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
       </a>
     </div>
 
-    <div
-      id="navBar"
-      class="navbar-menu"
-      style="background-color: #114E60"
-      :class="{ 'is-active': showNavBar }"
-    >
+    <div id="navBar" class="navbar-menu" style="background-color: #114E60" :class="{ 'is-active': showNavBar }">
       <div class="navbar-start">
-        <router-link
-          :to="`${menu.path}`"
-          class="navbar-item"
-          v-for="(menu, index) in menusNavbar"
-          :key="index"
-        >
+        <router-link :to="`${menu.path}`" class="navbar-item" v-for="(menu, index) in menusNavbar" :key="index">
           {{ menu.name }}
         </router-link>
       </div>
@@ -52,15 +36,12 @@ const menusNavbar = {
       <div class="navbar-end">
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">
-            <img
-              src="../assets/default_profile.jpg"
-              alt=""
-              style="height: 100%; aspect-ratio: 1/1;"
-            />
+            <img src="../assets/default_profile.jpg" alt="" style="height: 100%; aspect-ratio: 1/1;" />
           </a>
 
           <div class="navbar-dropdown">
-            <a class="navbar-item"> Profile </a>
+            <router-link to="/profile"><a class="navbar-item"> Profile </a>
+            </router-link>
             <hr class="navbar-divider" />
             <a class="navbar-item"> Sign out </a>
           </div>
@@ -81,10 +62,11 @@ export default {
 </script>
 
 <style scoped>
-.navbar-start a{
+.navbar-start a {
   color: white;
 }
-.navbar-brand a{
+
+.navbar-brand a {
   color: white;
 }
 </style>
