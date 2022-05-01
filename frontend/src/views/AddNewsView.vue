@@ -79,8 +79,8 @@ export default {
         return {
             title: "",
             description: "",
-            inputs_CATEGORYS: [{ id: 1, category: '' }],
-            inputs_REFERENCES: [{ id: 1, reference: '' }],
+            inputs_CATEGORYS: [],
+            inputs_REFERENCES: [],
             idCounter_CATEGORY: 0,
             idCounter_REFERENCE: 0
         }
@@ -94,10 +94,10 @@ export default {
             var formData = new FormData();
             var imagefile = document.querySelector('#news');
             formData.append("news", imagefile.files[0]);
-            formData.append('new_title', this.title);
-            formData.append('new_des', this.description);
-            formData.append('new_cat', JSON.stringify(this.inputs_CATEGORYS));
-            formData.append('new_ref', JSON.stringify(this.inputs_REFERENCES));
+            formData.append('news_title', this.title);
+            formData.append('news_des', this.description);
+            formData.append('news_cat', JSON.stringify(this.inputs_CATEGORYS));
+            formData.append('news_ref', JSON.stringify(this.inputs_REFERENCES));
             axios.post(`http://localhost:5000/addnews`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
                 .then((response) => {
                     console.log(response.data.message)

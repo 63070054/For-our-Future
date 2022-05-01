@@ -1,33 +1,93 @@
 <script setup>
-import CardRound from '../components/CardRound.vue';
+import CardRound from "../components/CardRound.vue";
 import IconAdd from "@/components/icons/IconAdd.vue";
 </script>
 <template>
-    <div style="background-color: #f9f7f0; width: 100%" class="hero is-fullheight-with-navbar ">
-        <div style="background-color: #de8971; width: 100%; height: 315px">
-            <div style="background-color: #0f1123; width: 100%; height: 300px">
-                <div style="
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-            ">
-                    <p class="is-size-1 has-text-centered has-text-white">
-                        ชื่อมหาวิทยาลัย
-                    </p>
-                </div>
-            </div>
+  <div
+    style="background-color: #f9f7f0; width: 100%"
+    class="hero is-fullheight-with-navbar"
+  >
+    <div style="background-color: #de8971; width: 100%; height: 315px">
+      <div style="background-color: #0f1123; width: 100%; height: 300px">
+        <div
+          style="
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+          "
+        >
+          <p class="is-size-1 has-text-centered has-text-white">
+            {{ this.$route.params.uniName }}
+          </p>
         </div>
-        <div class="container my-5" style="width:80%">
-                <div class="select is-medium is-full" style="width:100%">
-                    <select style="width:100%">
-                        <option>ชื่อคณะ</option>
-                        <option>With options</option>
-                    </select>
-                </div>
-                <h1 class="title has-text-weight-bold">รายละเอียดคณะ</h1>
-                <CardRound></CardRound>
-        </div>
-        <IconAdd></IconAdd>
+      </div>
     </div>
+    <div class="container my-5" style="width: 80%">
+      <div class="select is-medium is-full" style="width: 100%">
+        <select
+          style="width: 100%"
+          v-model="facultySelected"
+          @change="getRound"
+        >
+          <option v-for="fac in faculty" :key="fac.fac_id" :value="{facId: fac.fac_id, facName: fac.fac_name}">
+            {{ fac.fac_name }}
+          </option>
+        </select>
+      </div>
+      <h1 class="title has-text-weight-bold">รายละเอียดคณะ</h1>
+      <div class="columns is-multiline">
+        <div class="column is-6" v-for="round in round" :key="round.r_id">
+          <router-link :to="{path: `/${this.$route.params.uniName}/${facultySelected.facName}/${round.round}`}">
+            <CardRound :round="round.round"></CardRound>
+          </router-link>
+        </div>
+      </div>
+    </div>
+    <router-link :to="{path: `/${this.$route.params.uniName}/${facultySelected.facName}/round/add`}">
+        <IconAdd></IconAdd>
+    </router-link>
+  </div>
 </template>
+
+<script>
+import axios from "axios";
+
+export default {
+  data() {
+    return {
+      faculty: [],
+      round: [],
+      facultySelected: "",
+    };
+  },
+  async mounted() {
+    await this.getFaculty(this.$route.params.uniName);
+    this.facultySelected = {facId: this.faculty[0].fac_id, facName: this.faculty[0].fac_name};
+    await this.getRound();
+  },
+  methods: {
+    async getFaculty(uniName) {
+      await axios
+        .get(`http://localhost:5000/${uniName}/faculty`)
+        .then((response) => {
+          this.faculty = response.data.faculty;
+        })
+        .catch((error) => {
+          alert(error.response.data.message);
+        });
+    },
+    async getRound() {
+      await axios
+        .get(`http://localhost:5000/${this.facultySelected.facId}/round`)
+        .then((response) => {
+          this.round = response.data.round;
+          console.log(this.round);
+        })
+        .catch((error) => {
+          alert(error.response.data.message);
+        });
+    },
+  },
+};
+</script>

@@ -64,7 +64,7 @@
                     <button
                         class="button has-text-black has-text-centered is-3 is-size-4 has-text-weight-bold is-fullwidth"
                         style="background-color: #9DDFD3" type="button" @click="editnews">
-                        Create News
+                        Edit News
                     </button>
                 </div>
             </div>
@@ -80,6 +80,7 @@ export default {
         return {
             newstitle: "",
             newsdes: "",
+            newsid: "",
             inputs_CATEGORYS: [],
             inputs_REFERENCES: [],
             idCounter_CATEGORY: 0,
@@ -99,6 +100,7 @@ export default {
                 .then((response) => {
                     this.newstitle = response.data.news[0].news_title
                     this.newsdes = response.data.news[0].news_desc
+                    this.newsid = response.data.news[0].news_id
                     this.inputs_CATEGORYS = [...response.data.category]
                     this.inputs_REFERENCES = [...response.data.reference]
                 })
@@ -110,13 +112,16 @@ export default {
             var formData = new FormData();
             var imagefile = document.querySelector('#news');
             formData.append("news", imagefile.files[0]);
-            formData.append('new_title', this.title);
-            formData.append('new_des', this.description);
-            formData.append('new_cat', JSON.stringify(this.inputs_CATEGORYS));
-            formData.append('new_ref', JSON.stringify(this.inputs_REFERENCES));
+            formData.append('news_id', this.newsid);
+            formData.append('news_title', this.newstitle);
+            formData.append('news_des', this.newsdes);
+            formData.append('news_cat', JSON.stringify(this.inputs_CATEGORYS));
+            formData.append('news_ref', JSON.stringify(this.inputs_REFERENCES));
+            console.log(this.inputs_CATEGORYS)
             axios.put(`http://localhost:5000/editnews`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
                 .then((response) => {
                     console.log(response.data.message)
+                    this.$router.push(`/news`)
                 })
                 .catch((error) => {
                     alert(error.response.data.message)
@@ -124,27 +129,19 @@ export default {
         },
         addCategory() {
             this.idCounter_CATEGORY += 1
-            this.inputs_CATEGORYS.push({ id: this.idCounter_CATEGORY, category: '' })
-            console.log(this.inputs_CATEGORYS)
-            console.log(this.inputs_REFERENCES)
+            this.inputs_CATEGORYS.push({ id: this.idCounter_CATEGORY, category: '', update: false})
         },
         delCategory(item) {
             let index = this.inputs_CATEGORYS.findIndex((val) => val.id === item.id)
             this.inputs_CATEGORYS.splice(index, 1)
-            console.log(this.inputs_CATEGORYS)
-            console.log(this.inputs_REFERENCES)
         },
         addReference() {
             this.idCounter_REFERENCE += 1
-            this.inputs_REFERENCES.push({ id: this.idCounter_REFERENCE, reference: '' })
-            console.log(this.inputs_CATEGORYS)
-            console.log(this.inputs_REFERENCES)
+            this.inputs_REFERENCES.push({ id: this.idCounter_REFERENCE, reference: '', update: false })
         },
         delReference(item) {
             let index = this.inputs_REFERENCES.findIndex((val) => val.id === item.id)
             this.inputs_REFERENCES.splice(index, 1)
-            console.log(this.inputs_CATEGORYS)
-            console.log(this.inputs_REFERENCES)
         }
     },
 }
