@@ -35,7 +35,7 @@ export default {
   data() {
     return {
       username: '',
-      password: ''
+      password: '',
     };
   },
   mounted() {
@@ -49,15 +49,15 @@ export default {
         .then((response) => {
           // console.log(response.data.message)
           if (response.data.message == 'success') {
-              this.$router.push({ path: '/' })
+            this.$router.push({ path: '/' })
           }
-          else if(response.data.message == 'wrongPass'){
+          else if (response.data.message == 'wrongPass') {
             alert('คุณกรอก password ไม่ถูกต้อง')
           }
-          else if(response.data.message == 'noUser'){
+          else if (response.data.message == 'noUser') {
             alert('ไม่มี username นี้ในระบบ')
           }
-          else{
+          else {
             alert('เกิดข้อผิดพลาดขึ้น')
           }
         })
