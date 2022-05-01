@@ -440,6 +440,27 @@ VALUES
     (75, 'ยะลา', 6),
     (76, 'นราธิวาส', 6),
     (77, 'บึงกาฬ', 3);
-
+insert into
+    user (
+        f_name,
+        l_name,
+        type_user,
+        u_created_date,
+        u_edited_date,
+        username,
+        `password`
+    )
+values
+    (
+        'กิตติภพ',
+        'ปังตระกูล',
+        'student',
+        CURRENT_TIMESTAMP,
+        CURRENT_TIMESTAMP,
+        'wavezza2',
+        '123453'
+    );
+    
+insert into student (u_id) values (1);
 SET
     FOREIGN_KEY_CHECKS = 1;
