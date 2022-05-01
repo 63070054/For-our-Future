@@ -59,7 +59,7 @@
           </div>
         </div>
         <label class="label is-size-4 has-text-left"
-          >Percentage
+          >Require subject score in round (%)
           <span @click="addPercentage" style="cursor: pointer">
             <i class="fa fa-plus"></i>
           </span>

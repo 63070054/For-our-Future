@@ -28,16 +28,45 @@
         <h2 class="mb-6">
           รายละเอียดรอบการสมัครที่ {{ this.$route.params.round }}
         </h2>
-        <p></p>
-        <div class="content m-3" style="background-color: #f6c667">
+        <p>{{ round.r_desc }}</p>
+        <div class="content p-3 m-3" style="background-color: #f6c667">
           <div class="columns is-mobile">
-            <div class="column has-text-centered is-size-3">ประเภทรายวิชา</div>
-            <div class="column has-text-centered is-size-3">คะแนนที่ใช้</div>
+            <div
+              class="column has-text-centered is-size-3"
+              style="background-color: #2f4840; color: white"
+            >
+              ประเภทรายวิชา
+            </div>
+            <div
+              class="column has-text-centered is-size-3"
+              style="background-color: #2f4840; color: white"
+            >
+              คะแนนที่ใช้
+            </div>
+            <div
+              class="column has-text-centered is-size-3"
+              style="background-color: #2f4840; color: white"
+            >
+              คะแนนของคุณ
+            </div>
           </div>
-          <div class="columns is-mobile">
-            <div class="column has-text-centered is-size-4">O-NET ภาษาไทย</div>
-            <div class="column has-text-centered is-size-4">30 %</div>
-          </div>
+          <template v-for="(value, key) in round.percentage">
+            <div
+              class="columns is-mobile"
+              v-for="(percentage, index) in value"
+              :key="index"
+            >
+              <div class="column has-text-centered is-size-4">
+                {{ key }} {{ percentage.type }}
+              </div>
+              <div class="column has-text-centered is-size-4">
+                {{ percentage.percentage }} %
+              </div>
+              <div class="column has-text-centered is-size-4">
+                {{calculateAdmissionScore(key, percentage.type, percentage.percentage)}}
+              </div>
+            </div>
+          </template>
         </div>
       </div>
     </div>
@@ -48,27 +77,16 @@
 import axios from "axios";
 
 export default {
+  props: ["user"],
   data() {
     return {
       round: {},
-      options: {
-        rewind: true,
-        autoplay: true,
-        resetProgress: false,
-        // transition duration
-        speed: 1 * 1000,
-        rewindByDrag: true,
-        arrows: false,
-        // duration change slide
-        interval: 5 * 1000,
-      },
-      recommendCamps: [],
-      recommendUniversities: [],
+      admissionScore: 0,
     };
   },
   async mounted() {
-    console.log(this);
     await this.getRound();
+    console.log(this.user);
   },
   methods: {
     async getRound() {
@@ -78,12 +96,25 @@ export default {
         )
         .then((response) => {
           this.round = response.data.round;
-          console.log(this.round)
+          console.log(this.round);
         })
         .catch((error) => {
           alert(error.response.data.message);
         });
     },
+    calculateAdmissionScore(key, percentageType, percentage) {
+      let selectType = this.user.score[key].find(
+        (type) => type.type == percentageType
+      );
+      if (selectType) {
+        let calculateScore = percentage * selectType.score / 100
+        return `${calculateScore} คะแนน`
+      };
+      return "คุณไม่ได้กรอกคะแนนค่ะ";
+    },
+  },
+  computed: {
+    
   },
 };
 </script>

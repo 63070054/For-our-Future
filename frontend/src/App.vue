@@ -23,10 +23,37 @@ import EditUniversityView from "./views/EditUniversityView.vue";
   <div>
     <NavBar></NavBar>
     <div class="container">
-      <RouterView />
+      <RouterView :user="user" />
     </div>
   </div>
 </template>
+
+<script>
+import axios from "axios";
+
+export default {
+  data() {
+    return {
+      user: {},
+    };
+  },
+  async mounted() {
+    await this.getUser();
+  },
+  methods: {
+    async getUser() {
+      await axios
+        .get(`http://localhost:5000/user`)
+        .then((response) => {
+          this.user = response.data.user[0];
+        })
+        .catch((error) => {
+          alert(error.response.data.message);
+        });
+    },
+  },
+};
+</script>
 
 <style>
 @import "@/assets/base.css";

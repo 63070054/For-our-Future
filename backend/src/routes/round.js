@@ -31,18 +31,38 @@ router.get("/:uniName/:facName/:round", async function (req, res, next) {
             req.params.uniName, req.params.facName
         ])
 
+        console.log(id[0].fac_id, id[0].uni_id, req.params.round)
+
         const selectRound = await conn.query(`select * from round where uni_id = ? and fac_id = ? and round = ?`, [
-            id[0].fac_id, id[0].uni_id, req.params.round
+            id[0].uni_id, id[0].fac_id, req.params.round
         ]);
-        // id[0].uni_id, id[0].fac_id,
-        const selectRoundGat = await conn.query(`select * from r_gat where r_id`, [
+
+        selectRound[0][0].percentage = {}
+        selectRound[0][0].percentage.gat = []
+        selectRound[0][0].percentage.pat = []
+        selectRound[0][0].percentage.onet = []
+        selectRound[0][0].percentage.sub = []
+
+
+        const selectRoundGat = await conn.query(`select * from r_gat where r_id = ?`, [
+            selectRound[0][0].r_id
+        ]);
+        const selectRoundPat = await conn.query(`select * from r_pat where r_id = ?`, [
+            selectRound[0][0].r_id
+        ]);
+        const selectRoundSub = await conn.query(`select * from r_sub where r_id = ?`, [
+            selectRound[0][0].r_id
+        ]);
+        const selectRoundOnet = await conn.query(`select * from r_onet where r_id = ?`, [
             selectRound[0][0].r_id
         ]);
 
-        selectRound[0]
-
+        selectRound[0][0].percentage.gat = [...selectRoundGat[0]]
+        selectRound[0][0].percentage.pat = [...selectRoundPat[0]]
+        selectRound[0][0].percentage.sub = [...selectRoundSub[0]]
+        selectRound[0][0].percentage.onet = [...selectRoundOnet[0]]
         res.send({
-            round: selectRound[0]
+            round: selectRound[0][0]
         })
 
         conn.commit()
@@ -54,13 +74,13 @@ router.get("/:uniName/:facName/:round", async function (req, res, next) {
     }
 });
 
-router.post("/round/add", async function (req, res, next) {
+router.post("/:uniName/:facName/round/add", async function (req, res, next) {
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     try {
 
         const [count, field1] = await conn.query("select count(round) as `countRound` from university join faculty using (uni_id) join round using (fac_id) where uni_name = ? and fac_name = ? and round = ?", [
-            req.body.uniName, req.body.facName, req.body.round
+            req.params.uniName, req.params.facName, req.body.round
         ])
 
         if (count[0].countRound > 0) {
@@ -71,7 +91,7 @@ router.post("/round/add", async function (req, res, next) {
         } else {
 
             const [id, field2] = await conn.query("select uni_id, fac_id from faculty join university using (uni_id) where uni_name = ? and fac_name = ?", [
-                req.body.uniName, req.body.facName
+                req.params.uniName, req.params.facName
             ])
 
             const insertRound = await conn.query(`insert into round (uni_id, fac_id, round, r_desc) values (?, ?, ?, ?)`, [
@@ -84,22 +104,22 @@ router.post("/round/add", async function (req, res, next) {
                 let percentage = percent.percent
 
                 if (type == "O-NET") {
-                    await conn.query('insert into r_onet (r_id, r_onet_type, r_onet_percentage) values (?, ?, ?)', [
+                    await conn.query('insert into r_onet (r_id, type, percentage) values (?, ?, ?)', [
                         insertRound[0].insertId, subject, percentage
                     ])
                 }
                 if (type == "GAT") {
-                    await conn.query('insert into r_gat (r_id, r_gat_type, r_gat_percentage) values (?, ?, ?)', [
+                    await conn.query('insert into r_gat (r_id, type, percentage) values (?, ?, ?)', [
                         insertRound[0].insertId, subject, percentage
                     ])
                 }
                 if (type == "PAT") {
-                    await conn.query('insert into r_pat (r_id, r_pat_type, r_pat_percentage) values (?, ?, ?)', [
+                    await conn.query('insert into r_pat (r_id, type, percentage) values (?, ?, ?)', [
                         insertRound[0].insertId, subject, percentage
                     ])
                 }
                 if (type == "9 วิชาสามัญ") {
-                    await conn.query('insert into r_sub (r_id, r_sub_type, r_sub_percentage) values (?, ?, ?)', [
+                    await conn.query('insert into r_sub (r_id, type, percentage) values (?, ?, ?)', [
                         insertRound[0].insertId, subject, percentage
                     ])
                 }

@@ -29,7 +29,7 @@ import IconAdd from "@/components/icons/IconAdd.vue";
           <CardNews :news_info="news" :path="`/news/${news.news_id}`" :category="news.category_name" @delete-news_category="deleteNews(news)"></CardNews>
       </div>
     </div>
-    <router-link to="/news/add"><IconAdd></IconAdd></router-link>
+    <router-link to="/news/add"><IconAdd message="ข่าวสาร"></IconAdd></router-link>
   </div>
 </template>
 
