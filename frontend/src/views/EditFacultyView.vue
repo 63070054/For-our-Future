@@ -15,8 +15,11 @@
             transform: translate(-50%, -50%);
           "
         >
-          <p class="is-size-1 has-text-centered has-text-white">
-            ชื่อมหาวิทยาลัย
+        <p class="is-size-1 has-text-centered has-text-white">
+            {{this.$route.params.uniName}}
+          </p>
+          <p class="is-size-1 has-text-centered" style="color:#9ddfd3">
+            {{this.$route.params.facName}}
           </p>
         </div>
       </div>
@@ -27,19 +30,19 @@
           <label class="label is-size-4"
             >FACULTY NAME <span style="color: red">*</span></label
           >
-          <input class="input" type="text" />
+          <input  v-model="faculty_name" class="input" type="text" />
         </div>
         <div class="field">
           <div class="control">
             <label class="label is-size-4 has-text-left"
               >FACULTY DESCIPTION</label
             >
-            <textarea class="textarea" type="text"></textarea>
+            <textarea  v-model="faculty_desc" class="textarea" type="text"></textarea>
           </div>
         </div>
 
         <div class="mt-3 has-text-centered">
-          <button
+          <button @click="editFaculty"
             class="button has-text-black has-text-centered is-3 is-size-4 has-text-weight-bold is-fullwidth"
             style="background-color: #9ddfd3"
           >
@@ -56,3 +59,38 @@
     display: block;
 }
 </style>
+<script>
+import axios from 'axios';
+export default {
+  data() {
+    return {
+      faculty_name: '',
+      faculty_desc: '',
+    };
+  },
+  mounted() {
+
+  },
+  methods: {
+    editFaculty() {
+      axios.put(`http://localhost:5000/${this.$route.params.uniName}/${this.$route.params.facName}/edit`, { 'faculty_name': this.faculty_name, 'faculty_desc': this.faculty_desc })
+        .then((response) => {
+          console.log(response.data.message)
+          if (response.data.message == 'success') {
+            this.$router.push(`/${this.$route.params.uniName}/faculty`)
+          }
+          else if(response.data.message == 'alredyHave'){
+            alert('มีคณะนี้อยู่ในมหาวิทยาลัยนี้อยู่แล้ว')
+            this.$router.push(`/${this.$route.params.uniName}/faculty`)
+          }
+          else {
+            alert('เกิดข้อผิดพลาดขึ้น')
+          }
+        })
+        .catch((error) => {
+          alert(error.response.data.message)
+        });
+    },
+  }
+}
+</script>

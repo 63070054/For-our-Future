@@ -45,6 +45,17 @@ import IconAdd from "@/components/icons/IconAdd.vue";
         <div class="control">
           <router-link
             :to="{
+              path: `/${this.$route.params.uniName}/${this.facultySelected.facName}/edit`,
+            }"
+          >
+            <button type="submit" class="button is-warning">
+              <i class="fa fa-pen">&nbsp;คณะ</i>
+            </button>
+          </router-link>
+        </div>
+        <div class="control">
+          <router-link
+            :to="{
               path: `/${this.$route.params.uniName}/faculty/add`,
             }"
           >
