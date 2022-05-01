@@ -83,14 +83,14 @@ router.get("/recommendCamps", async function (req, res, next) {
 router.post("/addnews", upload.single('news'), async function (req, res, next) {
     const conn = await pool.getConnection()
     await conn.beginTransaction();
-    const allcate = JSON.parse(req.body.new_cat);
-    const allref = JSON.parse(req.body.new_ref);
+    const allcate = JSON.parse(req.body.news_cat);
+    const allref = JSON.parse(req.body.news_ref);
     try {
         if (req.file) {
             const [id, _] = await conn.query(`insert into news(news_title, news_desc, news_picture, news_created_date, news_created_by, news_edited_date, news_edited_by)
                 values (?, ?, ?, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP, 1)`,
-                [req.body.new_title, req.body.new_des, req.file.path.substring(4)]);
-            console.log(id)
+                [req.body.news_title, req.body.news_des, req.file.path.substring(4)]);
+            // console.log(id)
             for (let i = 0; i < allcate.length; i++) {
                 await conn.query(`insert into news_category(category_name, news_id) values(?, ?)`, [allcate[i].category, id.insertId])
             }
@@ -102,7 +102,7 @@ router.post("/addnews", upload.single('news'), async function (req, res, next) {
         else {
             const [id, _] = await conn.query(`insert into news(news_title, news_desc, news_picture, news_created_date, news_created_by, news_edited_date, news_edited_by)
                 values (?, ?, ?, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP, 1)`,
-                [req.body.new_title, req.body.new_des, 'images\\news.png']);
+                [req.body.news_title, req.body.news_des, 'images\\news.png']);
 
             for (let i = 0; i < allcate.length; i++) {
                 await conn.query(`insert into news_category(category_name, news_id) values(?, ?)`, [allcate[i].category, id.insertId])
@@ -178,27 +178,40 @@ router.put("/editnews", upload.single('news'), async function (req, res, next) {
     const allcate = JSON.parse(req.body.news_cat);
     const allref = JSON.parse(req.body.news_ref);
     try {
-        await conn.query(`UPDATE news 
+        if (req.file) {
+            await conn.query(`update news 
+                set news_title = ?,
+                    news_desc = ?,
+                    news_picture = ?,
+                    news_edited_date = CURRENT_TIMESTAMP,
+                    news_edited_by = 1
+                    where news_id = ?`,
+                [req.body.news_title, req.body.news_des, req.file.path.substring(4), req.body.news_id]);
+        }
+        else {
+            await conn.query(`UPDATE news 
                 SET news_title = ?,
                     news_desc = ?,
-                    news_edited_date = CURRENT_TIMESTAMP
+                    news_edited_date = CURRENT_TIMESTAMP,
+                    news_edited_by = 1
                     WHERE news_id = ?`,
-            [req.body.news_title, req.body.news_des, req.body.news_id]);
+                [req.body.news_title, req.body.news_des, req.body.news_id]);
+        }
 
-            allcate.map(async cate => {
-                if(cate.update){
-                    await conn.query(`update news_category set category_name = ? where category_no = ?`, [cate.category_name, cate.category_no])
-                }else{
-                    await conn.query(`insert into news_category(category_name, news_id) values(?, ?)`, [cate.category_name, req.body.news_id])
-                }
-            });
-            allref.map(async ref => {
-                if(ref.update){
-                    await conn.query(`update news_ref set ref_name = ? where ref_no = ?`, [ref.ref_name, ref.ref_no])
-                }else{
-                    await conn.query(`insert into news_ref(ref_name, news_id) values(?, ?)`, [ref.ref_name, req.body.news_id])
-                }
-            })
+        allcate.map(async cate => {
+            if (cate.update) {
+                await conn.query(`update news_category set category_name = ? where category_no = ?`, [cate.category_name, cate.category_no])
+            } else {
+                await conn.query(`insert into news_category(category_name, news_id) values(?, ?)`, [cate.category_name, req.body.news_id])
+            }
+        });
+        allref.map(async ref => {
+            if (ref.update) {
+                await conn.query(`update news_ref set ref_name = ? where ref_no = ?`, [ref.ref_name, ref.ref_no])
+            } else {
+                await conn.query(`insert into news_ref(ref_name, news_id) values(?, ?)`, [ref.ref_name, req.body.news_id])
+            }
+        })
         res.json({ "message": 'update' });
 
         conn.commit()

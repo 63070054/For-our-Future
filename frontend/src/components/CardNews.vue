@@ -32,7 +32,7 @@
         <div class="card-content">
           <div class="content">
             <h1>{{ news_info.news_title }}</h1>
-            <p>{{ news_info.news_desc }}</p>
+            <p class="news_desc">{{ news_info.news_desc }}</p>
           </div>
         </div>
         <footer class="card-footer tags pb-2">
@@ -80,5 +80,13 @@ export default {
   right: 0;
   border-radius: 3px;
   background-color: #de8971;
+}
+
+.news_desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
