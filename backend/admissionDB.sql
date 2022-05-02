@@ -5,6 +5,7 @@
 -- -------------------------------------------------------------
 SET
     FOREIGN_KEY_CHECKS = 0;
+    SET UNIQUE_CHECKS=0;
 
 DROP TABLE IF EXISTS `FACULTY`;
 
@@ -252,7 +253,7 @@ CREATE TABLE `user` (
     `blood_type` enum('A', 'B', 'AB', 'O'),
     `address` text,
     `phone` varchar(30),
-    `picture` varchar(30),
+    `picture` varchar(255),
     `u_created_date` date,
     `u_edited_date` date
 );
@@ -334,7 +335,19 @@ CREATE TABLE `university` (
     foreign key (`province_id`) references `province`(province_id)
 );
 
+DROP TABLE IF EXISTS `tokens`;
+
+CREATE TABLE `tokens` (
+  `id` int(10) AUTO_INCREMENT,
+  `u_id` int(10),
+  `token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`, `u_id`),
+  UNIQUE KEY `tokens_UN` (`token`),
+  FOREIGN KEY (`u_id`) REFERENCES `user` (`u_id`) ON DELETE CASCADE
+);
+
 DROP TABLE IF EXISTS `province`;
+
 
 CREATE TABLE `province` (
     `province_id` int(3) primary key AUTO_INCREMENT,
@@ -473,3 +486,4 @@ insert into u_pat (u_id, `type`, score) values (1, "ความถนัดท�
 
 SET
     FOREIGN_KEY_CHECKS = 1;
+    SET UNIQUE_CHECKS=1;
