@@ -2,8 +2,9 @@ const express = require("express");
 const path = require("path")
 const pool = require("../config/pool");
 const multer = require('multer');
-// var fileupload = require("express-fileupload");
-
+const Joi = require('joi');
+const bcrypt = require('bcrypt');
+const { optional } = require("joi");
 
 router = express.Router();
 
@@ -16,8 +17,6 @@ const storage = multer.diskStorage({
     }
 })
 const upload = multer({ storage: storage })
-
-
 
 router.get("/university", async function (req, res, next) {
     const conn = await pool.getConnection()
@@ -58,12 +57,25 @@ router.get("/province", async function (req, res, next) {
     }
 });
 
+const schema = Joi.object({
+    uni_name: Joi.string().required().min(1),
+    province: Joi.string().required(),
+    univer: Joi.string().optional(),
+})
+
 router.post("/adduni", upload.single('univer'), async function (req, res, next) {
+    try {
+        await schema.validateAsync(req.body, {abortEarly: false})
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json(error)
+    }
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     // console.log('-----------------')
     // console.log(req.body.uni_name)
     try {
+        console.log('add')
         const [uni, _] = await conn.query('SELECT COUNT(uni_name) `ucount` FROM university where lower(university.uni_name) = ?', [req.body.uni_name])
         if (uni[0].ucount === 0) {
             if (req.file) {
