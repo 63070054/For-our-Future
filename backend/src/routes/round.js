@@ -96,10 +96,15 @@ router.post("/:uniName/:facName/round/add", async function (req, res, next) {
             const [id, field2] = await conn.query("select uni_id, fac_id from faculty join university using (uni_id) where uni_name = ? and fac_name = ?", [
                 req.params.uniName, req.params.facName
             ])
+            let gpax = req.body.roundPercentage.find(type => type.type == 'GPAX')
 
-            const insertRound = await conn.query(`insert into round (uni_id, fac_id, round, r_desc) values (?, ?, ?, ?)`, [
-                id[0].uni_id, id[0].fac_id, req.body.round, req.body.round_desc
+            if (gpax === undefined) {
+                gpax = null
+            }
+            const insertRound = await conn.query(`insert into round (uni_id, fac_id, round, r_desc, r_gpax) values (?, ?, ?, ?, ?)`, [
+                id[0].uni_id, id[0].fac_id, req.body.round, req.body.round_desc, gpax
             ]);
+
 
             req.body.roundPercentage.map(async percent => {
                 let type = percent.type
@@ -122,6 +127,11 @@ router.post("/:uniName/:facName/round/add", async function (req, res, next) {
                     ])
                 }
                 if (type == "9 วิชาสามัญ") {
+                    await conn.query('insert into r_sub (r_id, type, percentage) values (?, ?, ?)', [
+                        insertRound[0].insertId, subject, percentage
+                    ])
+                }
+                if (type == "GPAX") {
                     await conn.query('insert into r_sub (r_id, type, percentage) values (?, ?, ?)', [
                         insertRound[0].insertId, subject, percentage
                     ])

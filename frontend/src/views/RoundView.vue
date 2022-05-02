@@ -28,7 +28,7 @@
         <h2 class="mb-6">
           รายละเอียดรอบการสมัครที่ {{ this.$route.params.round }}
         </h2>
-        <p>{{ round.r_desc }}</p>
+        <p style="word-break: break-all">{{ round.r_desc }}</p>
         <div class="content p-3 m-3" style="background-color: #f6c667">
           <div class="columns is-mobile">
             <div
@@ -50,6 +50,20 @@
               คะแนนของคุณ
             </div>
           </div>
+          <div class="columns is-mobile">
+            <div class="column has-text-centered is-size-4">O-NET 5 วิชา</div>
+            <div class="column has-text-centered is-size-4">30 %</div>
+            <div class="column has-text-centered is-size-4 scoreAdmission">
+              {{ calculateOnetScore() }}
+            </div>
+          </div>
+          <div class="columns is-mobile">
+            <div class="column has-text-centered is-size-4">GPAX</div>
+            <div class="column has-text-centered is-size-4">20 %</div>
+            <div class="column has-text-centered is-size-4 scoreAdmission">
+              {{ calculateGpaxScore() }}
+            </div>
+          </div>
           <template v-for="(value, key) in round.percentage">
             <div
               class="columns is-mobile"
@@ -62,11 +76,35 @@
               <div class="column has-text-centered is-size-4">
                 {{ percentage.percentage }} %
               </div>
-              <div class="column has-text-centered is-size-4">
-                {{calculateAdmissionScore(key, percentage.type, percentage.percentage)}}
+              <div class="column has-text-centered is-size-4 scoreAdmission">
+                {{
+                  calculateAdmissionScore(
+                    key,
+                    percentage.type,
+                    percentage.percentage
+                  )
+                }}
               </div>
             </div>
           </template>
+          <!-- <div class="columns is-mobile">
+            <div
+              class="column has-text-centered is-size-3"
+              style="background-color: #2f4840; color: white"
+            ></div>
+            <div
+              class="column has-text-centered is-size-3"
+              style="background-color: #2f4840; color: white"
+            >
+              รวมคะแนน
+            </div>
+            <div
+              class="column has-text-centered is-size-3"
+              style="background-color: #2f4840; color: white"
+            >
+              {{ admissionScore() }}
+            </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -81,10 +119,9 @@ export default {
   data() {
     return {
       round: {},
-      admissionScore: 0,
     };
   },
-  async mounted() {
+  async created() {
     await this.getRound();
     console.log(this.user);
   },
@@ -107,15 +144,32 @@ export default {
         (type) => type.type == percentageType
       );
       if (selectType) {
-        let calculateScore = percentage * selectType.score / 100
-        return `${calculateScore} คะแนน`
-      };
+        let calculateScore;
+        if (this.$route.params.round == "4") {
+          calculateScore = percentage * selectType.score;
+        } else {
+          calculateScore = (percentage * selectType.score) / 100;
+        }
+        this.admissionScore += calculateScore;
+        return `${calculateScore} คะแนน`;
+      }
       return "คุณไม่ได้กรอกคะแนนค่ะ";
     },
+    calculateOnetScore() {
+      let score = 0;
+      this.user.score.onet.map((onet) => (score += onet.score));
+      return `${score * 18} คะแนน`;
+    },
+    calculateGpaxScore() {
+      return `${this.user.u_gpax * 1500} คะแนน`;
+    },
+    admissionSCore(){
+      // let test = document.querySelectorAll(".scoreAdmission")
+      // console.log(test)
+      return `test`
+    }
   },
-  computed: {
-    
-  },
+
 };
 </script>
 

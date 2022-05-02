@@ -9,7 +9,7 @@ router.get("/user", async function (req, res, next) {
     await conn.beginTransaction();
     try {
 
-        const selectUser = await conn.query(`select * from user where u_id = ?`, [
+        const selectUser = await conn.query(`select * from user join student using (u_id) where u_id = ?`, [
             1
         ]);
 

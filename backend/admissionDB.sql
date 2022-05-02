@@ -461,6 +461,15 @@ values
         '123453'
     );
     
-insert into student (u_id) values (1);
+insert into student (u_id, u_gpax) values (1, 3);
+insert into u_onet (u_id, `type`, score) values (1, "ภาษาไทย", 70);
+insert into u_onet (u_id, `type`, score) values (1, "คณิตศาสตร์", 70);
+insert into u_onet (u_id, `type`, score) values (1, "สังคมศึกษา", 70);
+insert into u_onet (u_id, `type`, score) values (1, "ภาษาอังกฤษ", 70);
+insert into u_onet (u_id, `type`, score) values (1, "วิทยาศาสตร์", 70);
+insert into u_gat (u_id, `type`, score) values (1, "THAI", 100);
+insert into u_gat (u_id, `type`, score) values (1, "ENG", 100);
+insert into u_pat (u_id, `type`, score) values (1, "ความถนัดทางวิศวกรรมศาสตร์", 70);
+
 SET
     FOREIGN_KEY_CHECKS = 1;
