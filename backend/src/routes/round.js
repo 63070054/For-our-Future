@@ -1,5 +1,5 @@
 const express = require("express");
-const path = require("path")
+const path = require("path");
 const pool = require("../config/pool");
 
 router = express.Router();
@@ -136,7 +136,7 @@ router.post("/:uniName/:facName/round/add", async function (req, res, next) {
                         insertRound[0].insertId, subject, percentage
                     ])
                 }
-                
+
             })
             res.send({
                 isDuplicate: false,

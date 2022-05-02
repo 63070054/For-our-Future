@@ -2,13 +2,14 @@
 
 <template>
   <div style="background-color: #f9f7f0" class="hero is-fullheight-with-navbar p-3">
-
-    <!-- <form id="form" action="http://localhost:5000/adduni" enctype="multipart/form-data" method="post"> -->
     <div class="columns is-centered">
       <div class="column is-half">
         <div class="field">
           <label class="label is-size-4">UNIVERSITY NAME <span style="color: red">*</span></label>
-          <input class="input" type="text" v-model="uname" name="u_name" />
+          <input class="input" type="text" v-model="uname" />
+          <div v-if="error" class="has-text-danger">
+             <span v-if="v$.uname.$error">University Name is required</span>
+           </div>
         </div>
 
         <div class="field">
@@ -41,25 +42,42 @@
         </div>
       </div>
     </div>
-    <!-- </form> -->
   </div>
 </template>
 <script>
 import axios from 'axios';
+import useVuelidate from '@vuelidate/core';
+import { required, helpers  } from '@vuelidate/validators';
 
 export default {
+  setup () {
+    return { v$: useVuelidate() }
+  },
   data() {
     return {
-      uname: "",
+      uname: '',
       province: 1,
       all_province: [],
+      error: false,
+    }
+  },
+  validations () {
+    return {
+      uname: { required },
     }
   },
   mounted() {
     this.getprovince()
   },
   methods: {
-    adduni() {
+    async adduni() {
+       const result = await this.v$.$validate()
+       if(!result){
+         this.error = true
+         return
+       }
+       this.error = false
+
       var formData = new FormData();
       var imagefile = document.querySelector('#univer');
       formData.append("univer", imagefile.files[0]);

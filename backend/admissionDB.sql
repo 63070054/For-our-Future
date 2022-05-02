@@ -301,7 +301,7 @@ CREATE TABLE `news` (
     `news_id` int(10) AUTO_INCREMENT,
     `news_title` varchar(255) not null,
     `news_desc` varchar(255),
-    `news_picture` varchar(255),
+    `news_picture` varchar(255) default "images\\news.png",
     `news_created_date` date not null,
     `news_created_by` int(10) not null,
     `news_edited_date` date not null,
