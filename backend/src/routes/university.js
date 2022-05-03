@@ -4,7 +4,6 @@ const pool = require("../config/pool");
 const multer = require('multer');
 const Joi = require('joi');
 const bcrypt = require('bcrypt');
-const { optional } = require("joi");
 
 router = express.Router();
 
@@ -17,6 +16,14 @@ const storage = multer.diskStorage({
     }
 })
 const upload = multer({ storage: storage })
+
+const schema = Joi.object({
+    uni_name: Joi.string().required().min(1),
+    province: Joi.string().required(),
+    univer: Joi.string().optional(),
+    resume: Joi.string().optional(),
+    uniId: Joi.string().optional(),
+})
 
 router.get("/university", async function (req, res, next) {
     const conn = await pool.getConnection()
@@ -57,12 +64,6 @@ router.get("/province", async function (req, res, next) {
     }
 });
 
-const schema = Joi.object({
-    uni_name: Joi.string().required().min(1),
-    province: Joi.string().required(),
-    univer: Joi.string().optional(),
-})
-
 router.post("/adduni", upload.single('univer'), async function (req, res, next) {
     try {
         await schema.validateAsync(req.body, {abortEarly: false})
@@ -70,6 +71,7 @@ router.post("/adduni", upload.single('univer'), async function (req, res, next) 
         console.log(error)
         return res.status(400).json(error)
     }
+
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     // console.log('-----------------')
@@ -132,6 +134,7 @@ router.get("/recommendUniversities", async function (req, res, next) {
 });
 
 router.get("/:uniName/edit", async function (req, res, next) {
+
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     // console.log(req.params.uniName)
@@ -151,6 +154,13 @@ router.get("/:uniName/edit", async function (req, res, next) {
 });
 
 router.put("/edituni", upload.single('resume'), async function (req, res, next) {
+    try {
+        await schema.validateAsync(req.body, {abortEarly: false})
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json(error)
+    }
+
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     
@@ -167,14 +177,14 @@ router.put("/edituni", upload.single('resume'), async function (req, res, next) 
             console.log('ok')
             if (req.file) {
                 console.log('file')
-                await conn.query(`update university set uni_name = ?, province_id = ?, u_edited_date = CURRENT_TIMESTAMP, file_path = ? where uni_id = ?`,
-                [req.body.uni_name, req.body.province, req.file.path.substring(4), req.body.uniId]);
+                await conn.query(`update university set uni_name = ?, province_id = ?, u_edited_date = CURRENT_TIMESTAMP, u_edited_by = ?, file_path = ? where uni_id = ?`,
+                [req.body.uni_name, req.body.province, 1, req.file.path.substring(4), req.body.uniId]);
                 res.json({ "message": false });
             }
             else{
                 console.log('no file')
-                await conn.query(`update university set uni_name = ?, province_id = ?, u_edited_date = CURRENT_TIMESTAMP where uni_id = ?`,
-                    [req.body.uni_name, req.body.province, req.body.uniId]);
+                await conn.query(`update university set uni_name = ?, province_id = ?, u_edited_date = CURRENT_TIMESTAMP, u_edited_by = ? where uni_id = ?`,
+                    [req.body.uni_name, req.body.province, 1, req.body.uniId]);
                 res.json({ "message": false });
             }
         }

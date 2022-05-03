@@ -8,13 +8,18 @@
           <div class="field">
             <label class="label is-size-4">UNIVERSITY NAME <span style="color: red">*</span></label>
             <input class="input" type="text" v-model="univerName">
+            <div v-if="error" class="has-text-danger">
+              <span v-if="v$.univerName.$error">กรุณากรอกชื่อมหาวิทยาลัย</span>
+            </div>
           </div>
 
           <div class="field">
             <label class="label is-size-4">PROVINCE <span style="color: red">*</span></label>
             <div class="select is-fullwidth">
               <select v-model="province">
-                <option v-for="pro in all_province" :value="pro.province_id" :key="pro.province_id"> {{ pro.province_name }} </option>
+                <option v-for="pro in all_province" :value="pro.province_id" :key="pro.province_id"> {{
+                    pro.province_name
+                }} </option>
               </select>
             </div>
           </div>
@@ -44,16 +49,27 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
+import axios from "@/plugins/axios";
+import useVuelidate from '@vuelidate/core';
+import { required } from '@vuelidate/validators';
 
 export default {
+  setup() {
+    return { v$: useVuelidate() }
+  },
   data() {
     return {
       univerName: "",
       province: "",
       uniId: "",
       all_province: [],
+      error: false,
     };
+  },
+  validations() {
+    return {
+      univerName: { required },
+    }
   },
   mounted() {
     this.getuniversity(this.$route.params.uniName)
@@ -73,7 +89,14 @@ export default {
           alert(error.response.data.message)
         });
     },
-    edituni() {
+    async edituni() {
+      const result = await this.v$.$validate();
+      if (!result) {
+        this.error = true;
+        return;
+      }
+      this.error = false;
+
       var formData = new FormData();
       var imagefile = document.querySelector('#resume');
       formData.append("resume", imagefile.files[0]);
