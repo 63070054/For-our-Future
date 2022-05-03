@@ -95,7 +95,6 @@ export default {
         axios
           .delete(`http://localhost:5000/deleteNews/${newsId.news_id}`)
           .then((response) => {
-            console.log(this.newses);
             this.newses = this.newses.filter(
               (val) => val.news_id != newsId.news_id
             );

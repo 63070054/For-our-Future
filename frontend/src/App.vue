@@ -42,11 +42,9 @@ export default {
   },
   methods: {
     async getUser() {
-      console.log('getuser')
       await axios
         .get(`http://localhost:5000/user`)
         .then((response) => {
-          console.log(response);
           this.user = response.data.user[0];
         })
         .catch((error) => {

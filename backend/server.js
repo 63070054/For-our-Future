@@ -5,8 +5,6 @@ const cors = require("cors")
 
 const app = express();
 
-// set the view engine to ejs
-app.set('view engine', 'ejs')
 // set root folder for views
 app.set('views', path.join(__dirname, 'views'))
 
@@ -19,9 +17,9 @@ app.use(express.urlencoded({ extended: true })) // for parsing application/x-www
 
 
 // routers
+const roundRouter = require('./src/routes/round')
 const universityRouter = require('./src/routes/university')
 const facultyRouter = require('./src/routes/faculty')
-const roundRouter = require('./src/routes/round')
 const newsRounter = require('./src/routes/news')
 const loginRounter = require('./src/routes/login')
 const userRounter = require('./src/routes/user')

@@ -24,17 +24,21 @@ async function isLoggedIn(req, res, next) {
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     try {
-        const selectUser = await conn.query(`select * from user where u_id = ?`, [
+        let selectUser = await conn.query(`select * from user where u_id = ?`, [
             [token.u_id]
         ]);
 
-        if (selectUser[0].type_user == 'student') {
+        if (selectUser[0][0].type_user == 'student') {
+
+            selectUser = await conn.query(`select * from student where u_id = ?`, [
+                [token.u_id]
+            ]);
+
             selectUser[0][0].score = {}
             selectUser[0][0].score.gat = []
             selectUser[0][0].score.pat = []
             selectUser[0][0].score.sub = []
             selectUser[0][0].score.onet = []
-
 
             const selectScoreGat = await conn.query(`select * from u_gat where u_id = ?`, [
                 token.u_id
@@ -54,7 +58,6 @@ async function isLoggedIn(req, res, next) {
             selectUser[0][0].score.sub = [...selectScoreSub[0]]
             selectUser[0][0].score.onet = [...selectScoreOnet[0]]
         }
-
 
         req.user = selectUser[0]
         conn.commit()

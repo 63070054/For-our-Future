@@ -61,7 +61,7 @@ export default {
   z-index: 1;
   width: 100px;
   height: 100px;
-  transition: 0.3s;
+  transition: 0.1s;
   transition-timing-function: linear;
 }
 .round:hover .roundColor {

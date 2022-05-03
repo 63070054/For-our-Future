@@ -22,8 +22,14 @@ const passwordValidator = (value, helpers) => {
     if (value.length < 8) {
         throw new Joi.ValidationError('Password must contain at least 8 characters')
     }
-    if (!(value.match(/[a-z]/) && value.match(/[A-Z]/) && value.match(/[0-9]/))) {
-        throw new Joi.ValidationError('Password must be harder')
+    if (!(value.match(/[a-z]/))) {
+        throw new Joi.ValidationError('Password must contain letter lower case')
+    }
+    if (!(value.match(/[A-Z]/) && value.match(/[0-9]/))) {
+        throw new Joi.ValidationError('Password must contain letter upper case')
+    }
+    if (!(value.match(/[0-9]/))) {
+        throw new Joi.ValidationError('Password must contain number')
     }
     return value
 }
@@ -57,7 +63,6 @@ router.post('/user/register', upload.single("imageUser"), async (req, res, next)
     try {
         await signupSchema.validateAsync(req.body, { abortEarly: false })
     } catch (err) {
-        console.log(err.details[0])
 
         if (err.details[0] === undefined) return res.status(400).send(err.details.message)
 
