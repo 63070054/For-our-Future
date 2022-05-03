@@ -502,7 +502,7 @@ values
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP,
         'admin',
-        '123456'
+        '$2b$05$EIVJheMMKmRGmKLWoXAPket5AwH/vL5ve7oWDSrbA9wRO8G5Ma0mq'
     );
     
 insert into admin (u_id) values (2);

@@ -24,34 +24,36 @@ async function isLoggedIn(req, res, next) {
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     try {
-        const selectUser = await conn.query(`select * from user join student using (u_id) where u_id = ?`, [
+        const selectUser = await conn.query(`select * from user where u_id = ?`, [
             [token.u_id]
         ]);
 
-        selectUser[0][0].score = {}
-        selectUser[0][0].score.gat = []
-        selectUser[0][0].score.pat = []
-        selectUser[0][0].score.sub = []
-        selectUser[0][0].score.onet = []
+        if (selectUser[0].type_user == 'student') {
+            selectUser[0][0].score = {}
+            selectUser[0][0].score.gat = []
+            selectUser[0][0].score.pat = []
+            selectUser[0][0].score.sub = []
+            selectUser[0][0].score.onet = []
 
 
-        const selectScoreGat = await conn.query(`select * from u_gat where u_id = ?`, [
-            token.u_id
-        ]);
-        const selectScorePat = await conn.query(`select * from u_pat where u_id = ?`, [
-            token.u_id
-        ]);
-        const selectScoreSub = await conn.query(`select * from u_sub where u_id = ?`, [
-            token.u_id
-        ]);
-        const selectScoreOnet = await conn.query(`select * from u_onet where u_id = ?`, [
-            token.u_id
-        ]);
+            const selectScoreGat = await conn.query(`select * from u_gat where u_id = ?`, [
+                token.u_id
+            ]);
+            const selectScorePat = await conn.query(`select * from u_pat where u_id = ?`, [
+                token.u_id
+            ]);
+            const selectScoreSub = await conn.query(`select * from u_sub where u_id = ?`, [
+                token.u_id
+            ]);
+            const selectScoreOnet = await conn.query(`select * from u_onet where u_id = ?`, [
+                token.u_id
+            ]);
 
-        selectUser[0][0].score.gat = [...selectScoreGat[0]]
-        selectUser[0][0].score.pat = [...selectScorePat[0]]
-        selectUser[0][0].score.sub = [...selectScoreSub[0]]
-        selectUser[0][0].score.onet = [...selectScoreOnet[0]]
+            selectUser[0][0].score.gat = [...selectScoreGat[0]]
+            selectUser[0][0].score.pat = [...selectScorePat[0]]
+            selectUser[0][0].score.sub = [...selectScoreSub[0]]
+            selectUser[0][0].score.onet = [...selectScoreOnet[0]]
+        }
 
 
         req.user = selectUser[0]

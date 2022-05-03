@@ -37,8 +37,8 @@ export default {
       user: null,
     };
   },
-  async mounted() {
-    await this.onAuthChange();
+  mounted() {
+    this.onAuthChange();
   },
   methods: {
     async getUser() {
@@ -46,17 +46,17 @@ export default {
       await axios
         .get(`http://localhost:5000/user`)
         .then((response) => {
+          console.log(response);
           this.user = response.data.user[0];
         })
         .catch((error) => {
-          console.log('err user')
           alert(error);
         });
     },
-    async onAuthChange() {
+    onAuthChange() {
       const token = localStorage.getItem("token");
       if (token) {
-        await this.getUser();
+        this.getUser();
       }
     },
     signout(){

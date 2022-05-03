@@ -52,7 +52,7 @@
 <script>
 
 export default {
-    props: ['uni_info'],
+    props: ['uni_info', 'user'],
     data() {
         return {}
     },
