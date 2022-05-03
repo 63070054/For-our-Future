@@ -8,7 +8,7 @@ router = express.Router();
 
 const schema = Joi.object({
     faculty_name: Joi.string().required().min(1),
-    faculty_desc: Joi.string().required().min(1),
+    faculty_desc: Joi.string().min(0),
 })
 
 router.get("/:uniName/faculty", async function (req, res, next) {
