@@ -2,14 +2,15 @@ const express = require("express");
 const path = require("path");
 const pool = require("../config/pool");
 const Joi = require('joi');
-const bcrypt = require('bcrypt');
+const { isLoggedIn } = require('../middlewares/index')
+const { isAdmin } = require('../middlewares/index')
 
 router = express.Router();
 
-const schema = Joi.object({
+const roundSchema = Joi.object({
     round: Joi.number().required(),
     round_desc: Joi.string().min(0),
-    roundPercentage: Joi.optional(),
+    roundPercentage: Joi.any().optional(),
 })
 
 router.get("/:facId/round", async function (req, res, next) {
@@ -85,9 +86,9 @@ router.get("/:uniName/:facName/:round", async function (req, res, next) {
     }
 });
 
-router.post("/:uniName/:facName/round/add", async function (req, res, next) {
+router.post("/:uniName/:facName/round/add", isLoggedIn, isAdmin, async function (req, res, next) {
     try {
-        await schema.validateAsync(req.body, {abortEarly: false})
+        await roundSchema.validateAsync(req.body, {abortEarly: false})
     } catch (error) {
         console.log(error)
         return res.status(400).json(error)

@@ -3,7 +3,8 @@ const path = require("path")
 const pool = require("../config/pool");
 const multer = require('multer');
 const Joi = require('joi');
-const bcrypt = require('bcrypt');
+const { isLoggedIn } = require('../middlewares/index')
+const { isAdmin } = require('../middlewares/index')
 
 router = express.Router();
 
@@ -54,44 +55,9 @@ router.get("/news", async function (req, res, next) {
     }
 });
 
-router.get("/latestNews", async function (req, res, next) {
-    const conn = await pool.getConnection()
-    await conn.beginTransaction();
-    try {
-        const selectNews = await conn.query(`select * from news order by news_created_by desc limit 5`);
-        res.json({
-            news: selectNews[0]
-        })
-        conn.commit()
-
-    } catch (e) {
-        conn.rollback()
-    } finally {
-        conn.release()
-    }
-});
-
-router.get("/recommendCamps", async function (req, res, next) {
-    const conn = await pool.getConnection()
-    await conn.beginTransaction();
-    try {
-
-        const selectCat = await conn.query(`select * from news_category join news using (news_id) where category_name = 'ค่าย'`);
-
-        res.json({
-            recommendCamps: selectCat[0]
-        })
-        conn.commit()
-
-    } catch (e) {
-        conn.rollback()
-    } finally {
-        conn.release()
-    }
-});
 
 
-router.post("/addnews", upload.single('news'), async function (req, res, next) {
+router.post("/addnews", isLoggedIn, isAdmin, upload.single('news'), async function (req, res, next) {
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     const allcate = JSON.parse(req.body.news_cat);
@@ -185,7 +151,7 @@ router.get("/news/:newsId/edit", async function (req, res, next) {
     }
 });
 
-router.put("/editnews", upload.single('news'), async function (req, res, next) {
+router.put("/editnews", isLoggedIn, isAdmin, upload.single('news'), async function (req, res, next) {
     try {
         await schema.validateAsync(req.body, {abortEarly: false})
     } catch (error) {
@@ -244,7 +210,7 @@ router.put("/editnews", upload.single('news'), async function (req, res, next) {
     }
 });
 
-router.delete("/deleteNews/:newsId", async function (req, res, next) {
+router.delete("/deleteNews/:newsId", isLoggedIn, isAdmin, async function (req, res, next) {
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     try {

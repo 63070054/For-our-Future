@@ -1,8 +1,8 @@
 const express = require("express");
-const path = require("path")
 const pool = require("../config/pool");
 const Joi = require('joi');
-const bcrypt = require('bcrypt');
+const { isLoggedIn } = require('../middlewares/index')
+const { isAdmin } = require('../middlewares/index')
 
 router = express.Router();
 
@@ -29,7 +29,7 @@ router.get("/:uniName/faculty", async function (req, res, next) {
     }
 });
 
-router.post("/:uniName/faculty/add", async function (req, res, next) {
+router.post("/:uniName/faculty/add", isLoggedIn, isAdmin, async function (req, res, next) {
     try {
         await schema.validateAsync(req.body, {abortEarly: false})
     } catch (error) {
@@ -73,7 +73,7 @@ router.post("/:uniName/faculty/add", async function (req, res, next) {
     }
 });
 
-router.put("/:uniName/:facName/edit", async function (req, res, next) {
+router.put("/:uniName/:facName/edit", isLoggedIn, isAdmin, async function (req, res, next) {
     try {
         await schema.validateAsync(req.body, {abortEarly: false})
     } catch (error) {

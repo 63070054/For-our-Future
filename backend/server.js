@@ -23,6 +23,7 @@ const facultyRouter = require('./src/routes/faculty')
 const newsRounter = require('./src/routes/news')
 const loginRounter = require('./src/routes/login')
 const userRounter = require('./src/routes/user')
+const homeRounter = require('./src/routes/home')
 
 app.use(newsRounter.router)
 app.use(universityRouter.router)
@@ -30,6 +31,7 @@ app.use(facultyRouter.router)
 app.use(roundRouter.router)
 app.use(loginRounter.router)
 app.use(userRounter.router)
+app.use(homeRounter.router)
 
 app.listen(5000, () => {
     console.log(`Example app listening at http://localhost:5000`)

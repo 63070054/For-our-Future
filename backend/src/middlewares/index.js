@@ -27,10 +27,9 @@ async function isLoggedIn(req, res, next) {
         let selectUser = await conn.query(`select * from user where u_id = ?`, [
             [token.u_id]
         ]);
-
         if (selectUser[0][0].type_user == 'student') {
 
-            selectUser = await conn.query(`select * from student where u_id = ?`, [
+            selectUser = await conn.query(`select * from user join student using (u_id) where u_id = ?`, [
                 [token.u_id]
             ]);
 
@@ -58,8 +57,7 @@ async function isLoggedIn(req, res, next) {
             selectUser[0][0].score.sub = [...selectScoreSub[0]]
             selectUser[0][0].score.onet = [...selectScoreOnet[0]]
         }
-
-        req.user = selectUser[0]
+        req.user = selectUser[0][0]
         conn.commit()
 
     } catch (e) {
@@ -67,11 +65,18 @@ async function isLoggedIn(req, res, next) {
     } finally {
         conn.release()
     }
-
     next()
+}
+
+const isAdmin = (req, res, next) => {
+    if (req.user.type_user == 'admin') {
+        return next()
+    }
+    return res.status(403).send('You do not have permission to perform this action')
 }
 
 
 module.exports = {
     isLoggedIn,
+    isAdmin
 }

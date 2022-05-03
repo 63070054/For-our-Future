@@ -45,7 +45,7 @@ export default {
       await axios
         .get(`http://localhost:5000/user`)
         .then((response) => {
-          this.user = response.data.user[0];
+          this.user = response.data.user;
         })
         .catch((error) => {
           alert(error);

@@ -24,8 +24,12 @@
           </label>
           <div class="select is-fullwidth">
             <select v-model="province">
-              <option v-for="pro in all_province" :value="pro.province_id" :key="pro.province_id"> 
-                {{ pro.province_name}}
+              <option
+                v-for="pro in all_province"
+                :value="pro.province_id"
+                :key="pro.province_id"
+              >
+                {{ pro.province_name }}
               </option>
             </select>
           </div>
@@ -68,9 +72,8 @@
 </template>
 <script>
 import axios from "@/plugins/axios";
-import useVuelidate from '@vuelidate/core';
-import { required } from '@vuelidate/validators';
-
+import useVuelidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
 
 export default {
   setup() {
@@ -124,7 +127,7 @@ export default {
           }
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          alert(error.response.data);
         });
     },
     getprovince() {
