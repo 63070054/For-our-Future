@@ -87,24 +87,7 @@
               </div>
             </div>
           </template>
-          <!-- <div class="columns is-mobile">
-            <div
-              class="column has-text-centered is-size-3"
-              style="background-color: #2f4840; color: white"
-            ></div>
-            <div
-              class="column has-text-centered is-size-3"
-              style="background-color: #2f4840; color: white"
-            >
-              รวมคะแนน
-            </div>
-            <div
-              class="column has-text-centered is-size-3"
-              style="background-color: #2f4840; color: white"
-            >
-              {{ admissionSCore() }}
-            </div>
-          </div> -->
+          
         </div>
       </div>
     </div>

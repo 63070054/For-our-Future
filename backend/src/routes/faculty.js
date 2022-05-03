@@ -1,8 +1,15 @@
 const express = require("express");
-const path = require("path")
 const pool = require("../config/pool");
+const Joi = require('joi');
+const { isLoggedIn } = require('../middlewares/index')
+const { isAdmin } = require('../middlewares/index')
 
 router = express.Router();
+
+const schema = Joi.object({
+    faculty_name: Joi.string().required().min(1),
+    faculty_desc: Joi.string().min(0),
+})
 
 router.get("/:uniName/faculty", async function (req, res, next) {
     const conn = await pool.getConnection()
@@ -22,7 +29,14 @@ router.get("/:uniName/faculty", async function (req, res, next) {
     }
 });
 
-router.post("/:uniName/faculty/add", async function (req, res, next) {
+router.post("/:uniName/faculty/add", isLoggedIn, isAdmin, async function (req, res, next) {
+    try {
+        await schema.validateAsync(req.body, {abortEarly: false})
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json(error)
+    }
+
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     try {
@@ -59,7 +73,14 @@ router.post("/:uniName/faculty/add", async function (req, res, next) {
     }
 });
 
-router.put("/:uniName/:facName/edit", async function (req, res, next) {
+router.put("/:uniName/:facName/edit", isLoggedIn, isAdmin, async function (req, res, next) {
+    try {
+        await schema.validateAsync(req.body, {abortEarly: false})
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json(error)
+    }
+
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     try {

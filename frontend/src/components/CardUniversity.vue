@@ -3,14 +3,14 @@
 </script>
 <template>
     <main>
-        <router-link :to="`/${uni_info.uni_name}/edit`" style="position:absolute; right: 60px; top: 10px; z-index: 2;">
+        <router-link :to="`/${uni_info.uni_name}/edit`" style="position:absolute; right: 60px; top: 10px; z-index: 2;" v-if="user && user.type_user == 'admin'">
             <button class="button is-info is-small" type="button">
                 <span class="icon">
                     <i class="fas fa-pen" style="font-size: 16px;"></i>
                 </span>
             </button>
         </router-link>
-        <button class="button is-danger is-small" type="button" style="position:absolute; right: 20px; top: 10px; z-index: 2;"
+        <button v-if="user && user.type_user == 'admin'" class="button is-danger is-small" type="button" style="position:absolute; right: 20px; top: 10px; z-index: 2;"
             @click="deleteUniversity(uni_info)">
             <span class="icon">
                 <i class="fas fa-trash-alt" style="font-size: 16px;"></i>
@@ -52,7 +52,7 @@
 <script>
 
 export default {
-    props: ['uni_info'],
+    props: ['uni_info', 'user'],
     data() {
         return {}
     },

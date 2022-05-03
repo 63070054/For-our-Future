@@ -5,11 +5,17 @@
                 <div class="field">
                     <label class="label is-size-4">NEWS TITLE <span style="color: red">*</span></label>
                     <input class="input" type="text" v-model="newstitle" />
+                    <div v-if="error" class="has-text-danger">
+                        <span v-if="v$.newstitle.$error">กรุณากรอกหัวข้อข่าว</span>
+                    </div>
                 </div>
 
                 <div class="field">
                     <label class="label is-size-4">NEWS DESCRIPTION <span style="color: red">*</span></label>
                     <textarea class="textarea" rows="2" v-model="newsdes"></textarea>
+                    <div v-if="error" class="has-text-danger">
+                        <span v-if="v$.newsdes.$error">กรุณากรอกเนื้อหาข่าว</span>
+                    </div>
                 </div>
 
                 <div class="field">
@@ -73,9 +79,15 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "@/plugins/axios";
+// import axios from 'axios';
+import useVuelidate from '@vuelidate/core';
+import { required } from '@vuelidate/validators';
 
 export default {
+    setup() {
+        return { v$: useVuelidate() };
+    },
     data() {
         return {
             newstitle: "",
@@ -85,14 +97,22 @@ export default {
             inputs_REFERENCES: [],
             idCounter_CATEGORY: 0,
             idCounter_REFERENCE: 0,
+            error: false,
         }
     },
     created() {
         this.idCounter_CATEGORY = this.inputs_CATEGORYS.length
         this.idCounter_REFERENCE = this.inputs_REFERENCES.length
     },
+    validations() {
+        return {
+            newstitle: { required },
+            newsdes: { required },
+        };
+    },
     mounted() {
         this.getnews(this.$route.params.newsId)
+        console.log(this.$route.params.newsId)
     },
     methods: {
         getnews(newsId) {
@@ -108,7 +128,14 @@ export default {
                     alert(error.response.data)
                 });
         },
-        editnews() {
+        async editnews() {
+            const result = await this.v$.$validate();
+            if (!result) {
+                this.error = true;
+                return;
+            }
+            this.error = false;
+
             var formData = new FormData();
             var imagefile = document.querySelector('#news');
             formData.append("news", imagefile.files[0]);
@@ -129,7 +156,7 @@ export default {
         },
         addCategory() {
             this.idCounter_CATEGORY += 1
-            this.inputs_CATEGORYS.push({ id: this.idCounter_CATEGORY, category: '', update: false})
+            this.inputs_CATEGORYS.push({ id: this.idCounter_CATEGORY, category: '', update: false })
         },
         delCategory(item) {
             let index = this.inputs_CATEGORYS.findIndex((val) => val.id === item.id)

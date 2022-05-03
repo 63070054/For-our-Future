@@ -46,18 +46,7 @@ import IconAdd from "@/components/icons/IconAdd.vue";
             </select>
           </div>
         </div>
-        <div class="control">
-          <router-link
-            :to="{
-              path: `/${this.$route.params.uniName}/${this.facultySelected.facName}/edit`,
-            }"
-          >
-            <button type="submit" class="button is-warning">
-              <i class="fa fa-pen">&nbsp;คณะ</i>
-            </button>
-          </router-link>
-        </div>
-        <div class="control">
+        <div class="control" v-if="user && user.type_user == 'admin'">
           <router-link
             :to="{
               path: `/${this.$route.params.uniName}/faculty/add`,
@@ -68,11 +57,27 @@ import IconAdd from "@/components/icons/IconAdd.vue";
             </button>
           </router-link>
         </div>
+        <div class="control" v-if="user && user.type_user == 'admin'">
+          <router-link
+            :to="{
+              path: `/${this.$route.params.uniName}/${this.facultySelected.facName}/edit`,
+            }"
+          >
+            <button type="submit" class="button is-warning">
+              <i class="fa fa-pen">&nbsp;คณะ</i>
+            </button>
+          </router-link>
+        </div>
+        <div class="control" v-if="user && user.type_user == 'admin'">
+          <button type="button" class="button is-danger">
+            <i class="fa fa-trash">&nbsp;คณะ</i>
+          </button>
+        </div>
       </div>
       <h1 class="title has-text-weight-bold">รายละเอียดคณะ</h1>
       <p class="mb-4">{{ facultySelected.facDesc }}</p>
       <div class="columns is-multiline">
-        <div class="column is-6" v-for="round in round" :key="round.r_id">
+        <div class="column is-6" v-for="round in filterRound" :key="round.r_id">
           <router-link
             :to="{
               path: `/${this.$route.params.uniName}/${facultySelected.facName}/${round.round}`,
@@ -84,6 +89,7 @@ import IconAdd from "@/components/icons/IconAdd.vue";
       </div>
     </div>
     <router-link
+      v-if="user && user.type_user == 'admin'"
       :to="{
         path: `/${this.$route.params.uniName}/${facultySelected.facName}/round/add`,
       }"
@@ -97,6 +103,7 @@ import IconAdd from "@/components/icons/IconAdd.vue";
 import axios from "@/plugins/axios";
 
 export default {
+  props: ["user"],
   data() {
     return {
       faculty: [],
@@ -129,11 +136,25 @@ export default {
         .get(`http://localhost:5000/${this.facultySelected.facId}/round`)
         .then((response) => {
           this.round = response.data.round;
-          console.log(this.round);
         })
         .catch((error) => {
           alert(error.response.data.message);
         });
+    },
+  },
+  computed: {
+    filterRound() {
+      const compare = (a, b) => {
+        if (a.round < b.round) {
+          return -1;
+        }
+        if (a.round > b.round) {
+          return 1;
+        }
+        return 0;
+      };
+
+      return this.round.sort(compare)
     },
   },
 };

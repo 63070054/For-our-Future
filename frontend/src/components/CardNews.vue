@@ -4,14 +4,14 @@
 
 <template>
   <main class="m-3">
-    <router-link :to="`/news/${news_info.news_id}/edit`" style="position:absolute;left: 5px; top: 5px; z-index: 2;">
+    <router-link :to="`/news/${news_info.news_id}/edit`" style="position:absolute;left: 5px; top: 5px; z-index: 2;" v-if="user && user.type_user == 'admin'">
       <button class="button is-info is-small" type="button">
         <span class="icon">
           <i class="fas fa-pen" style="font-size: 16px;"></i>
         </span>
       </button>
     </router-link>
-    <button class="button is-danger is-small" type="button"
+    <button class="button is-danger is-small" type="button" v-if="user && user.type_user == 'admin'"
       style="position:absolute; left: 45px; top: 5px; z-index: 10;" @click="deleteNews(news_info)">
       <span class="icon">
         <i class="fas fa-trash-alt" style="font-size: 16px;"></i>
@@ -48,7 +48,7 @@
 <script>
 
 export default {
-  props: ['news_info', 'category', 'path'],
+  props: ['news_info', 'category', 'path', 'user'],
   data() {
     return {}
   },

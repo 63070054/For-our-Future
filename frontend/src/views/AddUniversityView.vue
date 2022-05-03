@@ -14,14 +14,14 @@
           >
           <input class="input" type="text" v-model="uname" name="u_name" />
           <div v-if="error" class="has-text-danger">
-            <span v-if="v$.uname.$error">University Name is required</span>
+            <span v-if="v$.uname.$error">กรุณากรอกชื่อมหาวิทยาลัย</span>
           </div>
         </div>
 
         <div class="field">
           <label class="label is-size-4"
-            >PROVINCE <span style="color: red">*</span></label
-          >
+            >PROVINCE <span style="color: red">*</span>
+          </label>
           <div class="select is-fullwidth">
             <select v-model="province">
               <option
@@ -73,7 +73,7 @@
 <script>
 import axios from "@/plugins/axios";
 import useVuelidate from "@vuelidate/core";
-import { required, helpers } from "@vuelidate/validators";
+import { required } from "@vuelidate/validators";
 
 export default {
   setup() {
@@ -127,7 +127,7 @@ export default {
           }
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          alert(error.response.data);
         });
     },
     getprovince() {

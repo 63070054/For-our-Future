@@ -302,7 +302,7 @@ CREATE TABLE `news` (
     `news_id` int(10) AUTO_INCREMENT,
     `news_title` varchar(255) not null,
     `news_desc` varchar(255),
-    `news_picture` varchar(255) default "images\\news.png",
+    `news_picture` varchar(255),
     `news_created_date` date not null,
     `news_created_by` int(10) not null,
     `news_edited_date` date not null,
@@ -470,8 +470,8 @@ values
         'student',
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP,
-        'wavezza2',
-        '123453'
+        'student',
+        '$2b$05$EIVJheMMKmRGmKLWoXAPket5AwH/vL5ve7oWDSrbA9wRO8G5Ma0mq'
     );
     
 insert into student (u_id, u_gpax) values (1, 3);
@@ -483,6 +483,46 @@ insert into u_onet (u_id, `type`, score) values (1, "วิทยาศาสต
 insert into u_gat (u_id, `type`, score) values (1, "THAI", 100);
 insert into u_gat (u_id, `type`, score) values (1, "ENG", 100);
 insert into u_pat (u_id, `type`, score) values (1, "ความถนัดทางวิศวกรรมศาสตร์", 70);
+
+insert into
+    user (
+        f_name,
+        l_name,
+        type_user,
+        u_created_date,
+        u_edited_date,
+        username,
+        `password`
+    )
+values
+    (
+        'กิตติภพ',
+        'ปังตระกูล',
+        'admin',
+        CURRENT_TIMESTAMP,
+        CURRENT_TIMESTAMP,
+        'admin',
+        '$2b$05$EIVJheMMKmRGmKLWoXAPket5AwH/vL5ve7oWDSrbA9wRO8G5Ma0mq'
+    );
+    
+insert into admin (u_id) values (2);
+
+insert into university (uni_name, province_id, u_created_date, u_created_by, u_edited_date, u_edited_by) values ('มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี', 1, current_timestamp, 1, current_timestamp, 1);
+insert into faculty (uni_id, fac_name) values (1, 'คณะวิศวกรรมศาสตร์');
+insert into faculty (uni_id, fac_name) values (1, 'คณะวิทยาศาสตร์');
+insert into faculty (uni_id, fac_name) values (1, 'คณะครุศาสตร์อุตสาหกรรม    และเทคโนโลยี');
+insert into faculty (uni_id, fac_name) values (1, 'คณะเทคโนโลยีสารสนเทศ');
+insert into faculty (uni_id, fac_name) values (1, 'คณะสถาปัตยกรรมศาสตร์และการออกแบบ');
+insert into faculty (uni_id, fac_name) values (1, 'คณะพลังงานสิ่งแวดล้อมและวัสดุ');
+insert into faculty (uni_id, fac_name) values (1, 'คณะทรัพยากรชีวภาพและเทคโนโลยี');
+insert into faculty (uni_id, fac_name) values (1, 'คณะศิลปศาสตร์');
+insert into faculty (uni_id, fac_name) values (1, 'บัณฑิตวิทยาลัยการจัดการและนวัตกรรม');
+insert into faculty (uni_id, fac_name) values (1, 'สถาบันวิทยาการหุ่นยนต์ภาคสนาม');
+insert into faculty (uni_id, fac_name) values (1, 'บัณฑิตวิทยาลัยร่วมด้านพลังงานและสิ่งแวดล้อม');
+insert into faculty (uni_id, fac_name) values (1, 'วิทยาลัยสหวิทยาการ');
+insert into faculty (uni_id, fac_name) values (1, 'ดรุณสิกขาลัยโรงเรียนนวัตกรรมแห่งการเรียนรู้');
+insert into faculty (uni_id, fac_name) values (1, 'โครงการ วมว.(ห้องเรียนวิศว์-วิทย์)');
+insert into faculty (uni_id, fac_name) values (1, 'KOSEN KMUTT(ห้องเรียนวิศว์-วิทย์)');
 
 SET
     FOREIGN_KEY_CHECKS = 1;

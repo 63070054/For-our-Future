@@ -11,11 +11,13 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
+      meta: { guess: true },
       component: () => import('../views/LoginView.vue')
     },
     {
       path: '/register',
       name: 'register',
+      meta: { guess: true },
       component: () => import('../views/RegisterView.vue')
     },
     {
@@ -53,6 +55,7 @@ const router = createRouter({
     {
       path: '/profile/',
       name: 'profile',
+      meta: { login: true },
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
@@ -141,6 +144,24 @@ const router = createRouter({
     
     
   ]
+})
+
+
+router.beforeEach((to, from, next) => {
+  const isLoggedIn = !!localStorage.getItem('token')
+
+  if (to.meta.login && !isLoggedIn) {
+    alert('Please login first!')
+    next({ path: '/login' })
+  }
+
+  if (to.meta.guess && isLoggedIn) {
+    alert("You've already logged in")
+    next({ path: '/' })
+  }
+
+
+  next()
 })
 
 export default router

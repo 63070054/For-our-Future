@@ -26,17 +26,26 @@ import IconAdd from "@/components/icons/IconAdd.vue";
         v-for="news in filterNewes"
         :key="news.news_id"
       >
-          <CardNews :news_info="news" :path="`/news/${news.news_id}`" :category="news.category_name" @delete-news_category="deleteNews(news)"></CardNews>
+        <CardNews
+          :news_info="news"
+          :path="`/news/${news.news_id}`"
+          :category="news.category_name"
+          :user="user"
+          @delete-news_category="deleteNews(news)"
+        ></CardNews>
       </div>
     </div>
-    <router-link to="/news/add"><IconAdd message="ข่าวสาร"></IconAdd></router-link>
+    <router-link to="/news/add" v-if="user && user.type_user == 'admin'"
+      ><IconAdd message="ข่าวสาร"></IconAdd
+    ></router-link>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 
 export default {
+  props: ['user'],
   data() {
     return {
       // variable for input
@@ -71,29 +80,32 @@ export default {
   },
   methods: {
     getNews() {
-      axios.get(`http://localhost:5000/news`)
+      axios
+        .get(`http://localhost:5000/news`)
         .then((response) => {
-          this.newses = response.data.news
+          this.newses = response.data.news;
         })
         .catch((error) => {
-          alert(error.response.data.message)
+          alert(error.response.data.message);
         });
     },
     deleteNews(newsId) {
-      let result = confirm('are u sure u want to delete')
+      let result = confirm("are u sure u want to delete");
       if (result) {
-        axios.delete(`http://localhost:5000/deleteNews/${newsId.news_id}`,)
+        axios
+          .delete(`http://localhost:5000/deleteNews/${newsId.news_id}`)
           .then((response) => {
-            console.log(this.newses)
-            this.newses = this.newses.filter(val => val.news_id != newsId.news_id)
+            this.newses = this.newses.filter(
+              (val) => val.news_id != newsId.news_id
+            );
             // alert("คุณลบสำเร็จแล้ว")
           })
           .catch((error) => {
-            alert(error.response.data.message)
+            alert(error.response.data.message);
           });
       }
     },
-  }
+  },
 };
 </script>
 
