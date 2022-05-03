@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 router = express.Router();
 
 const schema = Joi.object({
-    round: Joi.number().required().min(1),
+    round: Joi.number().required(),
     round_desc: Joi.string().min(0),
     roundPercentage: Joi.optional(),
 })
