@@ -49,7 +49,7 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
+import axios from "@/plugins/axios";
 import useVuelidate from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 
@@ -90,12 +90,12 @@ export default {
         });
     },
     async edituni() {
-      const result = await this.v$.$validate()
+      const result = await this.v$.$validate();
       if (!result) {
-        this.error = true
-        return
+        this.error = true;
+        return;
       }
-      this.error = false
+      this.error = false;
 
       var formData = new FormData();
       var imagefile = document.querySelector('#resume');

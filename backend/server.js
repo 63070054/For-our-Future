@@ -26,10 +26,10 @@ const newsRounter = require('./src/routes/news')
 const loginRounter = require('./src/routes/login')
 const userRounter = require('./src/routes/user')
 
+app.use(newsRounter.router)
 app.use(universityRouter.router)
 app.use(facultyRouter.router)
 app.use(roundRouter.router)
-app.use(newsRounter.router)
 app.use(loginRounter.router)
 app.use(userRounter.router)
 

@@ -2,6 +2,8 @@ const express = require("express");
 const path = require("path")
 const pool = require("../config/pool");
 const multer = require('multer');
+const Joi = require('joi');
+const bcrypt = require('bcrypt');
 
 router = express.Router();
 
@@ -14,6 +16,15 @@ const storage = multer.diskStorage({
     }
 })
 const upload = multer({ storage: storage })
+
+const schema = Joi.object({
+    news_id: Joi.string().optional(),
+    news_title: Joi.string().required().min(1),
+    news_des: Joi.string().required().min(1),
+    news_cat: Joi.string().optional(),
+    news_ref: Joi.string().optional(),
+    news: Joi.string().optional(),
+})
 
 router.get("/news", async function (req, res, next) {
     const conn = await pool.getConnection()
@@ -147,6 +158,7 @@ router.get("/news/:newsId/edit", async function (req, res, next) {
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     try {
+        console.log('edit')
         const selectNews = await conn.query(`select * from news where news_id = ?`, [req.params.newsId]);
         const selectCat = await conn.query(`select * from news_category where news_id = ?`, [req.params.newsId]);
         const selectRef = await conn.query(`select * from news_ref where news_id = ?`, [req.params.newsId]);
@@ -157,24 +169,33 @@ router.get("/news/:newsId/edit", async function (req, res, next) {
         selectRef[0].map(ref => {
             ref['update'] = true
         })
-
+        conn.commit()
         res.json({
             news: selectNews[0],
             category: selectCat[0],
             reference: selectRef[0]
         })
-        conn.commit()
+        
 
     } catch (e) {
         conn.rollback()
+        res.send('hello')
     } finally {
         conn.release()
     }
 });
 
 router.put("/editnews", upload.single('news'), async function (req, res, next) {
+    try {
+        await schema.validateAsync(req.body, {abortEarly: false})
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json(error)
+    }
+
     const conn = await pool.getConnection()
     await conn.beginTransaction();
+
     const allcate = JSON.parse(req.body.news_cat);
     const allref = JSON.parse(req.body.news_ref);
     try {
