@@ -71,6 +71,7 @@ router.post("/adduni", upload.single('univer'), async function (req, res, next) 
         console.log(error)
         return res.status(400).json(error)
     }
+
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     // console.log('-----------------')

@@ -1,8 +1,16 @@
 const express = require("express");
 const path = require("path");
 const pool = require("../config/pool");
+const Joi = require('joi');
+const bcrypt = require('bcrypt');
 
 router = express.Router();
+
+const schema = Joi.object({
+    round: Joi.number().required().min(1),
+    round_desc: Joi.string().min(0),
+    roundPercentage: Joi.optional(),
+})
 
 router.get("/:facId/round", async function (req, res, next) {
     const conn = await pool.getConnection()
@@ -78,6 +86,13 @@ router.get("/:uniName/:facName/:round", async function (req, res, next) {
 });
 
 router.post("/:uniName/:facName/round/add", async function (req, res, next) {
+    try {
+        await schema.validateAsync(req.body, {abortEarly: false})
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json(error)
+    }
+
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     try {
