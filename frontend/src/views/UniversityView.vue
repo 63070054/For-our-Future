@@ -74,6 +74,9 @@ export default {
   },
   computed: {
     filterUniversities() {
+
+      this.keyword = this.keyword.toLowerCase();
+
       let universities = this.universities;
 
       if (this.regionSelected.length != 0) {
@@ -83,7 +86,7 @@ export default {
       }
       universities = universities.filter(
         (uni) =>
-          uni.uni_name.includes(this.keyword) ||
+          uni.uni_name.toLowerCase().includes(this.keyword) ||
           uni.province_name.includes(this.keyword) ||
           uni.region_name.includes(this.keyword)
       );
