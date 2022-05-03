@@ -26,6 +26,12 @@
   background-color: transparent !important;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 @media screen and (min-width: 1024px) {
   .navbar-dropdown {
     left: -50%;

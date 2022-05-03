@@ -14,6 +14,14 @@
                             style="font-size: 20px; color: #0F1123; margin-top: 30px;"><i class="fa fa-pen"></i>
                             แก้ไขโปรไฟล์</button>
                     </div>
+                    <div class="column is-mobile">
+                        <router-link :to="{'path': '/profile/USERNAME/ScoreUser'}">
+                            <button class="button is-small ml-6  has-background-black-ter has-text-white-ter" 
+                            style="font-size: 20px; margin-top: 30px;">
+                            คะแนนของคุณ</button>
+                        </router-link>
+                        
+                    </div>
                 </div>
             </div>
             <div style="background-color: #0F1123; width: 17%; height:25px; top: 60%"></div>
@@ -159,3 +167,28 @@
 }
 }
 </style>
+<script>
+import axios from '@/plugins/axios'
+export default {
+    data() {
+    return {
+      
+    };
+  },
+  async mounted() {
+      await this.getProfile();
+  },
+  methods: {
+      async getProfile() {
+      await axios
+        .get(`http://localhost:5000/profile`)
+        .then((response) => {
+            console.log('test')
+        })
+        .catch((error) => {
+          alert(error.response.data.message);
+        });
+    },
+  }
+}
+</script>
