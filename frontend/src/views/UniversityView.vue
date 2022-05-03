@@ -38,8 +38,8 @@ import IconAdd from "@/components/icons/IconAdd.vue";
         </label>
       </button>
     </div>
-    <router-link to="/university/add">
-    <IconAdd message="มหาวิทยาลัย" />
+    <router-link to="/university/add" v-if="user && user.type_user == 'admin'">
+      <IconAdd message="มหาวิทยาลัย" />
     </router-link>
     <CardUniversity
       v-for="uni in filterUniversities"
@@ -50,9 +50,14 @@ import IconAdd from "@/components/icons/IconAdd.vue";
   </div>
 </template>
 <script>
-import axios from 'axios'
+import axios from "axios";
 
 export default {
+  props: ["user"],
+  setup() {
+    const user = Vue.ref(null);
+    return { user }
+  },
   data() {
     return {
       // variable for input
@@ -72,14 +77,19 @@ export default {
   },
   computed: {
     filterUniversities() {
-      let universities = this.universities
+      let universities = this.universities;
 
       if (this.regionSelected.length != 0) {
         universities = universities.filter((uni) =>
           Object.values(this.regionSelected).includes(uni.region_name)
         );
       }
-      universities = universities.filter(uni => uni.uni_name.includes(this.keyword) || uni.province_name.includes(this.keyword) || uni.region_name.includes(this.keyword))
+      universities = universities.filter(
+        (uni) =>
+          uni.uni_name.includes(this.keyword) ||
+          uni.province_name.includes(this.keyword) ||
+          uni.region_name.includes(this.keyword)
+      );
       return universities;
     },
   },
@@ -88,28 +98,32 @@ export default {
   },
   methods: {
     getuniversity() {
-      axios.get(`http://localhost:5000/university`)
+      axios
+        .get(`http://localhost:5000/university`)
         .then((response) => {
-          this.universities = response.data
+          this.universities = response.data;
         })
         .catch((error) => {
-          alert(error.response.data.message)
+          alert(error.response.data.message);
         });
     },
     deleteUniversity(uni) {
-      let result = confirm('are u sure u want to delete')
+      let result = confirm("are u sure u want to delete");
       if (result) {
-        axios.delete(`http://localhost:5000/deleteUniversity/${uni.uni_id}`,)
+        axios
+          .delete(`http://localhost:5000/deleteUniversity/${uni.uni_id}`)
           .then((response) => {
-            this.universities = this.universities.filter(val => val.uni_id != uni.uni_id)
-            alert("คุณลบสำเร็จแล้ว")
+            this.universities = this.universities.filter(
+              (val) => val.uni_id != uni.uni_id
+            );
+            alert("คุณลบสำเร็จแล้ว");
           })
           .catch((error) => {
-            alert(error.response.data.message)
+            alert(error.response.data.message);
           });
       }
     },
-  }
+  },
 };
 </script>
 <style>

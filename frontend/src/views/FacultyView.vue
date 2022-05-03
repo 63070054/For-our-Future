@@ -48,6 +48,7 @@ import IconAdd from "@/components/icons/IconAdd.vue";
         </div>
         <div class="control">
           <router-link
+            v-if="user && user.type_user == 'admin'"
             :to="{
               path: `/${this.$route.params.uniName}/${this.facultySelected.facName}/edit`,
             }"
@@ -59,6 +60,7 @@ import IconAdd from "@/components/icons/IconAdd.vue";
         </div>
         <div class="control">
           <router-link
+            v-if="user && user.type_user == 'admin'"
             :to="{
               path: `/${this.$route.params.uniName}/faculty/add`,
             }"
@@ -67,6 +69,11 @@ import IconAdd from "@/components/icons/IconAdd.vue";
               <i class="fa fa-plus">&nbsp;คณะ</i>
             </button>
           </router-link>
+        </div>
+        <div class="control">
+          <button type="button" class="button is-primary">
+            <i class="fa fa-trash">&nbsp;คณะ</i>
+          </button>
         </div>
       </div>
       <h1 class="title has-text-weight-bold">รายละเอียดคณะ</h1>
@@ -84,6 +91,7 @@ import IconAdd from "@/components/icons/IconAdd.vue";
       </div>
     </div>
     <router-link
+      v-if="user && user.type_user == 'admin'"
       :to="{
         path: `/${this.$route.params.uniName}/${facultySelected.facName}/round/add`,
       }"

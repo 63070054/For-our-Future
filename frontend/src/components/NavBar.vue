@@ -43,7 +43,7 @@ const menusNavbar = {
             <router-link to="/profile"><a class="navbar-item"> Profile </a>
             </router-link>
             <hr class="navbar-divider" />
-            <a class="navbar-item"> Sign out </a>
+            <a class="navbar-item" @click="signout"> Sign out </a>
           </div>
         </div>
         <div class="navbar-item" v-else>
@@ -66,7 +66,14 @@ export default {
       showNavBar: false,
     };
   },
-  mounted() {
+  methods: {
+    signout(){
+      const token = localStorage.getItem("token");
+      if (token) {
+        localStorage.removeItem('token')
+        this.$emit("sign-out");
+      }
+    }
   },
 };
 </script>
