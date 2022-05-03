@@ -29,19 +29,19 @@ import IconAdd from "@/components/icons/IconAdd.vue";
       <h1>{{ news.news_title }}</h1>
       <p>{{ news.news_desc }}</p>
       <h2>แหล่งอ้างอิง</h2>
-      <a v-for="ref in ref" :href="ref.ref_name">{{ref.ref_name}}<br></a>
+      <a v-for="ref in ref" :href="ref.ref_name">{{ ref.ref_name }}<br /></a>
     </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import axios from "@/plugins/axios";
 
 export default {
   data() {
     return {
       news: {
-          news_picture: "images/news.png"
+        news_picture: "images/news.png",
       },
       category: [],
       ref: [],

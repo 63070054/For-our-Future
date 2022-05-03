@@ -122,7 +122,7 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+import axios from "@/plugins/axios";
 
 export default {
   data() {
@@ -156,17 +156,17 @@ export default {
           "ภาษาบาลี",
         ],
         "9 วิชาสามัญ": [
-            "ภาษาไทย",
-            "สังคมศึกษา",
-            "ภาษาอังกฤษ",
-            "คณิตศาสตร์ 1",
-            "ฟิสิกส์",
-            "เคมี",
-            "ชีววิทยา",
-            "คณิตศาสตร์ 2 (สายศิลป์)",
-            "วิทยาศาสตร์ทั่วไป (สายศิลป์)",
+          "ภาษาไทย",
+          "สังคมศึกษา",
+          "ภาษาอังกฤษ",
+          "คณิตศาสตร์ 1",
+          "ฟิสิกส์",
+          "เคมี",
+          "ชีววิทยา",
+          "คณิตศาสตร์ 2 (สายศิลป์)",
+          "วิทยาศาสตร์ทั่วไป (สายศิลป์)",
         ],
-        "GPAX": []
+        GPAX: [],
       },
       roundDesc: "",
       round: 1,
@@ -194,11 +194,14 @@ export default {
     },
     async createRound() {
       await axios
-        .post(`http://localhost:5000/${this.$route.params.uniName}/${this.$route.params.facName}/round/add`, {
-          round: this.round,
-          round_desc: this.roundDesc,
-          roundPercentage: this.inputs,
-        })
+        .post(
+          `http://localhost:5000/${this.$route.params.uniName}/${this.$route.params.facName}/round/add`,
+          {
+            round: this.round,
+            round_desc: this.roundDesc,
+            roundPercentage: this.inputs,
+          }
+        )
         .then((response) => {
           if (response.data.isDuplicate) {
             let result = confirm(

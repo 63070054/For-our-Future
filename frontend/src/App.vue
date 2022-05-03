@@ -21,36 +21,47 @@ import EditUniversityView from "./views/EditUniversityView.vue";
 
 <template>
   <div>
-    <NavBar></NavBar>
+    <NavBar @sign-out="signout" :user="user"></NavBar>
     <div class="container">
-      <RouterView :user="user" />
+      <RouterView @auth-change="onAuthChange" :user="user" />
     </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import axios from "@/plugins/axios";
 
 export default {
   data() {
     return {
-      user: {},
+      user: null,
     };
   },
   async mounted() {
-    await this.getUser();
+    await this.onAuthChange();
   },
   methods: {
     async getUser() {
+      console.log('getuser')
       await axios
         .get(`http://localhost:5000/user`)
         .then((response) => {
           this.user = response.data.user[0];
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          console.log('err user')
+          alert(error);
         });
     },
+    async onAuthChange() {
+      const token = localStorage.getItem("token");
+      if (token) {
+        await this.getUser();
+      }
+    },
+    signout(){
+      this.user = null
+    }
   },
 };
 </script>

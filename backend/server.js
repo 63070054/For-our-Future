@@ -2,6 +2,7 @@ const express = require("express")
 const path = require("path")
 const cors = require("cors")
 
+
 const app = express();
 
 // set the view engine to ejs
@@ -15,6 +16,7 @@ app.use(express.static(path.join(__dirname, 'src')))
 app.use(cors())
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
 
 // routers
 const universityRouter = require('./src/routes/university')

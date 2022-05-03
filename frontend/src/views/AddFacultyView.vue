@@ -34,12 +34,17 @@
             <label class="label is-size-4 has-text-left"
               >FACULTY DESCIPTION</label
             >
-            <textarea  v-model="faculty_desc" class="textarea" type="text"></textarea>
+            <textarea
+              v-model="faculty_desc"
+              class="textarea"
+              type="text"
+            ></textarea>
           </div>
         </div>
 
         <div class="mt-3 has-text-centered">
-          <button @click="addFaculty"
+          <button
+            @click="addFaculty"
             class="button has-text-black has-text-centered is-3 is-size-4 has-text-weight-bold is-fullwidth"
             style="background-color: #9ddfd3"
           >
@@ -53,43 +58,43 @@
 
 <style scoped>
 .hero {
-    display: block;
+  display: block;
 }
 </style>
 <script>
-import axios from 'axios';
+import axios from "@/plugins/axios";
 export default {
   data() {
     return {
-      faculty_name: '',
-      faculty_desc: '',
+      faculty_name: "",
+      faculty_desc: "",
     };
   },
-  mounted() {
-
-  },
+  mounted() {},
   methods: {
     addFaculty() {
-      console.log(this.faculty_name)
-      console.log(this.faculty_desc)
-      axios.post(`http://localhost:5000/${this.$route.params.uniName}/faculty/add`, { 'faculty_name': this.faculty_name, 'faculty_desc': this.faculty_desc })
+      console.log(this.faculty_name);
+      console.log(this.faculty_desc);
+      axios
+        .post(
+          `http://localhost:5000/${this.$route.params.uniName}/faculty/add`,
+          { faculty_name: this.faculty_name, faculty_desc: this.faculty_desc }
+        )
         .then((response) => {
-          console.log(response.data.message)
-          if (response.data.message == 'success') {
-            this.$router.push(`/${this.$route.params.uniName}/faculty`)
-          }
-          else if(response.data.message == 'alredyHave'){
-            alert('มีคณะนี้อยู่ในมหาวิทยาลัยนี้อยู่แล้ว')
-            this.$router.push(`/${this.$route.params.uniName}/faculty`)
-          }
-          else {
-            alert('เกิดข้อผิดพลาดขึ้น')
+          console.log(response.data.message);
+          if (response.data.message == "success") {
+            this.$router.push(`/${this.$route.params.uniName}/faculty`);
+          } else if (response.data.message == "alredyHave") {
+            alert("มีคณะนี้อยู่ในมหาวิทยาลัยนี้อยู่แล้ว");
+            this.$router.push(`/${this.$route.params.uniName}/faculty`);
+          } else {
+            alert("เกิดข้อผิดพลาดขึ้น");
           }
         })
         .catch((error) => {
-          alert(error.response.data.message)
+          alert(error.response.data.message);
         });
     },
-  }
-}
+  },
+};
 </script>

@@ -50,14 +50,14 @@
               คะแนนของคุณ
             </div>
           </div>
-          <div class="columns is-mobile">
+          <div class="columns is-mobile" v-if="this.$route.params.round == '4'">
             <div class="column has-text-centered is-size-4">O-NET 5 วิชา</div>
             <div class="column has-text-centered is-size-4">30 %</div>
             <div class="column has-text-centered is-size-4 scoreAdmission">
               {{ calculateOnetScore() }}
             </div>
           </div>
-          <div class="columns is-mobile">
+          <div class="columns is-mobile" v-if="this.$route.params.round == '4'">
             <div class="column has-text-centered is-size-4">GPAX</div>
             <div class="column has-text-centered is-size-4">20 %</div>
             <div class="column has-text-centered is-size-4 scoreAdmission">
@@ -102,7 +102,7 @@
               class="column has-text-centered is-size-3"
               style="background-color: #2f4840; color: white"
             >
-              {{ admissionScore() }}
+              {{ admissionSCore() }}
             </div>
           </div> -->
         </div>
@@ -112,7 +112,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "@/plugins/axios";
 
 export default {
   props: ["user"],
@@ -163,13 +163,12 @@ export default {
     calculateGpaxScore() {
       return `${this.user.u_gpax * 1500} คะแนน`;
     },
-    admissionSCore(){
-      // let test = document.querySelectorAll(".scoreAdmission")
-      // console.log(test)
-      return `test`
-    }
+    admissionSCore() {
+      let test = document.querySelectorAll(".scoreAdmission");
+      console.log(test);
+      return test;
+    },
   },
-
 };
 </script>
 

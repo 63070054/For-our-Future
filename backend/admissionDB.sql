@@ -5,6 +5,7 @@
 -- -------------------------------------------------------------
 SET
     FOREIGN_KEY_CHECKS = 0;
+    SET UNIQUE_CHECKS=0;
 
 DROP TABLE IF EXISTS `FACULTY`;
 
@@ -252,7 +253,7 @@ CREATE TABLE `user` (
     `blood_type` enum('A', 'B', 'AB', 'O'),
     `address` text,
     `phone` varchar(30),
-    `picture` varchar(30),
+    `picture` varchar(255),
     `u_created_date` date,
     `u_edited_date` date
 );
@@ -301,7 +302,7 @@ CREATE TABLE `news` (
     `news_id` int(10) AUTO_INCREMENT,
     `news_title` varchar(255) not null,
     `news_desc` varchar(255),
-    `news_picture` varchar(255) default "images\\news.png",
+    `news_picture` varchar(255),
     `news_created_date` date not null,
     `news_created_by` int(10) not null,
     `news_edited_date` date not null,
@@ -334,7 +335,19 @@ CREATE TABLE `university` (
     foreign key (`province_id`) references `province`(province_id)
 );
 
+DROP TABLE IF EXISTS `tokens`;
+
+CREATE TABLE `tokens` (
+  `id` int(10) AUTO_INCREMENT,
+  `u_id` int(10),
+  `token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`, `u_id`),
+  UNIQUE KEY `tokens_UN` (`token`),
+  FOREIGN KEY (`u_id`) REFERENCES `user` (`u_id`) ON DELETE CASCADE
+);
+
 DROP TABLE IF EXISTS `province`;
+
 
 CREATE TABLE `province` (
     `province_id` int(3) primary key AUTO_INCREMENT,
@@ -471,5 +484,46 @@ insert into u_gat (u_id, `type`, score) values (1, "THAI", 100);
 insert into u_gat (u_id, `type`, score) values (1, "ENG", 100);
 insert into u_pat (u_id, `type`, score) values (1, "ความถนัดทางวิศวกรรมศาสตร์", 70);
 
+insert into
+    user (
+        f_name,
+        l_name,
+        type_user,
+        u_created_date,
+        u_edited_date,
+        username,
+        `password`
+    )
+values
+    (
+        'กิตติภพ',
+        'ปังตระกูล',
+        'admin',
+        CURRENT_TIMESTAMP,
+        CURRENT_TIMESTAMP,
+        'admin',
+        '123456'
+    );
+    
+insert into admin (u_id) values (2);
+
+insert into university (uni_name, province_id, u_created_date, u_created_by, u_edited_date, u_edited_by) values ('มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี', 1, current_timestamp, 1, current_timestamp, 1);
+insert into faculty (uni_id, fac_name) values (1, 'คณะวิศวกรรมศาสตร์');
+insert into faculty (uni_id, fac_name) values (1, 'คณะวิทยาศาสตร์');
+insert into faculty (uni_id, fac_name) values (1, 'คณะครุศาสตร์อุตสาหกรรม    และเทคโนโลยี');
+insert into faculty (uni_id, fac_name) values (1, 'คณะเทคโนโลยีสารสนเทศ');
+insert into faculty (uni_id, fac_name) values (1, 'คณะสถาปัตยกรรมศาสตร์และการออกแบบ');
+insert into faculty (uni_id, fac_name) values (1, 'คณะพลังงานสิ่งแวดล้อมและวัสดุ');
+insert into faculty (uni_id, fac_name) values (1, 'คณะทรัพยากรชีวภาพและเทคโนโลยี');
+insert into faculty (uni_id, fac_name) values (1, 'คณะศิลปศาสตร์');
+insert into faculty (uni_id, fac_name) values (1, 'บัณฑิตวิทยาลัยการจัดการและนวัตกรรม');
+insert into faculty (uni_id, fac_name) values (1, 'สถาบันวิทยาการหุ่นยนต์ภาคสนาม');
+insert into faculty (uni_id, fac_name) values (1, 'บัณฑิตวิทยาลัยร่วมด้านพลังงานและสิ่งแวดล้อม');
+insert into faculty (uni_id, fac_name) values (1, 'วิทยาลัยสหวิทยาการ');
+insert into faculty (uni_id, fac_name) values (1, 'ดรุณสิกขาลัยโรงเรียนนวัตกรรมแห่งการเรียนรู้');
+insert into faculty (uni_id, fac_name) values (1, 'โครงการ วมว.(ห้องเรียนวิศว์-วิทย์)');
+insert into faculty (uni_id, fac_name) values (1, 'KOSEN KMUTT(ห้องเรียนวิศว์-วิทย์)');
+
 SET
     FOREIGN_KEY_CHECKS = 1;
+    SET UNIQUE_CHECKS=1;

@@ -35,7 +35,11 @@ import IconAdd from "@/components/icons/IconAdd.vue";
               <option
                 v-for="fac in faculty"
                 :key="fac.fac_id"
-                :value="{ facId: fac.fac_id, facName: fac.fac_name, facDesc: fac.fac_desc }"
+                :value="{
+                  facId: fac.fac_id,
+                  facName: fac.fac_name,
+                  facDesc: fac.fac_desc,
+                }"
               >
                 {{ fac.fac_name }}
               </option>
@@ -44,6 +48,7 @@ import IconAdd from "@/components/icons/IconAdd.vue";
         </div>
         <div class="control">
           <router-link
+            v-if="user && user.type_user == 'admin'"
             :to="{
               path: `/${this.$route.params.uniName}/${this.facultySelected.facName}/edit`,
             }"
@@ -55,6 +60,7 @@ import IconAdd from "@/components/icons/IconAdd.vue";
         </div>
         <div class="control">
           <router-link
+            v-if="user && user.type_user == 'admin'"
             :to="{
               path: `/${this.$route.params.uniName}/faculty/add`,
             }"
@@ -64,9 +70,14 @@ import IconAdd from "@/components/icons/IconAdd.vue";
             </button>
           </router-link>
         </div>
+        <div class="control">
+          <button type="button" class="button is-primary">
+            <i class="fa fa-trash">&nbsp;คณะ</i>
+          </button>
+        </div>
       </div>
       <h1 class="title has-text-weight-bold">รายละเอียดคณะ</h1>
-      <p class="mb-4">{{facultySelected.facDesc}}</p>
+      <p class="mb-4">{{ facultySelected.facDesc }}</p>
       <div class="columns is-multiline">
         <div class="column is-6" v-for="round in round" :key="round.r_id">
           <router-link
@@ -80,6 +91,7 @@ import IconAdd from "@/components/icons/IconAdd.vue";
       </div>
     </div>
     <router-link
+      v-if="user && user.type_user == 'admin'"
       :to="{
         path: `/${this.$route.params.uniName}/${facultySelected.facName}/round/add`,
       }"
@@ -90,7 +102,7 @@ import IconAdd from "@/components/icons/IconAdd.vue";
 </template>
 
 <script>
-import axios from "axios";
+import axios from "@/plugins/axios";
 
 export default {
   data() {
