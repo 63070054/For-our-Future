@@ -8,15 +8,16 @@
           <label class="label is-size-4">UNIVERSITY NAME <span style="color: red">*</span></label>
           <input class="input" type="text" v-model="uname" />
           <div v-if="error" class="has-text-danger">
-             <span v-if="v$.uname.$error">University Name is required</span>
-           </div>
+            <span v-if="v$.uname.$error">กรุณากรอกชื่อมหาวิทยาลัย</span>
+          </div>
         </div>
 
         <div class="field">
           <label class="label is-size-4">PROVINCE <span style="color: red">*</span></label>
           <div class="select is-fullwidth">
             <select v-model="province">
-              <option v-for="pro in all_province" :value="pro.province_id" :key="pro.province_id"> {{ pro.province_name }}
+              <option v-for="pro in all_province" :value="pro.province_id" :key="pro.province_id"> 
+                {{ pro.province_name}}
               </option>
             </select>
           </div>
@@ -47,10 +48,10 @@
 <script>
 import axios from 'axios';
 import useVuelidate from '@vuelidate/core';
-import { required, helpers  } from '@vuelidate/validators';
+import { required } from '@vuelidate/validators';
 
 export default {
-  setup () {
+  setup() {
     return { v$: useVuelidate() }
   },
   data() {
@@ -61,7 +62,7 @@ export default {
       error: false,
     }
   },
-  validations () {
+  validations() {
     return {
       uname: { required },
     }
@@ -71,12 +72,12 @@ export default {
   },
   methods: {
     async adduni() {
-       const result = await this.v$.$validate()
-       if(!result){
-         this.error = true
-         return
-       }
-       this.error = false
+      const result = await this.v$.$validate()
+      if (!result) {
+        this.error = true
+        return
+      }
+      this.error = false
 
       var formData = new FormData();
       var imagefile = document.querySelector('#univer');
