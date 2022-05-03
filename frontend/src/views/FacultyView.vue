@@ -46,9 +46,8 @@ import IconAdd from "@/components/icons/IconAdd.vue";
             </select>
           </div>
         </div>
-        <div class="control">
+        <div class="control" v-if="user && user.type_user == 'admin'">
           <router-link
-            v-if="user && user.type_user == 'admin'"
             :to="{
               path: `/${this.$route.params.uniName}/${this.facultySelected.facName}/edit`,
             }"
@@ -58,9 +57,9 @@ import IconAdd from "@/components/icons/IconAdd.vue";
             </button>
           </router-link>
         </div>
-        <div class="control">
+        <div class="control" v-if="user && user.type_user == 'admin'">
           <router-link
-            v-if="user && user.type_user == 'admin'"
+            
             :to="{
               path: `/${this.$route.params.uniName}/faculty/add`,
             }"
@@ -70,8 +69,8 @@ import IconAdd from "@/components/icons/IconAdd.vue";
             </button>
           </router-link>
         </div>
-        <div class="control">
-          <button type="button" class="button is-primary">
+        <div class="control" v-if="user && user.type_user == 'admin'">
+          <button type="button" class="button is-danger">
             <i class="fa fa-trash">&nbsp;คณะ</i>
           </button>
         </div>
@@ -105,6 +104,7 @@ import IconAdd from "@/components/icons/IconAdd.vue";
 import axios from "@/plugins/axios";
 
 export default {
+  props: ['user'],
   data() {
     return {
       faculty: [],

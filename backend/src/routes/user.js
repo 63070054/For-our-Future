@@ -181,6 +181,7 @@ router.post('/user/login', async (req, res, next) => {
 
 
 router.get("/user", isLoggedIn, async function (req, res, next) {
+    console.log("loginfds")
     res.json({
         user: req.user
     })

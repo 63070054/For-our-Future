@@ -45,6 +45,7 @@ import IconAdd from "@/components/icons/IconAdd.vue";
       v-for="uni in filterUniversities"
       :key="uni.id"
       :uni_info="uni"
+      :user="user"
       @delete-university="deleteUniversity(uni)"
     />
   </div>
@@ -54,10 +55,6 @@ import axios from "axios";
 
 export default {
   props: ["user"],
-  setup() {
-    const user = Vue.ref(null);
-    return { user }
-  },
   data() {
     return {
       // variable for input
