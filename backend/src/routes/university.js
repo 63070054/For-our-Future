@@ -176,14 +176,14 @@ router.put("/edituni", upload.single('resume'), async function (req, res, next) 
             console.log('ok')
             if (req.file) {
                 console.log('file')
-                await conn.query(`update university set uni_name = ?, province_id = ?, u_edited_date = CURRENT_TIMESTAMP, file_path = ? where uni_id = ?`,
-                [req.body.uni_name, req.body.province, req.file.path.substring(4), req.body.uniId]);
+                await conn.query(`update university set uni_name = ?, province_id = ?, u_edited_date = CURRENT_TIMESTAMP, u_edited_by = ?, file_path = ? where uni_id = ?`,
+                [req.body.uni_name, req.body.province, 1, req.file.path.substring(4), req.body.uniId]);
                 res.json({ "message": false });
             }
             else{
                 console.log('no file')
-                await conn.query(`update university set uni_name = ?, province_id = ?, u_edited_date = CURRENT_TIMESTAMP where uni_id = ?`,
-                    [req.body.uni_name, req.body.province, req.body.uniId]);
+                await conn.query(`update university set uni_name = ?, province_id = ?, u_edited_date = CURRENT_TIMESTAMP, u_edited_by = ? where uni_id = ?`,
+                    [req.body.uni_name, req.body.province, 1, req.body.uniId]);
                 res.json({ "message": false });
             }
         }

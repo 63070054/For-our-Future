@@ -205,18 +205,18 @@ router.put("/editnews", upload.single('news'), async function (req, res, next) {
                     news_desc = ?,
                     news_picture = ?,
                     news_edited_date = CURRENT_TIMESTAMP,
-                    news_edited_by = 1
+                    news_edited_by = ?
                     where news_id = ?`,
-                [req.body.news_title, req.body.news_des, req.file.path.substring(4), req.body.news_id]);
+                [req.body.news_title, req.body.news_des, req.file.path.substring(4), 1, req.body.news_id]);
         }
         else {
-            await conn.query(`UPDATE news 
+            await conn.query(`UPDATE news
                 SET news_title = ?,
                     news_desc = ?,
                     news_edited_date = CURRENT_TIMESTAMP,
-                    news_edited_by = 1
+                    news_edited_by = ?
                     WHERE news_id = ?`,
-                [req.body.news_title, req.body.news_des, req.body.news_id]);
+                [req.body.news_title, req.body.news_des, 1, req.body.news_id]);
         }
 
         allcate.map(async cate => {
