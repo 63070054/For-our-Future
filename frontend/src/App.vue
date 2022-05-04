@@ -59,6 +59,7 @@ export default {
     },
     signout(){
       this.user = null
+      this.$router.push('/login')
     }
   },
 };
