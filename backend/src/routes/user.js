@@ -82,9 +82,12 @@ router.post('/user/register', upload.single("imageUser"), async (req, res, next)
     const nationality = req.body.nationality
     const blood = req.body.blood
     const address = req.body.address
+
+    var row
+
     try {
         if (req.file) {
-            let [row, field] = await conn.query(
+            [row,   ] = await conn.query(
                 'INSERT INTO user (f_name, l_name, username, password, type_user, birth_date, sex, email, nationality, blood_type, address, phone, picture, u_created_date, u_edited_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)',
                 [
                     f_name, l_name, username, password, 'student', birthDate, sex, email, nationality, blood, address, phone, req.file.path.substring(4),
@@ -99,22 +102,105 @@ router.post('/user/register', upload.single("imageUser"), async (req, res, next)
                 ]
             )
         } else {
-            let [row, field] = await conn.query(
+            [row, field] = await conn.query(
                 'INSERT INTO user (f_name, l_name, username, password, type_user, birth_date, sex, email, nationality, blood_type, address, phone, picture, u_created_date, u_edited_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)',
                 [
                     f_name, l_name, username, password, 'student', birthDate, sex, email, nationality, blood, address, phone, 'images\\default_profile.jpg',
                 ]
             )
             await conn.query(
-                'INSERT INTO student (u_id) values (?)',
+                'INSERT INTO student (u_id, u_gpax) values (?, 0)',
                 [
                     row.insertId
                 ]
             )
         }
+
+      const onet = {
+        "ภาษาไทย": { score: 0 },
+        "คณิตศาสตร์": { score: 0 },
+        "สังคมศึกษา": { score: 0 },
+        "ภาษาอังกฤษ": { score: 0 },
+        "วิทยาศาสตร์": { score: 0 }
+      }
+      const gat = {
+        "THAI": { score: 0 },
+        "ENG": { score: 0 }
+      }
+      const pat = {
+        "ความถนัดทางคณิตศาสตร์": { score: 0 },
+        "ความถนัดทางวิทยาศาสตร์": { score: 0 },
+        "ความถนัดทางวิศวกรรมศาสตร์": { score: 0 },
+        "ความถนัดทางสถาปัตยกรรมศาสตร์": { score: 0 },
+        "ความถนัดทางวิชาชีพครู": { score: 0 },
+        "ความถนัดทางศิลปกรรมศาสตร์": { score: 0 },
+        "ฝรั่งเศส": { score: 0 },
+        "เยอรมัน": { score: 0 },
+        "ญี่ปุ่น": { score: 0 },
+        "จีน": { score: 0 },
+        "อาหรับ": { score: 0 },
+        "ภาษาบาลี": { score: 0 },
+      }
+      const sub9 = {
+        "ภาษาไทย": { score: 0 },
+        "สังคมศึกษา": { score: 0 },
+        "ภาษาอังกฤษ": { score: 0 },
+        "คณิตศาสตร์ 1": { score: 0 },
+        "ฟิสิกส์": { score: 0 },
+        "เคมี": { score: 0 },
+        "ชีววิทยา": { score: 0 },
+        "คณิตศาสตร์ 2 (สายศิลป์)": { score: 0 },
+        "วิทยาศาสตร์ทั่วไป (สายศิลป์)": { score: 0 },
+      }
+
+      Object.entries(onet).map(async value => {
+          let subject = value[0]
+          let score = value[1].score
+          await conn.query(
+            'INSERT INTO u_onet (u_id, type, score) values (?, ?, ?)',
+            [
+                row.insertId, subject, score
+            ]
+        )
+      })
+      Object.entries(gat).map(async value => {
+          let subject = value[0]
+          let score = value[1].score
+          await conn.query(
+            'INSERT INTO u_gat (u_id, type, score) values (?, ?, ?)',
+            [
+                row.insertId, subject, score
+            ]
+        )
+      })
+      Object.entries(pat).map(async value => {
+          let subject = value[0]
+          let score = value[1].score
+          await conn.query(
+            'INSERT INTO u_pat (u_id, type, score) values (?, ?, ?)',
+            [
+                row.insertId, subject, score
+            ]
+        )
+      })
+      Object.entries(sub9).map(async value => {
+          let subject = value[0]
+          let score = value[1].score
+          await conn.query(
+            'INSERT INTO u_sub (u_id, type, score) values (?, ?, ?)',
+            [
+                row.insertId, subject, score
+            ]
+        )
+      })
+
+
+
+
         res.json({
             "message": true,
         });
+
         conn.commit()
     } catch (err) {
         conn.rollback()

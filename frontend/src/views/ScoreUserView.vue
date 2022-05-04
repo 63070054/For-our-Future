@@ -23,7 +23,7 @@
                   <div class="control">
                     <input v-if="!editScore" :disabled="!editScore" v-model="gpax" class="input" type="number"
                       @input="limit(score, 100)">
-                      <input v-else :disabled="!editScore" v-model="editGpax" class="input" type="number"
+                    <input v-else :disabled="!editScore" v-model="editGpax" class="input" type="number"
                       @input="limit(score, 100)">
                   </div>
                 </div>
@@ -37,15 +37,15 @@
             <div class="field-body mb-2" v-for="(score, subject, index) in onet" :key="index">
               <div class="column is-9 py-0 pl-0">
                 <div class="field">
-                  <input class="input" :value="subject" type="text" disabled />
+                  <input class="input" :value="score.type" type="text" disabled />
                 </div>
               </div>
               <div class="column is-3 pl-0 py-0">
                 <div class="field">
                   <div class="control">
                     <input v-if="!editScore" :disabled="!editScore" v-model="score.score" class="input" type="number"
-                      @input="limit(score, 100)">
-                      <input v-else :disabled="!editScore" v-model="score.editScore" class="input" type="number"
+                      >
+                    <input v-else :disabled="!editScore" v-model="score.editScore" class="input" type="number"
                       @input="limit(score, 100)">
                   </div>
                 </div>
@@ -59,15 +59,15 @@
             <div class="field-body mb-2" v-for="(score, subject, index) in sub9" :key="index">
               <div class="column is-9 py-0 pl-0">
                 <div class="field">
-                  <input class="input" :value="subject" type="text" disabled />
+                  <input class="input" :value="score.type" type="text" disabled />
                 </div>
               </div>
               <div class="column is-3 pl-0 py-0">
                 <div class="field">
                   <div class="control">
                     <input v-if="!editScore" :disabled="!editScore" v-model="score.score" class="input" type="number"
-                      @input="limit(score, 100)">
-                      <input v-else :disabled="!editScore" v-model="score.editScore" class="input" type="number"
+                      >
+                    <input v-else :disabled="!editScore" v-model="score.editScore" class="input" type="number"
                       @input="limit(score, 100)">
                   </div>
                 </div>
@@ -83,15 +83,15 @@
             <div class="field-body mb-2" v-for="(score, subject, index) in gat" :key="index">
               <div class="column is-9 py-0 pl-0">
                 <div class="field">
-                  <input class="input" :value="subject" type="text" disabled />
+                  <input class="input" :value="score.type" type="text" disabled />
                 </div>
               </div>
               <div class="column is-3 pl-0 py-0">
                 <div class="field">
                   <div class="control">
                     <input v-if="!editScore" :disabled="!editScore" v-model="score.score" class="input" type="number"
-                      @input="limit(score, 100)">
-                      <input v-else :disabled="!editScore" v-model="score.editScore" class="input" type="number"
+                      >
+                    <input v-else :disabled="!editScore" v-model="score.editScore" class="input" type="number"
                       @input="limit(score, 100)">
                   </div>
                 </div>
@@ -105,15 +105,15 @@
             <div class="field-body mb-2" v-for="(score, subject, index) in pat" :key="index">
               <div class="column is-9 py-0 pl-0">
                 <div class="field">
-                  <input class="input" :value="subject" type="text" disabled />
+                  <input class="input" :value="score.type" type="text" disabled />
                 </div>
               </div>
               <div class="column is-3 pl-0 py-0">
                 <div class="field">
                   <div class="control">
                     <input v-if="!editScore" :disabled="!editScore" v-model="score.score" class="input" type="number"
-                      @input="limit(score, 100)">
-                      <input v-else :disabled="!editScore" v-model="score.editScore" class="input" type="number"
+                      >
+                    <input v-else :disabled="!editScore" v-model="score.editScore" class="input" type="number"
                       @input="limit(score, 100)">
                   </div>
                 </div>
@@ -144,65 +144,56 @@
 import axios from '@/plugins/axios'
 
 export default {
-  data() {
+  props: ['user']
+  , data() {
     return {
       editScore: false,
       gpax: 0,
       editGpax: 0,
       onet: {
-        "ภาษาไทย": { score: 0, editScore: 0 },
-        "คณิตศาสตร์": { score: 0, editScore: 0 },
-        "สังคมศึกษา": { score: 0, editScore: 0 },
-        "ภาษาอังกฤษ": { score: 0, editScore: 0 },
-        "วิทยาศาสตร์": { score: 0, editScore: 0 }
       },
       gat: {
-        "THAI": { score: 0, editScore: 0 },
-        "ENG": { score: 0, editScore: 0 }
       },
       pat: {
-        "ความถนัดทางคณิตศาสตร์": { score: 0, editScore: 0 },
-        "ความถนัดทางวิทยาศาสตร์": { score: 0, editScore: 0 },
-        "ความถนัดทางวิศวกรรมศาสตร์": { score: 0, editScore: 0 },
-        "ความถนัดทางสถาปัตยกรรมศาสตร์": { score: 0, editScore: 0 },
-        "ความถนัดทางวิชาชีพครู": { score: 0, editScore: 0 },
-        "ความถนัดทางศิลปกรรมศาสตร์": { score: 0, editScore: 0 },
-        "ฝรั่งเศส": { score: 0, editScore: 0 },
-        "เยอรมัน": { score: 0, editScore: 0 },
-        "ญี่ปุ่น": { score: 0, editScore: 0 },
-        "จีน": { score: 0, editScore: 0 },
-        "อาหรับ": { score: 0, editScore: 0 },
-        "ภาษาบาลี": { score: 0, editScore: 0 },
       },
       sub9: {
-        "ภาษาไทย": { score: 0, editScore: 0 },
-        "สังคมศึกษา": { score: 0, editScore: 0 },
-        "ภาษาอังกฤษ": { score: 0, editScore: 0 },
-        "คณิตศาสตร์ 1": { score: 0, editScore: 0 },
-        "ฟิสิกส์": { score: 0, editScore: 0 },
-        "เคมี": { score: 0, editScore: 0 },
-        "ชีววิทยา": { score: 0, editScore: 0 },
-        "คณิตศาสตร์ 2 (สายศิลป์)": { score: 0, editScore: 0 },
-        "วิทยาศาสตร์ทั่วไป (สายศิลป์)": { score: 0, editScore: 0 },
       }
     };
   },
 
   mounted() {
+    this.gpax = this.user.u_gpax
+    this.editGpax = this.user.editGpax
+    this.onet = [...this.user.score.onet]
+    this.gat = [...this.user.score.gat]
+    this.pat = [...this.user.score.pat]
+    this.sub9 = [...this.user.score.sub]
+    console.log(this.onet)
   },
   methods: {
-    getScore(){
-      
-    },
     saveScore() {
-
+      axios.put(`http://localhost:5000/profile/scoreUser`, {
+        'gpax': this.gpax,
+        'onet': this.onet,
+        'gat': this.gat,
+        'pat': this.pat,
+        'sub9': this.sub9
+      })
+        .then((response) => {
+          console.log(response.data.message)
+          alert("แก้ไขข้อมูลเสร็จสิ้น")
+      this.editScore = false
+        })
+        .catch((error) => {
+          alert(error.response.data.message)
+        });
     },
     limit(score, maxScore) {
-      if (score.score < 0) {
-        score.score = 0
+      if (score.editScore < 0) {
+        score.editScore = 0
       }
-      if (score.score > maxScore) {
-        score.score = maxScore
+      if (score.editScore > maxScore) {
+        score.editScore = maxScore
       }
     }
   },

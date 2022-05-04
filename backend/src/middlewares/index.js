@@ -32,7 +32,7 @@ async function isLoggedIn(req, res, next) {
             selectUser = await conn.query(`select * from user join student using (u_id) where u_id = ?`, [
                 [token.u_id]
             ]);
-
+            selectUser[0][0].editGpax = selectUser[0][0].u_gpax
             selectUser[0][0].score = {}
             selectUser[0][0].score.gat = []
             selectUser[0][0].score.pat = []
@@ -51,6 +51,19 @@ async function isLoggedIn(req, res, next) {
             const selectScoreOnet = await conn.query(`select * from u_onet where u_id = ?`, [
                 token.u_id
             ]);
+
+            selectScoreGat[0].map(gat => {
+                gat.editScore = gat.score
+            })
+            selectScorePat[0].map(pat => {
+                pat.editScore = pat.score
+            })
+            selectScoreSub[0].map(sub => {
+                sub.editScore = sub.score
+            })
+            selectScoreOnet[0].map(onet => {
+                onet.editScore = onet.score
+            })
 
             selectUser[0][0].score.gat = [...selectScoreGat[0]]
             selectUser[0][0].score.pat = [...selectScorePat[0]]

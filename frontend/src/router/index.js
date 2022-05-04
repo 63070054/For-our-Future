@@ -62,7 +62,7 @@ const router = createRouter({
       component: () => import('../views/ProfileView.vue')
     },
     {
-      path: '/profile/:username/scoreUser',
+      path: '/profile/scoreUser',
       name: 'scoreUser',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
