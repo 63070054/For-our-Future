@@ -189,11 +189,25 @@ router.put("/edituni", isLoggedIn, isAdmin, upload.single('resume'), async funct
     }
 });
 
-router.delete("/deleteUniversity/:uniId", isLoggedIn, isAdmin, async function (req, res, next) {
+router.delete("/deleteUniversity/:uniId", async function (req, res, next) {
     const conn = await pool.getConnection()
     await conn.beginTransaction();
-    console.log(req.params.uniId)
     try {
+        const [selectFac, field1] = await conn.query(`select fac_id from faculty WHERE uni_id = ?`, [req.params.uniId]);
+        selectFac.map(async fac => {
+            const [selectRound, field2] = await conn.query('select r_id from round where uni_id = ? and fac_id = ?', [
+                req.params.uniId, fac.fac_id
+            ])
+            selectRound.map(async round => {
+                await conn.query(`DELETE FROM r_gat WHERE r_id = ?`, [round.r_id]);
+                await conn.query(`DELETE FROM r_lang WHERE r_id = ?`, [round.r_id]);
+                await conn.query(`DELETE FROM r_onet WHERE r_id = ?`, [round.r_id]);
+                await conn.query(`DELETE FROM r_pat WHERE r_id = ?`, [round.r_id]);
+                await conn.query(`DELETE FROM r_specific WHERE r_id = ?`, [round.r_id]);
+                await conn.query(`DELETE FROM r_sub WHERE r_id = ?`, [round.r_id]);
+                await conn.query(`DELETE FROM round WHERE r_id = ?`, [round.r_id]);
+            })
+        })
         await conn.query(`DELETE FROM round WHERE uni_id = ?`, [req.params.uniId]);
         await conn.query(`DELETE FROM faculty WHERE uni_id = ?`, [req.params.uniId]);
         await conn.query(`DELETE FROM university WHERE uni_id = ?`, [req.params.uniId]);
@@ -202,6 +216,8 @@ router.delete("/deleteUniversity/:uniId", isLoggedIn, isAdmin, async function (r
         conn.commit()
 
     } catch (e) {
+        console.log(e)
+        res.status(400).send(e)
         conn.rollback()
     } finally {
         conn.release()

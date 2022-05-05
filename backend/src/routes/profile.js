@@ -30,7 +30,8 @@ router.put("/profile", isLoggedIn, async function (req, res, next) {
         nationality = ?
         ,blood_type = ?
         ,address = ?,
-        sex = ?
+        sex = ?,
+        u_edited_date = current_timestamp 
         where u_id = ? ;
         `, [req.body.f_name,
         req.body.l_name,
@@ -41,6 +42,7 @@ router.put("/profile", isLoggedIn, async function (req, res, next) {
         req.body.blood,
         req.body.add,
         req.body.sex,
+
         req.user.u_id]);
 
         res.json({ 'message': 'success' })
