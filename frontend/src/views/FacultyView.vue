@@ -117,13 +117,12 @@ export default {
       facId: this.faculty[0].fac_id,
       facName: this.faculty[0].fac_name,
       facDesc: this.faculty[0].fac_desc,
-    };
-    await this.getRound();
+    };    await this.getRound();
   },
   methods: {
     async delFaculty() {
       axios.delete(
-        `http://localhost:5000/${this.$route.params.uniName}/${this.facultySelected}/delete`,
+        `http://localhost:5000/${this.$route.params.uniName}/${this.facultySelected.facName}`
       )
         .then((response) => {
           console.log(response.data.message);
