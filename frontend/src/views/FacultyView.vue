@@ -69,7 +69,7 @@ import IconAdd from "@/components/icons/IconAdd.vue";
           </router-link>
         </div>
         <div class="control" v-if="user && user.type_user == 'admin'">
-          <button type="button" class="button is-danger">
+          <button @click="delFaculty" type="button" class="button is-danger">
             <i class="fa fa-trash">&nbsp;คณะ</i>
           </button>
         </div>
@@ -122,6 +122,22 @@ export default {
 
   },
   methods: {
+    async delFaculty() {
+      axios.delete(
+        `http://localhost:5000/${this.$route.params.uniName}/${this.facultySelected.facName}`
+      )
+        .then((response) => {
+          console.log(response.data.message);
+          if (response.data.message == "ok") {
+            alert('ลบเสร็จสิ้น')
+          } else {
+            alert("เกิดข้อผิดพลาดขึ้น");
+          }
+        })
+        .catch((error) => {
+          alert(error.response.data.message);
+        });
+    },
     async getFaculty(uniName) {
       await axios
         .get(`http://localhost:5000/${uniName}/faculty`)
