@@ -16,7 +16,6 @@ router.get("/:uniName/faculty", async function (req, res, next) {
     await conn.beginTransaction();
     try {
         const selectFaculty = await conn.query(`select * from faculty join university using(uni_id) where uni_name = ?`, [req.params.uniName]);
-        console.log(selectFaculty[0]);
         res.send({
             faculty: selectFaculty[0]
         })
@@ -107,11 +106,6 @@ router.put("/:uniName/:facName/edit", isLoggedIn, isAdmin, async function (req, 
         const [facultys2] = await conn.query(`select * from faculty join university using(uni_id) where uni_name = ? AND fac_name = ?`,
          [req.params.uniName, req.body.faculty_name]);
         const faculty2 = facultys2[0]
-        console.log('-----')
-        console.log(faculty)
-        console.log('-----')
-        console.log(faculty2)
-        console.log('-----')
         if(faculty2){
             res.json({'message':'alredyHave'})
         }
@@ -128,8 +122,6 @@ router.put("/:uniName/:facName/edit", isLoggedIn, isAdmin, async function (req, 
              [
                 req.body.faculty_name, req.body.faculty_desc, faculty.fac_id
              ]);
-             console.log('+++')
-             console.log(rows[0])
             res.json({'message': 'success'})
         }
 

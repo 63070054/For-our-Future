@@ -77,7 +77,7 @@ import IconAdd from "@/components/icons/IconAdd.vue";
       <h1 class="title has-text-weight-bold">รายละเอียดคณะ</h1>
       <p class="mb-4">{{ facultySelected.facDesc }}</p>
       <div class="columns is-multiline">
-        <div class="column is-6" v-for="round in filterRound" :key="round.r_id">
+        <div class="column is-6" v-for="round in roundInfo" :key="round.r_id">
           <router-link
             :to="{
               path: `/${this.$route.params.uniName}/${facultySelected.facName}/${round.round}`,
@@ -107,18 +107,19 @@ export default {
   data() {
     return {
       faculty: [],
-      round: [],
+      roundInfo: [],
       facultySelected: "",
     };
   },
-  async mounted() {
+  async created() {
     await this.getFaculty(this.$route.params.uniName);
     this.facultySelected = {
       facId: this.faculty[0].fac_id,
       facName: this.faculty[0].fac_name,
       facDesc: this.faculty[0].fac_desc,
     };
-    await this.getRound();
+    await this.getRound()
+
   },
   methods: {
     async getFaculty(uniName) {
@@ -132,10 +133,12 @@ export default {
         });
     },
     async getRound() {
+      console.log(this.facultySelected.facId)
       await axios
         .get(`http://localhost:5000/${this.facultySelected.facId}/round`)
         .then((response) => {
-          this.round = response.data.round;
+          this.roundInfo = response.data.round;
+          console.log(this.roundInfo)
         })
         .catch((error) => {
           alert(error.response.data.message);

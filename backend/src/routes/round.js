@@ -19,10 +19,13 @@ const editRoundSchema = Joi.object({
 })
 
 router.get("/:facId/round", async function (req, res, next) {
+    console.log('test')
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     try {
         const selectRound = await conn.query(`select * from round where fac_id = ?`, [req.params.facId]);
+        console.log('round')
+        console.log(selectRound[0])
         res.send({
             round: selectRound[0]
         })
