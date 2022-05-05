@@ -22,7 +22,7 @@
           PROFILE
         </p>
       </div>
-      <img :src="'http://localhost:5000/' + pic" class="profileImage" />
+      <img :src="'http://localhost:5000/' + picture " class="profileImage" />
     </div>
     <div class="columns is-centered column-res">
       <div class="column is-half p-5">
@@ -230,12 +230,11 @@ export default {
       blood: "",
       add: "",
       sex: "",
-      pic: "",
+      picture: "",
     };
   },
   async created() {
     await this.setProfile();
-    console.log(this.user);
   },
   methods: {
     async setProfile() {
@@ -244,12 +243,14 @@ export default {
       this.l_name = this.user.l_name;
       this.email = this.user.email;
       this.phone = this.user.phone;
-      this.date = this.user.birth_date.substring(0, 10);
+      this.date = this.user.birth_date;
+      if(this.user.birth_date) this.date = this.user.birth_date.substring(0, 10);
       this.nationality = this.user.nationality;
       this.blood = this.user.blood_type;
       this.add = this.user.address;
       this.sex = this.user.sex;
-      this.pic = this.user.picture;
+      this.picture = this.user.picture;
+      console.log(this.user.picture)
     },
     cancelEdit() {
       this.editAble = false;

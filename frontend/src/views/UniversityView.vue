@@ -119,7 +119,7 @@ export default {
             alert("คุณลบสำเร็จแล้ว");
           })
           .catch((error) => {
-            alert(error.response.data.message);
+            alert(error.response.data);
           });
       }
     },

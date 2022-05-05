@@ -8,7 +8,7 @@ router = express.Router();
 
 const schema = Joi.object({
     faculty_name: Joi.string().required().min(1),
-    faculty_desc: Joi.string().min(0),
+    faculty_desc: Joi.any(),
 })
 
 router.get("/:uniName/faculty", async function (req, res, next) {
@@ -137,37 +137,24 @@ router.delete("/:uniName/:facName", isLoggedIn, isAdmin, async function (req, re
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     try {
-        console.log('1')
         const [universitys] = await conn.query(`select * from university where uni_name = ?`,
             [req.params.uniName]);
-        console.log('1.1')
         const university = universitys[0]
-        console.log(university.uni_id)
-        console.log(req.params.facName)
         const [facultys] = await conn.query(`select * from faculty where uni_id=? AND fac_name = ?`,
             [university.uni_id, req.params.facName]);
         const faculty = facultys[0]
         console.log(faculty.fac_id)
         const [rounds] = await conn.query(`select * from round where uni_id=? AND fac_id = ?`,
             [university.uni_id, faculty.fac_id_id]);
-        console.log('==')
-        console.log(rounds)
         if (rounds[0]) {
             const round = rounds[0]
             await conn.query(`DELETE FROM r_gat WHERE r_id = ?`, [round.r_id]);
-            // console.log('111')
             await conn.query(`DELETE FROM r_lang WHERE r_id = ?`, [round.r_id]);
-            // console.log('1111')
             await conn.query(`DELETE FROM r_onet WHERE r_id = ?`, [round.r_id]);
-            // console.log('11111')
             await conn.query(`DELETE FROM r_pat WHERE r_id = ?`, [round.r_id]);
-            // console.log('111111')
             await conn.query(`DELETE FROM r_specific WHERE r_id = ?`, [round.r_id]);
-            // console.log('1111111')
             await conn.query(`DELETE FROM r_sub WHERE r_id = ?`, [round.r_id]);
-            // console.log('11111111')
             await conn.query(`DELETE FROM round WHERE r_id = ?`, [round.r_id]);
-            // console.log('111111111')
         }
 
         await conn.query(`DELETE FROM faculty WHERE fac_id = ? AND uni_id = ? `
