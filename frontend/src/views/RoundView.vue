@@ -7,11 +7,13 @@
       <div style="background-color: #de8971; width: 100%; height: 315px">
         <div style="background-color: #0f1123; width: 100%; height: 300px">
           <div
+            class="column"
             style="
               position: absolute;
               top: 50%;
               left: 50%;
               transform: translate(-50%, -50%);
+              width: 100%;
             "
           >
             <p class="is-size-1 has-text-centered has-text-white">
@@ -23,7 +25,29 @@
           </div>
         </div>
       </div>
-      <div class="content p-2">
+      <div class="content p-2" style="position: relative">
+        <router-link
+          :to="`/${this.$route.params.uniName}/${this.$route.params.facName}/${this.$route.params.round}/edit`"
+          style="position: absolute; right: 60px; top: 10px; z-index: 2"
+          v-if="user && user.type_user == 'admin'"
+        >
+          <button class="button is-info is-small" type="button">
+            <span class="icon">
+              <i class="fas fa-pen" style="font-size: 16px"></i>
+            </span>
+          </button>
+        </router-link>
+        <button
+          v-if="user && user.type_user == 'admin'"
+          class="button is-danger is-small"
+          type="button"
+          style="position: absolute; right: 20px; top: 10px; z-index: 2"
+          @click="deleteRound()"
+        >
+          <span class="icon">
+            <i class="fas fa-trash-alt" style="font-size: 16px"></i>
+          </span>
+        </button>
         <h1>รอบการสมัครที่ {{ this.$route.params.round }}</h1>
         <h2 class="mb-6">
           รายละเอียดรอบการสมัครที่ {{ this.$route.params.round }}
@@ -46,6 +70,7 @@
             <div
               class="column has-text-centered is-size-3"
               style="background-color: #2f4840; color: white"
+              v-if="user.type_user == 'student'"
             >
               คะแนนของคุณ
             </div>
@@ -53,14 +78,20 @@
           <div class="columns is-mobile" v-if="this.$route.params.round == '4'">
             <div class="column has-text-centered is-size-4">O-NET 5 วิชา</div>
             <div class="column has-text-centered is-size-4">30 %</div>
-            <div class="column has-text-centered is-size-4 scoreAdmission">
+            <div
+              class="column has-text-centered is-size-4 scoreAdmission"
+              v-if="user.type_user == 'student'"
+            >
               {{ calculateOnetScore() }}
             </div>
           </div>
           <div class="columns is-mobile" v-if="this.$route.params.round == '4'">
             <div class="column has-text-centered is-size-4">GPAX</div>
             <div class="column has-text-centered is-size-4">20 %</div>
-            <div class="column has-text-centered is-size-4 scoreAdmission">
+            <div
+              class="column has-text-centered is-size-4 scoreAdmission"
+              v-if="user.type_user == 'student'"
+            >
               {{ calculateGpaxScore() }}
             </div>
           </div>
@@ -76,7 +107,10 @@
               <div class="column has-text-centered is-size-4">
                 {{ percentage.percentage }} %
               </div>
-              <div class="column has-text-centered is-size-4 scoreAdmission">
+              <div
+                class="column has-text-centered is-size-4 scoreAdmission"
+                v-if="user.type_user == 'student'"
+              >
                 {{
                   calculateAdmissionScore(
                     key,
@@ -87,7 +121,6 @@
               </div>
             </div>
           </template>
-          
         </div>
       </div>
     </div>
@@ -106,7 +139,6 @@ export default {
   },
   async created() {
     await this.getRound();
-    console.log(this.user);
   },
   methods: {
     async getRound() {
@@ -148,8 +180,26 @@ export default {
     },
     admissionSCore() {
       let test = document.querySelectorAll(".scoreAdmission");
-      console.log(test);
       return test;
+    },
+    async deleteRound() {
+      await axios
+        .delete(
+          `http://localhost:5000/${this.$route.params.uniName}/${this.$route.params.facName}/${this.$route.params.round}/delete`,
+          {
+            data: {
+              r_id: this.round.r_id,
+            }
+          }
+        )
+        .then((response) => {
+          this.$router.push(
+            `/${this.$route.params.uniName}/faculty`
+          );
+        })
+        .catch((error) => {
+          alert(error.response.data.message);
+        });
     },
   },
 };

@@ -12,7 +12,7 @@
         <div class="columns">
           <div class="column">
             <label class="label is-size-4 has-text-left">GPAX</label>
-            <div class="field-body mb-2">
+            <div class="field-body mb-2 columns is-mobile">
               <div class="column is-9 py-0 pl-0">
                 <div class="field">
                   <input class="input" value="เกรดเฉลี่ย 6 เทอม" type="text" disabled />
@@ -34,7 +34,7 @@
         <div class="columns">
           <div class="column">
             <label class="label is-size-4 has-text-left">O-NET</label>
-            <div class="field-body mb-2" v-for="(score, subject, index) in onet" :key="index">
+            <div class="field-body mb-2 columns is-mobile" v-for="(score, subject, index) in onet" :key="index">
               <div class="column is-9 py-0 pl-0">
                 <div class="field">
                   <input class="input" :value="score.type" type="text" disabled />
@@ -56,7 +56,7 @@
         <div class="columns">
           <div class="column">
             <label class="label is-size-4 has-text-left">9 วิชาสามัญ</label>
-            <div class="field-body mb-2" v-for="(score, subject, index) in sub9" :key="index">
+            <div class="field-body mb-2 columns is-mobile" v-for="(score, subject, index) in sub9" :key="index">
               <div class="column is-9 py-0 pl-0">
                 <div class="field">
                   <input class="input" :value="score.type" type="text" disabled />
@@ -80,7 +80,7 @@
         <div class="columns">
           <div class="column">
             <label class="label is-size-4 has-text-left">GAT</label>
-            <div class="field-body mb-2" v-for="(score, subject, index) in gat" :key="index">
+            <div class="field-body mb-2 columns is-mobile" v-for="(score, subject, index) in gat" :key="index">
               <div class="column is-9 py-0 pl-0">
                 <div class="field">
                   <input class="input" :value="score.type" type="text" disabled />
@@ -102,7 +102,7 @@
         <div class="columns">
           <div class="column ">
             <label class="label is-size-4 has-text-left">PAT</label>
-            <div class="field-body mb-2" v-for="(score, subject, index) in pat" :key="index">
+            <div class="field-body mb-2 columns is-mobile" v-for="(score, subject, index) in pat" :key="index">
               <div class="column is-9 py-0 pl-0">
                 <div class="field">
                   <input class="input" :value="score.type" type="text" disabled />
@@ -123,11 +123,11 @@
         </div>
         <div class="columns">
           <div class="column" v-if="!editScore">
-            <button class="button" @click="editScore = true"> แก้ไขคะแนนของคุณ</button>
+            <button class="button is-info has-text-white" @click="editScore = true"> แก้ไขคะแนนของคุณ</button>
           </div>
           <div class="column" v-else>
-            <button class="button" @click="saveScore"> บันทึกคะแนนของคุณ </button>
-            <button class="button" @click="editScore = false"> ยกเลิก </button>
+            <button class="button is-success has-text-white" @click="saveScore"> บันทึกคะแนนของคุณ </button>
+            <button class="button is-danger has-text-white" @click="editScore = false"> ยกเลิก </button>
 
           </div>
         </div>
