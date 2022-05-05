@@ -152,7 +152,7 @@
                 <label class="label is-size-6 has-text-left">NATIONALITY</label>
                 <input
                   :disabled="!editAble"
-                  v-model="nationlity"
+                  v-model="nationality"
                   class="input"
                   type="text"
                   placeholder="NATIONALITY"
@@ -226,7 +226,7 @@ export default {
       email: "",
       phone: "",
       date: "",
-      nationlity: "",
+      nationality: "",
       blood: "",
       add: "",
       sex: "",
@@ -244,10 +244,10 @@ export default {
       this.l_name = this.user.l_name;
       this.email = this.user.email;
       this.phone = this.user.phone;
-      this.date = this.user.birth_date;
-      this.nationlity = this.user.nationlity;
+      this.date = this.user.birth_date.substring(0, 10);
+      this.nationality = this.user.nationality;
       this.blood = this.user.blood_type;
-      this.add = this.user.addres;
+      this.add = this.user.address;
       this.sex = this.user.sex;
       this.pic = this.user.picture;
     },
@@ -264,7 +264,7 @@ export default {
           email: this.email,
           phone: this.phone,
           date: this.date,
-          nationlity: this.nationlity,
+          nationality: this.nationality,
           blood: this.blood,
           add: this.add,
           sex: this.sex,

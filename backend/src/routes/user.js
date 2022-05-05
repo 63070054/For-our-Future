@@ -96,7 +96,7 @@ router.post('/user/register', upload.single("imageUser"), async (req, res, next)
             console.log(row)
 
             await conn.query(
-                'INSERT INTO student (u_id) values (?)',
+                'INSERT INTO student (u_id, u_gpax) values (?, 0)',
                 [
                     row.insertId
                 ]
