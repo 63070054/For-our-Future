@@ -77,7 +77,7 @@ import IconAdd from "@/components/icons/IconAdd.vue";
       <h1 class="title has-text-weight-bold">รายละเอียดคณะ</h1>
       <p class="mb-4">{{ facultySelected.facDesc }}</p>
       <div class="columns is-multiline">
-        <div class="column is-6" v-for="round in roundInfo" :key="round.r_id">
+        <div class="column is-6" v-for="round in filterRound" :key="round.r_id">
           <router-link
             :to="{
               path: `/${this.$route.params.uniName}/${facultySelected.facName}/${round.round}`,
@@ -157,7 +157,7 @@ export default {
         return 0;
       };
 
-      return this.round.sort(compare)
+      return this.roundInfo.sort(compare)
     },
   },
 };
