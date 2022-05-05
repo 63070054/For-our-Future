@@ -118,21 +118,27 @@ export default {
       facName: this.faculty[0].fac_name,
       facDesc: this.faculty[0].fac_desc,
     };
-    await this.getRound()
-
+    await this.getRound();
   },
   methods: {
     async delFaculty() {
-      axios.delete(
-        `http://localhost:5000/${this.$route.params.uniName}/${this.facultySelected.facName}`
-      )
+      axios
+        .delete(
+          `http://localhost:5000/${this.$route.params.uniName}/${this.facultySelected.facName}`
+        )
         .then((response) => {
-          console.log(response.data.message);
-          if (response.data.message == "ok") {
-            alert('ลบเสร็จสิ้น')
-          } else {
-            alert("เกิดข้อผิดพลาดขึ้น");
+          this.faculty = this.faculty.filter(
+            (val) => val.fac_id != response.data.facIdDeleted
+          );
+          if (this.faculty) {
+            this.facultySelected = {
+              facId: this.faculty[0].fac_id,
+              facName: this.faculty[0].fac_name,
+              facDesc: this.faculty[0].fac_desc,
+            };
           }
+
+          alert("ลบเสร็จสิ้น");
         })
         .catch((error) => {
           alert(error.response.data.message);
@@ -149,12 +155,12 @@ export default {
         });
     },
     async getRound() {
-      console.log(this.facultySelected.facId)
+      console.log(this.facultySelected.facId);
       await axios
         .get(`http://localhost:5000/${this.facultySelected.facId}/round`)
         .then((response) => {
           this.roundInfo = response.data.round;
-          console.log(this.roundInfo)
+          console.log(this.roundInfo);
         })
         .catch((error) => {
           alert(error.response.data.message);
@@ -173,7 +179,7 @@ export default {
         return 0;
       };
 
-      return this.roundInfo.sort(compare)
+      return this.roundInfo.sort(compare);
     },
   },
 };

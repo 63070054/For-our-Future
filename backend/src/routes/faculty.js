@@ -34,7 +34,7 @@ router.get("/:uniName/:facName", async function (req, res, next) {
     await conn.beginTransaction();
     try {
         const selectFaculty = await conn.query(`select * from faculty join university using(uni_id) where uni_name = ? AND fac_name = ?`, [req.params.uniName, req.params.facName]);
-        res.json({'faculty': selectFaculty[0]})
+        res.json({ 'faculty': selectFaculty[0] })
 
         conn.commit()
 
@@ -47,7 +47,7 @@ router.get("/:uniName/:facName", async function (req, res, next) {
 
 router.post("/:uniName/faculty/add", isLoggedIn, isAdmin, async function (req, res, next) {
     try {
-        await schema.validateAsync(req.body, {abortEarly: false})
+        await schema.validateAsync(req.body, { abortEarly: false })
     } catch (error) {
         console.log(error)
         return res.status(400).json(error)
@@ -57,27 +57,27 @@ router.post("/:uniName/faculty/add", isLoggedIn, isAdmin, async function (req, r
     await conn.beginTransaction();
     try {
         const [facultys] = await conn.query(`select * from faculty join university using(uni_id) where uni_name = ? AND fac_name = ?`,
-         [req.params.uniName, req.body.faculty_name]);
+            [req.params.uniName, req.body.faculty_name]);
         const faculty = facultys[0]
         // console.log(faculty)
-        if(faculty){
-            res.json({'message':'alredyHave'})
+        if (faculty) {
+            res.json({ 'message': 'alredyHave' })
         }
-        else{
+        else {
             // console.log('test2')
             const [university] = await conn.query(`SELECT * FROM university where uni_name = ?`,
-            [req.params.uniName]);
+                [req.params.uniName]);
             const uni = university[0];
             // console.log(uni)
             // console.log('----')
             const [rows, fieldn] = await conn.query(`INSERT INTO faculty(uni_id, fac_name, fac_desc)
             values(?,?,?)`,
-             [
-                uni.uni_id, req.body.faculty_name, req.body.faculty_desc
-             ]);
+                [
+                    uni.uni_id, req.body.faculty_name, req.body.faculty_desc
+                ]);
             //  console.log('+++')
             //  console.log(rows[0])
-            res.json({'message': 'success'})
+            res.json({ 'message': 'success' })
         }
 
         conn.commit()
@@ -91,7 +91,7 @@ router.post("/:uniName/faculty/add", isLoggedIn, isAdmin, async function (req, r
 
 router.put("/:uniName/:facName/edit", isLoggedIn, isAdmin, async function (req, res, next) {
     try {
-        await schema.validateAsync(req.body, {abortEarly: false})
+        await schema.validateAsync(req.body, { abortEarly: false })
     } catch (error) {
         console.log(error)
         return res.status(400).json(error)
@@ -101,15 +101,15 @@ router.put("/:uniName/:facName/edit", isLoggedIn, isAdmin, async function (req, 
     await conn.beginTransaction();
     try {
         const [facultys] = await conn.query(`select * from faculty join university using(uni_id) where uni_name = ? AND fac_name = ?`,
-         [req.params.uniName, req.params.facName]);
+            [req.params.uniName, req.params.facName]);
         const faculty = facultys[0]
         const [facultys2] = await conn.query(`select * from faculty join university using(uni_id) where uni_name = ? AND fac_name = ?`,
-         [req.params.uniName, req.body.faculty_name]);
+            [req.params.uniName, req.body.faculty_name]);
         const faculty2 = facultys2[0]
-        if(faculty2){
-            res.json({'message':'alredyHave'})
+        if (faculty2) {
+            res.json({ 'message': 'alredyHave' })
         }
-        else{
+        else {
             console.log('test2')
             // const [university] = await conn.query(`SELECT * FROM university where uni_name = ?`,
             // [req.params.uniName]);
@@ -119,10 +119,10 @@ router.put("/:uniName/:facName/edit", isLoggedIn, isAdmin, async function (req, 
             const [rows, fieldn] = await conn.query(`UPDATE faculty
             SET fac_name = ?, fac_desc = ? 
             WHERE fac_id = ?`,
-             [
-                req.body.faculty_name, req.body.faculty_desc, faculty.fac_id
-             ]);
-            res.json({'message': 'success'})
+                [
+                    req.body.faculty_name, req.body.faculty_desc, faculty.fac_id
+                ]);
+            res.json({ 'message': 'success' })
         }
 
         conn.commit()
@@ -139,20 +139,20 @@ router.delete("/:uniName/:facName", isLoggedIn, isAdmin, async function (req, re
     try {
         console.log('1')
         const [universitys] = await conn.query(`select * from university where uni_name = ?`,
-        [req.params.uniName]);
+            [req.params.uniName]);
         console.log('1.1')
         const university = universitys[0]
         console.log(university.uni_id)
         console.log(req.params.facName)
         const [facultys] = await conn.query(`select * from faculty where uni_id=? AND fac_name = ?`,
-        [university.uni_id, req.params.facName]);
+            [university.uni_id, req.params.facName]);
         const faculty = facultys[0]
         console.log(faculty.fac_id)
         const [rounds] = await conn.query(`select * from round where uni_id=? AND fac_id = ?`,
-        [university.uni_id, faculty.fac_id_id]);
+            [university.uni_id, faculty.fac_id_id]);
         console.log('==')
         console.log(rounds)
-        if(rounds[0]){
+        if (rounds[0]) {
             const round = rounds[0]
             await conn.query(`DELETE FROM r_gat WHERE r_id = ?`, [round.r_id]);
             // console.log('111')
@@ -169,12 +169,14 @@ router.delete("/:uniName/:facName", isLoggedIn, isAdmin, async function (req, re
             await conn.query(`DELETE FROM round WHERE r_id = ?`, [round.r_id]);
             // console.log('111111111')
         }
-        
+
         await conn.query(`DELETE FROM faculty WHERE fac_id = ? AND uni_id = ? `
-        , [faculty.fac_id,university.uni_id ]);
-        
+            , [faculty.fac_id, university.uni_id]);
+
         console.log('set')
-        res.json({ "message": 'ok'});
+        res.json({
+            "facIdDeleted": faculty.fac_id
+        });
         conn.commit()
 
     } catch (e) {

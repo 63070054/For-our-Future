@@ -141,7 +141,7 @@ router.get("/news/:newsId/edit", async function (req, res, next) {
             category: selectCat[0],
             reference: selectRef[0]
         })
-        
+
 
     } catch (e) {
         conn.rollback()
@@ -153,7 +153,7 @@ router.get("/news/:newsId/edit", async function (req, res, next) {
 
 router.put("/editnews", isLoggedIn, isAdmin, upload.single('news'), async function (req, res, next) {
     try {
-        await schema.validateAsync(req.body, {abortEarly: false})
+        await schema.validateAsync(req.body, { abortEarly: false })
     } catch (error) {
         console.log(error)
         return res.status(400).json(error)
@@ -210,7 +210,8 @@ router.put("/editnews", isLoggedIn, isAdmin, upload.single('news'), async functi
     }
 });
 
-router.delete("/deleteNews/:newsId", isLoggedIn, isAdmin, async function (req, res, next) {
+router.delete("/deleteNews/:newsId", async function (req, res, next) {
+    console.log('del test')
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     try {
@@ -218,6 +219,7 @@ router.delete("/deleteNews/:newsId", isLoggedIn, isAdmin, async function (req, r
         await conn.query(`DELETE FROM news_category WHERE news_id = ?`, [req.params.newsId]);
         await conn.query(`DELETE FROM news_ref WHERE news_id = ?`, [req.params.newsId]);
         await conn.query(`DELETE FROM news WHERE news_id = ?`, [req.params.newsId]);
+        console.log('del success')
         res.json({ "message": 'ok' });
         conn.commit()
 

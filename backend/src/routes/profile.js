@@ -33,15 +33,15 @@ router.put("/profile", isLoggedIn, async function (req, res, next) {
         sex = ?
         where u_id = ? ;
         `, [req.body.f_name,
-            req.body.l_name,
-            req.body.email,
-            req.body.phone,
-            req.body.date,
-            req.body.nationlity,
-            req.body.blood,
-            req.body.add,
-            req.body.sex, 
-            req.user.u_id]);
+        req.body.l_name,
+        req.body.email,
+        req.body.phone,
+        req.body.date,
+        req.body.nationality,
+        req.body.blood,
+        req.body.add,
+        req.body.sex,
+        req.user.u_id]);
 
         res.json({ 'message': 'success' })
         conn.commit()

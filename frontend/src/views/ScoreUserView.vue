@@ -18,13 +18,13 @@
                   <input class="input" value="เกรดเฉลี่ย 6 เทอม" type="text" disabled />
                 </div>
               </div>
-              <div class="column is-3 pl-0 py-0">
+              <div class="column is-3 m-0 p-1">
                 <div class="field">
                   <div class="control">
                     <input v-if="!editScore" :disabled="!editScore" v-model="gpax" class="input" type="number"
-                      @input="limit(score, 100)">
+                      @input="limitGpax(4)">
                     <input v-else :disabled="!editScore" v-model="editGpax" class="input" type="number"
-                      @input="limit(score, 100)">
+                      @input="limitGpax(4)">
                   </div>
                 </div>
               </div>
@@ -40,7 +40,7 @@
                   <input class="input" :value="score.type" type="text" disabled />
                 </div>
               </div>
-              <div class="column is-3 pl-0 py-0">
+              <div class="column is-3 m-0 p-1">
                 <div class="field">
                   <div class="control">
                     <input v-if="!editScore" :disabled="!editScore" v-model="score.score" class="input" type="number"
@@ -62,7 +62,7 @@
                   <input class="input" :value="score.type" type="text" disabled />
                 </div>
               </div>
-              <div class="column is-3 pl-0 py-0">
+              <div class="column is-3 m-0 p-1">
                 <div class="field">
                   <div class="control">
                     <input v-if="!editScore" :disabled="!editScore" v-model="score.score" class="input" type="number"
@@ -86,13 +86,14 @@
                   <input class="input" :value="score.type" type="text" disabled />
                 </div>
               </div>
-              <div class="column is-3 pl-0 py-0">
+              <div class="column is-3 m-0 p-1">
                 <div class="field">
                   <div class="control">
                     <input v-if="!editScore" :disabled="!editScore" v-model="score.score" class="input" type="number"
+                    @input="limit(score, 150)"
                       >
                     <input v-else :disabled="!editScore" v-model="score.editScore" class="input" type="number"
-                      @input="limit(score, 100)">
+                      @input="limit(score, 150)">
                   </div>
                 </div>
               </div>
@@ -108,7 +109,7 @@
                   <input class="input" :value="score.type" type="text" disabled />
                 </div>
               </div>
-              <div class="column is-3 pl-0 py-0">
+              <div class="column is-3 m-0 p-1">
                 <div class="field">
                   <div class="control">
                     <input v-if="!editScore" :disabled="!editScore" v-model="score.score" class="input" type="number"
@@ -168,12 +169,12 @@ export default {
     this.gat = [...this.user.score.gat]
     this.pat = [...this.user.score.pat]
     this.sub9 = [...this.user.score.sub]
-    console.log(this.onet)
+    console.log(this.user)
   },
   methods: {
     saveScore() {
       axios.put(`http://localhost:5000/profile/scoreUser`, {
-        'gpax': this.gpax,
+        'gpax': this.editGpax,
         'onet': this.onet,
         'gat': this.gat,
         'pat': this.pat,
@@ -182,6 +183,7 @@ export default {
         .then((response) => {
           console.log(response.data.message)
           alert("แก้ไขข้อมูลเสร็จสิ้น")
+          this.$router.push('/profile')
       this.editScore = false
         })
         .catch((error) => {
@@ -194,6 +196,14 @@ export default {
       }
       if (score.editScore > maxScore) {
         score.editScore = maxScore
+      }
+    },
+    limitGpax(maxScore){
+      if(this.editGpax < 0){
+        this.editGpax = 0
+      }
+      if(this.editGpax > 4){
+        this.editGpax = 4
       }
     }
   },
