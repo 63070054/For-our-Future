@@ -302,7 +302,7 @@ CREATE TABLE `news` (
     `news_id` int(10) AUTO_INCREMENT,
     `news_title` varchar(255) not null,
     `news_desc` varchar(255),
-    `news_picture` varchar(255),
+    `news_picture` varchar(255) default "images\\catnews.jpg",
     `news_created_date` date not null,
     `news_created_by` int(10) not null,
     `news_edited_date` date not null,
@@ -525,6 +525,15 @@ insert into faculty (uni_id, fac_name) values (1, 'วิทยาลัยส�
 insert into faculty (uni_id, fac_name) values (1, 'ดรุณสิกขาลัยโรงเรียนนวัตกรรมแห่งการเรียนรู้');
 insert into faculty (uni_id, fac_name) values (1, 'โครงการ วมว.(ห้องเรียนวิศว์-วิทย์)');
 insert into faculty (uni_id, fac_name) values (1, 'KOSEN KMUTT(ห้องเรียนวิศว์-วิทย์)');
+
+insert into news (news_title, news_desc, news_created_date, news_created_by, news_edited_date, news_edited_by) values ('เป็ดกินไก่หน้าปากซอย', 'พบเป็ดกินไก่หน้าปากซอยซึ่ง ไก่จริงๆแล้วคือแมว ที่กำลังกินเป็ดต่างหาก', CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP, 1);
+insert into news_category (category_no, category_name, news_id) values (1, 'เป็ดไก่', 1);
+insert into news_category (category_no, category_name, news_id) values (2, 'ค่าย', 1);
+insert into news (news_title, news_desc, news_created_date, news_created_by, news_edited_date, news_edited_by) values ('ผู้ร้ายคลั่งทำร้ายเจ้าหน้าที่ เนื่องอยากแดกกะเพราไก่', 'พบอดีตผู้ร้ายกลับมาอาละวาดหลังถูกปล่อยตัวได้ 7 วัน คลั่งบุกร้านกะเพราไก่พร้อมทำร้านเจ้าหน้าที่ตำรวจที่มาห้ามเนื่องจากอยากกินกะเพราไก่', CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP, 1);
+insert into news_category (category_no, category_name, news_id) values (3, 'กะเพรา', 2);
+insert into news_category (category_no, category_name, news_id) values (4, 'ข่าวสด', 2);
+insert into news (news_title, news_desc, news_created_date, news_created_by, news_edited_date, news_edited_by) values ('พบเด็กชายติดดอย', 'พบเด็กชายคนหนึ่งติดดอยเนื่องจากเขาพูดว่า เราจะมูนไปดวงจันทร์', CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP, 1);
+insert into news (news_title, news_desc, news_created_date, news_created_by, news_edited_date, news_edited_by) values ('พนักงานตกใจโดนผีอำ', 'พนักงานทำงานอยู่ดีๆ ถึงกับผวา เพราะมีเสียงบอกว่ากลับบ้านไปซะ', CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP, 1);
 
 SET
     FOREIGN_KEY_CHECKS = 1;
