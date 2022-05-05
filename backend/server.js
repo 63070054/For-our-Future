@@ -11,9 +11,14 @@ app.set('views', path.join(__dirname, 'views'))
 // Statics
 app.use(express.static(path.join(__dirname, 'src')))
 
-app.use(cors())
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    credentials: true,
+};
+app.use(cors(corsOptions))
 
 
 // routers
