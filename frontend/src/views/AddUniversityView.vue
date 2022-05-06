@@ -135,7 +135,6 @@ export default {
         .get(`http://localhost:5000/province`)
         .then((response) => {
           this.all_province = response.data.province;
-          console.log(this.all_province);
         })
         .catch((error) => {
           alert(error.response.data);

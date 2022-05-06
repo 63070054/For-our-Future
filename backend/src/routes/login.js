@@ -11,7 +11,6 @@ router.post("/signIn", async function (req, res, next){
         const [users] = await conn.query(`SELECT * FROM user where username = ?`,
         [username])
         const user = users[0];
-        // console.log(user)
         if(!user){
             res.json({ "message": 'noUser' });
         }
@@ -26,7 +25,6 @@ router.post("/signIn", async function (req, res, next){
         console.log('error')
         conn.rollback()
     } finally {
-        // console.log('final')
         conn.release()
     }
 });

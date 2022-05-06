@@ -4,7 +4,6 @@ const pool = require("../config/pool");
 const multer = require('multer');
 const { isLoggedIn } = require('../middlewares/index')
 router.put("/profile", isLoggedIn, async function (req, res, next) {
-    console.log('edit score user')
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     try {
@@ -19,7 +18,6 @@ router.put("/profile", isLoggedIn, async function (req, res, next) {
         // blood:'',
         // add:'',
         // sex: ''
-        console.log(req.user)
         await conn.query(`
         update user
         set f_name = ?,
@@ -48,15 +46,12 @@ router.put("/profile", isLoggedIn, async function (req, res, next) {
         res.json({ 'message': 'success' })
         conn.commit()
     } catch (e) {
-        console.log('1')
         conn.rollback()
     } finally {
-        console.log('end')
         conn.release()
     }
 });
 router.put("/profile/scoreUser", isLoggedIn, async function (req, res, next) {
-    console.log('edit score user')
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     try {
@@ -65,7 +60,6 @@ router.put("/profile/scoreUser", isLoggedIn, async function (req, res, next) {
         // 'gat': this.gat,
         // 'pat': this.pat,
         // 'sub9': this.sub
-        console.log(req.user.u_id)
         await conn.query(`
         update student
         set u_gpax = ?
@@ -73,28 +67,24 @@ router.put("/profile/scoreUser", isLoggedIn, async function (req, res, next) {
         `, [req.body.gpax, req.user.u_id]);
 
         req.body.onet.map(async val => {
-            console.log(val)
             await conn.query('update u_onet set score = ? where no = ?', [
                 val.editScore, val.no
             ]);
         })
 
         req.body.gat.map(async val => {
-            console.log(val)
             await conn.query('update u_gat set score = ? where no = ?', [
                 val.editScore, val.no
             ]);
         })
 
         req.body.pat.map(async val => {
-            console.log(val)
             await conn.query('update u_pat set score = ? where no = ?', [
                 val.editScore, val.no
             ]);
         })
 
         req.body.sub9.map(async val => {
-            console.log(val)
             await conn.query('update u_sub set score = ? where no = ?', [
                 val.editScore, val.no
             ]);
@@ -103,10 +93,8 @@ router.put("/profile/scoreUser", isLoggedIn, async function (req, res, next) {
         res.json({ 'message': 'success' })
         conn.commit()
     } catch (e) {
-        console.log('1')
         conn.rollback()
     } finally {
-        console.log('end')
         conn.release()
     }
 });

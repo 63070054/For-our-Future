@@ -68,8 +68,6 @@ export default {
   },
   methods: {
     async addFaculty() {
-      console.log(this.faculty_name);
-      console.log(this.faculty_desc);
 
       const result = await this.v$.$validate();
       if (!result) {
@@ -82,7 +80,6 @@ export default {
         { faculty_name: this.faculty_name, faculty_desc: this.faculty_desc }
       )
         .then((response) => {
-          console.log(response.data.message);
           if (response.data.message == "success") {
             this.$router.push(`/${this.$route.params.uniName}/faculty`);
           } else if (response.data.message == "alredyHave") {

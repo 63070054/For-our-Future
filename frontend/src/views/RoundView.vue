@@ -155,7 +155,6 @@ export default {
         )
         .then((response) => {
           this.round = response.data.round;
-          console.log(this.round);
         })
         .catch((error) => {
           alert(error.response.data.message);

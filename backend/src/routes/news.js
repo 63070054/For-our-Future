@@ -129,7 +129,6 @@ router.get("/news/:newsId/edit", async function (req, res, next) {
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     try {
-        console.log('edit')
         const selectNews = await conn.query(`select * from news where news_id = ?`, [req.params.newsId]);
         const selectCat = await conn.query(`select * from news_category where news_id = ?`, [req.params.newsId]);
         const selectRef = await conn.query(`select * from news_ref where news_id = ?`, [req.params.newsId]);
@@ -216,7 +215,6 @@ router.put("/editnews", isLoggedIn, isAdmin, upload.single('news'), async functi
 });
 
 router.delete("/deleteNews/:newsId", async function (req, res, next) {
-    console.log('del test')
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     try {
@@ -225,7 +223,6 @@ router.delete("/deleteNews/:newsId", async function (req, res, next) {
         await conn.query(`DELETE FROM news_ref WHERE news_id = ?`, [req.params.newsId]);
         await conn.query(`DELETE FROM admin_news WHERE news_id = ?`, [req.params.newsId]);
         await conn.query(`DELETE FROM news WHERE news_id = ?`, [req.params.newsId]);
-        console.log('del success')
         res.json({ "message": 'ok' });
         conn.commit()
 

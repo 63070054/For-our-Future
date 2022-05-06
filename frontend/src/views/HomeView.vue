@@ -140,7 +140,6 @@ export default {
         .get(`http://localhost:5000/recommendCamps`)
         .then((response) => {
           this.recommendCamps = response.data.recommendCamps;
-          console.log(response.data.recommendCamps);
         })
         .catch((error) => {
           alert(error.response.data.message);
@@ -151,7 +150,6 @@ export default {
         .get(`http://localhost:5000/recommendUniversities`)
         .then((response) => {
           this.recommendUniversities = response.data.recommendUniversities;
-          console.log(response.data.recommendUniversities)
         })
         .catch((error) => {
           alert(error.response.data.message);

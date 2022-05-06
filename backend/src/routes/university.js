@@ -73,8 +73,6 @@ router.post("/adduni", isLoggedIn, isAdmin, upload.single('univer'), async funct
     }
     const conn = await pool.getConnection()
     await conn.beginTransaction();
-    // console.log('-----------------')
-    // console.log(req.body.uni_name)
     try {
         const [uni, _] = await conn.query('SELECT COUNT(uni_name) `ucount` FROM university where lower(university.uni_name) = ?', [req.body.uni_name])
         if (uni[0].ucount === 0) {
@@ -102,7 +100,6 @@ router.post("/adduni", isLoggedIn, isAdmin, upload.single('univer'), async funct
 
         }
         else {
-            console.log('no add')
             res.json({
                 "message": true,
                 "uni_name": req.body.uni_name
@@ -126,10 +123,8 @@ router.get("/:uniName/edit", async function (req, res, next) {
 
     const conn = await pool.getConnection()
     await conn.beginTransaction();
-    // console.log(req.params.uniName)
     try {
         const selectUni = await conn.query(`select * from university where uni_name = ?`, [req.params.uniName]);
-        // console.log(selectUni[0])
         res.send(selectUni[0])
 
         conn.commit()
@@ -156,29 +151,19 @@ router.put("/edituni", isLoggedIn, isAdmin, upload.single('resume'), async funct
     try {
         const [uni, a] = await conn.query('SELECT COUNT(uni_name) `ucount` FROM university where lower(university.uni_name) = ?', [req.body.uni_name])
         const [pro, b] = await conn.query('SELECT province_id FROM university where uni_id = ?', [req.body.uniId])
-        // console.log('---------')
-        // console.log(uni[0].ucount)
-        // console.log(req.body.uniId)
-        // console.log(req.body.uni_name)
-        // console.log(req.file)
-        // console.log(pro[0].province_id)
         if (uni[0].ucount === 0 || pro[0].province_id != req.body.province || req.file) {
-            console.log('ok')
             if (req.file) {
-                console.log('file')
                 await conn.query(`update university set uni_name = ?, province_id = ?, u_edited_date = CURRENT_TIMESTAMP, u_edited_by = ?, file_path = ? where uni_id = ?`,
                     [req.body.uni_name, req.body.province, req.user.u_id, req.file.path.substring(4), req.body.uniId]);
                 res.json({ "message": false });
             }
             else {
-                console.log('no file')
                 await conn.query(`update university set uni_name = ?, province_id = ?, u_edited_date = CURRENT_TIMESTAMP, u_edited_by = ? where uni_id = ?`,
                     [req.body.uni_name, req.body.province, req.user.u_id, req.body.uniId]);
                 res.json({ "message": false });
             }
         }
         else {
-            console.log('no edit')
             res.json({
                 "message": true,
                 "uni_name": req.body.uni_name
@@ -221,7 +206,6 @@ router.delete("/deleteUniversity/:uniId", async function (req, res, next) {
         conn.commit()
 
     } catch (e) {
-        console.log(e)
         res.status(400).send(e)
         conn.rollback()
     } finally {

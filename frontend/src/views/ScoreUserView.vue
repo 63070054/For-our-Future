@@ -169,7 +169,6 @@ export default {
     this.gat = [...this.user.score.gat]
     this.pat = [...this.user.score.pat]
     this.sub9 = [...this.user.score.sub]
-    console.log(this.user)
   },
   methods: {
     saveScore() {
@@ -181,7 +180,6 @@ export default {
         'sub9': this.sub9
       })
         .then((response) => {
-          console.log(response.data.message)
           alert("แก้ไขข้อมูลเสร็จสิ้น")
           this.$router.push('/profile')
       this.editScore = false

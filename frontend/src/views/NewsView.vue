@@ -92,19 +92,15 @@ export default {
     deleteNews(news) {
       let result = confirm("are u sure u want to delete");
       if (result) {
-      console.log(news)
         axios
           .delete(`http://localhost:5000/deleteNews/${news.news_id}`)
           .then((response) => {
-            console.log("test");
             this.newses = this.newses.filter(
               (val) => val.news_id != news.news_id
             );
             // alert("คุณลบสำเร็จแล้ว")
           })
           .catch((error) => {
-            console.log("test2");
-
             alert(error.response.data.message);
           });
       }
