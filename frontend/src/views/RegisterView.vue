@@ -127,7 +127,7 @@
         <div class="column is-5 py-0 pl-0">
           <div class="field">
             <div class="control">
-              <label class="label is-size-5 has-text-left">BIRTH DATE</label>
+              <label class="label is-size-5 has-text-left">BIRTH DATE<span class="has-text-danger"> *</span></label>
               <input
                 class="input"
                 type="date"

@@ -22,7 +22,7 @@
           PROFILE
         </p>
       </div>
-      <img :src="'http://localhost:5000/' + picture " class="profileImage" />
+      <img :src="'http://localhost:5000/' + picture" class="profileImage" />
     </div>
     <div class="columns is-centered column-res">
       <div class="column is-half p-5">
@@ -33,7 +33,16 @@
               class="is-size-6 button is-small is-info has-text-white"
               style="color: #0f1123; width: 100%"
             >
-              <i class="fa fa-pen"></i> แก้ไขโปรไฟล์
+              <i class="fa fa-pen"></i> &nbsp;แก้ไขโปรไฟล์
+            </button>
+          </div>
+          <div class="column">
+            <button
+              @click="editPassword = !editPassword"
+              class="is-size-6 button is-small is-warning has-text-black"
+              style="color: #0f1123; width: 100%"
+            >
+              <i class="fa fa-pen"></i> &nbsp;เปลี่ยนรหัสผ่าน
             </button>
           </div>
           <div class="column" v-if="user && user.type_user == 'student'">
@@ -45,6 +54,26 @@
                 คะแนนของคุณ
               </button>
             </router-link>
+          </div>
+        </div>
+        <div class="field" v-if="editPassword">
+          <div class="control">
+            <label class="label is-size-6">OLD PASSWORD</label>
+            <input
+              v-model="oldPassword"
+              class="input"
+              type="text"
+              placeholder="OLD PASSWORD"
+            />
+          </div>
+          <div class="control">
+            <label class="label is-size-6">NEW PASSWORD</label>
+            <input
+              v-model="newPassword"
+              class="input"
+              type="text"
+              placeholder="NEW PASSWORD"
+            />
           </div>
         </div>
         <div class="field">
@@ -201,6 +230,20 @@
             ยกเลิก
           </button>
         </div>
+        <div class="mt-3 has-text-centered" v-if="editPassword">
+          <button
+            @click="changePassword"
+            class="button is-white is-success has-text-centered mx-1"
+          >
+            แก้ไขรหัสผ่าน
+          </button>
+          <button
+            @click="editPassword = false"
+            class="button is-white is-danger has-text-centered mx-1"
+          >
+            ยกเลิก
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -219,6 +262,7 @@ export default {
   props: ["user"],
   data() {
     return {
+      editPassword: false,
       editAble: false,
       username: "",
       f_name: "",
@@ -231,6 +275,8 @@ export default {
       add: "",
       sex: "",
       picture: "",
+      oldPasswdord: "",
+      newPassword: "",
     };
   },
   async created() {
@@ -244,7 +290,8 @@ export default {
       this.email = this.user.email;
       this.phone = this.user.phone;
       this.date = this.user.birth_date;
-      if(this.user.birth_date) this.date = this.user.birth_date.substring(0, 10);
+      if (this.user.birth_date)
+        this.date = this.user.birth_date.substring(0, 10);
       this.nationality = this.user.nationality;
       this.blood = this.user.blood_type;
       this.add = this.user.address;
@@ -268,9 +315,24 @@ export default {
           blood: this.blood,
           add: this.add,
           sex: this.sex,
+          oldPasswdord: this.oldPasswdord,
+          newPassword: this.newPassword,
         })
         .then((response) => {
           this.editAble = false;
+          alert("แก้ไขข้อมูลเสร็จสิ้น");
+        })
+        .catch((error) => {
+          alert(error.response.data.message);
+        });
+    },
+    changePassword() {
+      axios
+        .put(`http://localhost:5000/profile/changePassword`, {
+          oldPassword: this.oldPassword,
+          newPassword: this.newPassword,
+        })
+        .then((response) => {
           alert("แก้ไขข้อมูลเสร็จสิ้น");
         })
         .catch((error) => {
@@ -298,7 +360,7 @@ export default {
     transform: translate(-50%, 0);
   }
   .mt-100-mobile {
-      margin-top: 100px;
+    margin-top: 100px;
   }
 }
 </style>

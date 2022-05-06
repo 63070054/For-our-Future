@@ -70,14 +70,14 @@
             <div
               class="column has-text-centered is-size-3"
               style="background-color: #2f4840; color: white"
-              v-if="user.type_user == 'student' && this.$route.params.round == '4'"
+              v-if="user && user.type_user == 'student' && this.$route.params.round == '4'"
             >
               คะแนนของคุณหลังคำนวณแล้ว
             </div>
             <div
               class="column has-text-centered is-size-3"
               style="background-color: #2f4840; color: white"
-              v-else
+              v-if="user"
             >
               คะแนนของคุณ
             </div>
@@ -87,7 +87,7 @@
             <div class="column has-text-centered is-size-4">30 %</div>
             <div
               class="column has-text-centered is-size-4 scoreAdmission"
-              v-if="user.type_user == 'student'"
+              v-if="user && user.type_user == 'student'"
             >
               {{ calculateOnetScore() }}
             </div>
@@ -97,7 +97,7 @@
             <div class="column has-text-centered is-size-4">20 %</div>
             <div
               class="column has-text-centered is-size-4 scoreAdmission"
-              v-if="user.type_user == 'student'"
+              v-if="user && user.type_user == 'student'"
             >
               {{ calculateGpaxScore() }}
             </div>
@@ -116,7 +116,7 @@
               </div>
               <div
                 class="column has-text-centered is-size-4 scoreAdmission"
-                v-if="user.type_user == 'student'"
+                v-if="user && user.type_user == 'student'"
               >
                 {{
                   calculateAdmissionScore(

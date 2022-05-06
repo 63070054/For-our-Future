@@ -2,22 +2,14 @@ const express = require("express");
 const path = require("path")
 const pool = require("../config/pool");
 const multer = require('multer');
+const bcrypt = require('bcrypt');
 const { isLoggedIn } = require('../middlewares/index')
 router.put("/profile", isLoggedIn, async function (req, res, next) {
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     try {
-        // [users] = await conn.query(`select `)
-        // username: '',
-        // f_name: '',
-        // l_name:'',
-        // email:'',
-        // phone:'',
-        // date: '',
-        // nationlity: '',
-        // blood:'',
-        // add:'',
-        // sex: ''
+
+
         await conn.query(`
         update user
         set f_name = ?,
@@ -40,7 +32,6 @@ router.put("/profile", isLoggedIn, async function (req, res, next) {
         req.body.blood,
         req.body.add,
         req.body.sex,
-
         req.user.u_id]);
 
         res.json({ 'message': 'success' })
@@ -51,6 +42,32 @@ router.put("/profile", isLoggedIn, async function (req, res, next) {
         conn.release()
     }
 });
+
+
+router.put("/profile/changePassword", isLoggedIn, async function (req, res, next) {
+    const conn = await pool.getConnection()
+    await conn.beginTransaction();
+    try {
+        if (!(await bcrypt.compare(req.body.oldPassword, req.user.password))) {
+                console.log('error')
+                return res.status(400).json({
+                    message: "Incorrect old password"
+                })
+        }
+
+            await conn.query('update user set password = ? where u_id = ?', [
+                await bcrypt.hash(req.body.newPassword, 5), req.user.u_id
+            ])
+
+        res.json({ 'message': 'success' })
+        conn.commit()
+    } catch (e) {
+        conn.rollback()
+    } finally {
+        conn.release()
+    }
+});
+
 router.put("/profile/scoreUser", isLoggedIn, async function (req, res, next) {
     const conn = await pool.getConnection()
     await conn.beginTransaction();
