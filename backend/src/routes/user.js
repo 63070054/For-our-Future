@@ -93,7 +93,6 @@ router.post('/user/register', upload.single("imageUser"), async (req, res, next)
                     f_name, l_name, username, password, 'student', birthDate, sex, email, nationality, blood, address, phone, req.file.path.substring(4),
                 ])
             
-            console.log(row)
 
             await conn.query(
                 'INSERT INTO student (u_id, u_gpax) values (?, 0)',
@@ -272,7 +271,7 @@ router.post('/user/login', async (req, res, next) => {
 
 
 router.get("/user", isLoggedIn, async function (req, res, next) {
-    console.log("loginfds")
+    console.log("login")
     res.json({
         user: req.user
     })

@@ -19,13 +19,10 @@ const editRoundSchema = Joi.object({
 })
 
 router.get("/:facId/round", async function (req, res, next) {
-    console.log('test')
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     try {
         const selectRound = await conn.query(`select * from round where fac_id = ?`, [req.params.facId]);
-        console.log('round')
-        console.log(selectRound[0])
         res.send({
             round: selectRound[0]
         })
@@ -77,7 +74,6 @@ router.get("/:uniName/:facName/:round", async function (req, res, next) {
         selectRound[0][0].percentage.sub = [...selectRoundSub[0]]
         selectRound[0][0].percentage.onet = [...selectRoundOnet[0]]
 
-        console.log(selectRound[0][0])
 
         res.send({
             round: selectRound[0][0]
@@ -144,7 +140,6 @@ router.get("/:uniName/:facName/:round/edit", async function (req, res, next) {
         })
 
 
-        console.log(selectRound[0][0])
 
         res.send({
             round: selectRound[0][0]
@@ -243,7 +238,6 @@ router.put("/:uniName/:facName/:round/edit", isLoggedIn, isAdmin, async function
     try {
         await editRoundSchema.validateAsync(req.body, { abortEarly: false })
     } catch (error) {
-        console.log(error)
         return res.status(400).send(error)
     }
 
@@ -342,7 +336,6 @@ router.delete("/:uniName/:facName/:round/delete", isLoggedIn, isAdmin, async fun
     try {
         await deleteRoundSchema.validateAsync(req.body, { abortEarly: false })
     } catch (error) {
-        console.log(error)
         return res.status(400).send(error)
     }
 

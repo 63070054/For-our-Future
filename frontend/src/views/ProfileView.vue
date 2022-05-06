@@ -250,7 +250,6 @@ export default {
       this.add = this.user.address;
       this.sex = this.user.sex;
       this.picture = this.user.picture;
-      console.log(this.user.picture)
     },
     cancelEdit() {
       this.editAble = false;
@@ -271,7 +270,6 @@ export default {
           sex: this.sex,
         })
         .then((response) => {
-          console.log(response.data.message);
           this.editAble = false;
           alert("แก้ไขข้อมูลเสร็จสิ้น");
         })

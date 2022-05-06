@@ -131,7 +131,6 @@ export default {
                 headers: { "Content-Type": "multipart/form-data" },
             })
                 .then((response) => {
-                    console.log(response.data.message);
                     this.$router.push(`/news`);
                 })
                 .catch((error) => {
@@ -141,14 +140,10 @@ export default {
         addCategory() {
             this.idCounter_CATEGORY += 1;
             this.inputs_CATEGORYS.push({ id: this.idCounter_CATEGORY, category: "" });
-            console.log(this.inputs_CATEGORYS);
-            console.log(this.inputs_REFERENCES);
         },
         delCategory(item) {
             let index = this.inputs_CATEGORYS.findIndex((val) => val.id === item.id);
             this.inputs_CATEGORYS.splice(index, 1);
-            console.log(this.inputs_CATEGORYS);
-            console.log(this.inputs_REFERENCES);
         },
         addReference() {
             this.idCounter_REFERENCE += 1;
@@ -156,14 +151,10 @@ export default {
                 id: this.idCounter_REFERENCE,
                 reference: "",
             });
-            console.log(this.inputs_CATEGORYS);
-            console.log(this.inputs_REFERENCES);
         },
         delReference(item) {
             let index = this.inputs_REFERENCES.findIndex((val) => val.id === item.id);
             this.inputs_REFERENCES.splice(index, 1);
-            console.log(this.inputs_CATEGORYS);
-            console.log(this.inputs_REFERENCES);
         },
     },
 };

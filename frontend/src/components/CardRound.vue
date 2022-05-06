@@ -25,22 +25,6 @@ export default {
       backgroundRound: ["#f6c667", "#ff7070", "#9f7bc4", "#6ebf8b", "#88cdff"],
     };
   },
-  async mounted() {
-    // await this.getFaculty(this.$route.params.uniName);
-  },
-  methods: {
-    // async getFaculty(uniName) {
-    //   await axios
-    //     .get(`http://localhost:5000/${uniName}/faculty`)
-    //     .then((response) => {
-    //       this.faculty = response.data.faculty;
-    //       console.log(this.faculty[0])
-    //     })
-    //     .catch((error) => {
-    //       alert(error.response.data.message);
-    //     });
-    // },
-  },
 };
 </script>
 

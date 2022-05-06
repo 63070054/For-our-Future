@@ -185,7 +185,6 @@ export default {
         .then((response) => {
           this.round = response.data.round;
           this.inputs = response.data.round.percentage;
-          console.log(this.inputs);
           this.idCounter = this.inputs.length;
         })
         .catch((error) => {

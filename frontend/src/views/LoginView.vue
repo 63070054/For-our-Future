@@ -67,8 +67,6 @@ export default {
   mounted() {},
   methods: {
     signIn() {
-      // console.log(this.username)
-      // console.log(this.password)
       axios
         .post(`http://localhost:5000/user/login`, {
           username: this.username,

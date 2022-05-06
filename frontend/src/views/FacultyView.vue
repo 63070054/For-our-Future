@@ -155,12 +155,10 @@ export default {
         });
     },
     async getRound() {
-      console.log(this.facultySelected.facId);
       await axios
         .get(`http://localhost:5000/${this.facultySelected.facId}/round`)
         .then((response) => {
           this.roundInfo = response.data.round;
-          console.log(this.roundInfo);
         })
         .catch((error) => {
           alert(error.response.data.message);

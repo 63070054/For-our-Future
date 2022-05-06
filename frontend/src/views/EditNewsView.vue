@@ -112,7 +112,6 @@ export default {
     },
     mounted() {
         this.getnews(this.$route.params.newsId)
-        console.log(this.$route.params.newsId)
     },
     methods: {
         getnews(newsId) {
@@ -144,10 +143,8 @@ export default {
             formData.append('news_des', this.newsdes);
             formData.append('news_cat', JSON.stringify(this.inputs_CATEGORYS));
             formData.append('news_ref', JSON.stringify(this.inputs_REFERENCES));
-            console.log(this.inputs_CATEGORYS)
             axios.put(`http://localhost:5000/editnews`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
                 .then((response) => {
-                    console.log(response.data.message)
                     this.$router.push(`/news`)
                 })
                 .catch((error) => {

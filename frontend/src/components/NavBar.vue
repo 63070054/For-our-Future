@@ -92,9 +92,6 @@ export default {
       showNavBar: false,
     };
   },
-  created() {
-    console.log(this.user);
-  },
   methods: {
     signout() {
       const token = localStorage.getItem("token");

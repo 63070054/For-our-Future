@@ -59,24 +59,18 @@ router.post("/:uniName/faculty/add", isLoggedIn, isAdmin, async function (req, r
         const [facultys] = await conn.query(`select * from faculty join university using(uni_id) where uni_name = ? AND fac_name = ?`,
             [req.params.uniName, req.body.faculty_name]);
         const faculty = facultys[0]
-        // console.log(faculty)
         if (faculty) {
             res.json({ 'message': 'alredyHave' })
         }
         else {
-            // console.log('test2')
             const [university] = await conn.query(`SELECT * FROM university where uni_name = ?`,
                 [req.params.uniName]);
             const uni = university[0];
-            // console.log(uni)
-            // console.log('----')
             const [rows, fieldn] = await conn.query(`INSERT INTO faculty(uni_id, fac_name, fac_desc)
             values(?,?,?)`,
                 [
                     uni.uni_id, req.body.faculty_name, req.body.faculty_desc
                 ]);
-            //  console.log('+++')
-            //  console.log(rows[0])
             res.json({ 'message': 'success' })
         }
 
@@ -110,12 +104,6 @@ router.put("/:uniName/:facName/edit", isLoggedIn, isAdmin, async function (req, 
             res.json({ 'message': 'alredyHave' })
         }
         else {
-            console.log('test2')
-            // const [university] = await conn.query(`SELECT * FROM university where uni_name = ?`,
-            // [req.params.uniName]);
-            // const uni = university[0];
-            // console.log(uni)
-            // console.log('----')
             const [rows, fieldn] = await conn.query(`UPDATE faculty
             SET fac_name = ?, fac_desc = ? 
             WHERE fac_id = ?`,
@@ -143,7 +131,6 @@ router.delete("/:uniName/:facName", isLoggedIn, isAdmin, async function (req, re
         const [facultys] = await conn.query(`select * from faculty where uni_id=? AND fac_name = ?`,
             [university.uni_id, req.params.facName]);
         const faculty = facultys[0]
-        console.log(faculty.fac_id)
         const [rounds] = await conn.query(`select * from round where uni_id=? AND fac_id = ?`,
             [university.uni_id, faculty.fac_id_id]);
         if (rounds[0]) {
@@ -160,7 +147,6 @@ router.delete("/:uniName/:facName", isLoggedIn, isAdmin, async function (req, re
         await conn.query(`DELETE FROM faculty WHERE fac_id = ? AND uni_id = ? `
             , [faculty.fac_id, university.uni_id]);
 
-        console.log('set')
         res.json({
             "facIdDeleted": faculty.fac_id
         });

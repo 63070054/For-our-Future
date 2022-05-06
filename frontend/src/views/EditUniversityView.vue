@@ -79,8 +79,6 @@ export default {
     getuniversity(uniName) {
       axios.get(`http://localhost:5000/${uniName}/edit`)
         .then((response) => {
-          // this.univer = response.data
-          // console.log(response.data[0].uni_id)
           this.univerName = response.data[0].uni_name
           this.uniId = response.data[0].uni_id
           this.province = response.data[0].province_id
@@ -105,7 +103,6 @@ export default {
       formData.append('uniId', this.uniId);
       axios.put(`http://localhost:5000/edituni`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
         .then((response) => {
-          // console.log(response.data.message)
           if (response.data.message) {
             const result = confirm("มีมหาวิทยาลัยนี้อยู่ในระบบอยู่แล้ว")
             if (result) {
@@ -113,7 +110,6 @@ export default {
             }
           }
           else {
-            console.log('แก้ไขแล้ว')
             this.$router.push(`/university`)
           }
         })
@@ -125,7 +121,6 @@ export default {
       axios.get(`http://localhost:5000/province`)
         .then((response) => {
           this.all_province = response.data.province
-          console.log(this.all_province)
         })
         .catch((error) => {
           alert(error.response.data)
