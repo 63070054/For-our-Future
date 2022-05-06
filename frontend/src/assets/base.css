@@ -26,6 +26,15 @@
   background-color: transparent !important;
 }
 
+.navbar-link:hover {
+  background-color: transparent !important;
+}
+
+.navbar-link:focus{
+  background-color: transparent !important;
+}
+
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -37,3 +46,11 @@ input::-webkit-inner-spin-button {
     left: -50%;
   }
 }
+
+@media screen and (max-width: 1024px) {
+  .navbar-dropdown .navbar-item {
+    color: white;
+  }
+}
+
+

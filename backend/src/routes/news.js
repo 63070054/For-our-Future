@@ -68,8 +68,8 @@ router.post("/addnews", isLoggedIn, isAdmin, upload.single('news'), async functi
         
         if (req.file) {
             [id, _] = await conn.query(`insert into news(news_title, news_desc, news_picture, news_created_date, news_created_by, news_edited_date, news_edited_by)
-                values (?, ?, ?, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP, 1)`,
-                [req.body.news_title, req.body.news_des, req.file.path.substring(4)]);
+                values (?, ?, ?, CURRENT_TIMESTAMP, ?, CURRENT_TIMESTAMP, ?)`,
+                [req.body.news_title, req.body.news_des, req.file.path.substring(4), req.user.u_id, req.user.u_id]);
             // console.log(id)
             for (let i = 0; i < allcate.length; i++) {
                 await conn.query(`insert into news_category(category_name, news_id) values(?, ?)`, [allcate[i].category, id.insertId])
@@ -81,8 +81,8 @@ router.post("/addnews", isLoggedIn, isAdmin, upload.single('news'), async functi
         }
         else {
             [id, _] = await conn.query(`insert into news(news_title, news_desc, news_picture, news_created_date, news_created_by, news_edited_date, news_edited_by)
-                values (?, ?, ?, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP, 1)`,
-                [req.body.news_title, req.body.news_des, 'images\\news.png']);
+                values (?, ?, ?, CURRENT_TIMESTAMP, ?, CURRENT_TIMESTAMP, ?)`,
+                [req.body.news_title, req.body.news_des, 'images\\news.png', req.user.u_id, req.user.u_id]);
 
             for (let i = 0; i < allcate.length; i++) {
                 await conn.query(`insert into news_category(category_name, news_id) values(?, ?)`, [allcate[i].category, id.insertId])
@@ -178,7 +178,7 @@ router.put("/editnews", isLoggedIn, isAdmin, upload.single('news'), async functi
                     news_edited_date = CURRENT_TIMESTAMP,
                     news_edited_by = ?
                     where news_id = ?`,
-                [req.body.news_title, req.body.news_des, req.file.path.substring(4), 1, req.body.news_id]);
+                [req.body.news_title, req.body.news_des, req.file.path.substring(4), req.user.u_id, req.body.news_id]);
         }
         else {
             await conn.query(`UPDATE news
@@ -187,7 +187,7 @@ router.put("/editnews", isLoggedIn, isAdmin, upload.single('news'), async functi
                     news_edited_date = CURRENT_TIMESTAMP,
                     news_edited_by = ?
                     WHERE news_id = ?`,
-                [req.body.news_title, req.body.news_des, 1, req.body.news_id]);
+                [req.body.news_title, req.body.news_des, req.user.u_id, req.body.news_id]);
         }
 
         allcate.map(async cate => {
@@ -223,6 +223,7 @@ router.delete("/deleteNews/:newsId", async function (req, res, next) {
 
         await conn.query(`DELETE FROM news_category WHERE news_id = ?`, [req.params.newsId]);
         await conn.query(`DELETE FROM news_ref WHERE news_id = ?`, [req.params.newsId]);
+        await conn.query(`DELETE FROM admin_news WHERE news_id = ?`, [req.params.newsId]);
         await conn.query(`DELETE FROM news WHERE news_id = ?`, [req.params.newsId]);
         console.log('del success')
         res.json({ "message": 'ok' });

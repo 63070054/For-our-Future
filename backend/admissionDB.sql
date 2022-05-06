@@ -493,7 +493,9 @@ insert into
         u_created_date,
         u_edited_date,
         username,
-        `password`
+        `password`,
+        sex,
+        blood_type
     )
 values
     (
@@ -504,7 +506,9 @@ values
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP,
         'admin',
-        '$2b$05$EIVJheMMKmRGmKLWoXAPket5AwH/vL5ve7oWDSrbA9wRO8G5Ma0mq'
+        '$2b$05$EIVJheMMKmRGmKLWoXAPket5AwH/vL5ve7oWDSrbA9wRO8G5Ma0mq',
+        'male',
+        'A'
     );
     
 insert into admin (u_id) values (2);

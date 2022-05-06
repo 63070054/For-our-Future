@@ -7,7 +7,7 @@
         class="image image is-1by1"
         style="height: 100%"
       >
-        <img :src="`http://localhost:5000/` + news_picture" style="width: 100%; aspect-ratio: 1/1; margin: auto; height: auto">
+        <img :src="`http://localhost:5000/` + news_picture" style="width: 100%; aspect-ratio: 1/1; margin: auto; height: auto; object-fit: cover;">
       </figure>
     </div>
     <div class="column is-four-fifths" style="position: relative">

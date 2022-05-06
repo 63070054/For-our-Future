@@ -32,7 +32,7 @@ import CardRecommendUniversity from "../components/CardRecommendUniversity.vue";
                       position: relative;
                       left: 50%;
                       transform: translateX(-50%);
-                      opacity: 0.2;
+                      opacity: 0.1;
                     "
                   />
                   <div
@@ -44,7 +44,7 @@ import CardRecommendUniversity from "../components/CardRecommendUniversity.vue";
                       transform: translate(-50%, -50%);
                     "
                   >
-                    <h1 style="color: white;">
+                    <h1 class="is-size-1" style="color: white;">
                       {{ slide.news_title }}
                     </h1>
                   </div>

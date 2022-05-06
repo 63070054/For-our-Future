@@ -6,7 +6,7 @@
       <div style="background-color: #0f1123; width: 100%; height: 300px">
         <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
           <p class="is-size-1 has-text-centered has-text-white">
-            ชื่อมหาวิทยาลัย
+            {{this.$route.params.uniName}}
           </p>
         </div>
       </div>

@@ -16,10 +16,10 @@
               width: 100%;
             "
           >
-            <p class="is-size-1 has-text-centered has-text-white">
+            <p class="is-size-1 has-text-centered has-text-white text-round">
               {{ this.$route.params.uniName }}
             </p>
-            <p class="is-size-2 has-text-centered" style="color: #9ddfd3">
+            <p class="is-size-2 has-text-centered text-round" style="color: #9ddfd3">
               {{ this.$route.params.facName }}
             </p>
           </div>
@@ -70,7 +70,14 @@
             <div
               class="column has-text-centered is-size-3"
               style="background-color: #2f4840; color: white"
-              v-if="user.type_user == 'student'"
+              v-if="user.type_user == 'student' && this.$route.params.round == '4'"
+            >
+              คะแนนของคุณหลังคำนวณแล้ว
+            </div>
+            <div
+              class="column has-text-centered is-size-3"
+              style="background-color: #2f4840; color: white"
+              v-else
             >
               คะแนนของคุณ
             </div>
@@ -163,7 +170,7 @@ export default {
         if (this.$route.params.round == "4") {
           calculateScore = percentage * selectType.score;
         } else {
-          calculateScore = (percentage * selectType.score) / 100;
+          calculateScore = selectType.score
         }
         this.admissionScore += calculateScore;
         return `${calculateScore} คะแนน`;
@@ -208,5 +215,11 @@ export default {
 <style scoped>
 .hero {
   display: block;
+}
+
+@media screen and (max-width: 1024px) {
+  .text-round {
+    font-size: 36px !important;
+  }
 }
 </style>

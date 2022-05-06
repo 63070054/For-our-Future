@@ -20,7 +20,7 @@
             <div class="card is-full my-3 mx-2 columns brown1">
                 <div class="card-image column ">
                     <figure class="image image is-1by1">
-                        <img :src="`http://localhost:5000/` + uni_info.file_path">
+                        <img :src="`http://localhost:5000/` + uni_info.file_path" style="object-fit: contain; width: 100%; aspect-ratio: 1/1; object-position: top center;">
                     </figure>
                 </div>
                 <div class="column is-four-fifths" style="position:relative;">

@@ -71,20 +71,20 @@ router.post("/adduni", isLoggedIn, isAdmin, upload.single('univer'), async funct
     } catch (error) {
         return res.status(400).json(error)
     }
-
     const conn = await pool.getConnection()
     await conn.beginTransaction();
     // console.log('-----------------')
     // console.log(req.body.uni_name)
     try {
-        console.log('add')
         const [uni, _] = await conn.query('SELECT COUNT(uni_name) `ucount` FROM university where lower(university.uni_name) = ?', [req.body.uni_name])
         if (uni[0].ucount === 0) {
+
             if (req.file) {
                 const [uniId, _] = await conn.query(
                     `insert into university (uni_name, province_id, u_created_date, u_created_by, u_edited_date, u_edited_by, file_path) 
-                    values (?, ?, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP, 1, ?)`,
-                    [req.body.uni_name, req.body.province, req.file.path.substring(4)]);
+                    values (?, ?, CURRENT_TIMESTAMP, ?, CURRENT_TIMESTAMP, ?, ?)`,
+                    [req.body.uni_name, req.body.province, req.user.u_id, req.user.u_id, file.path.substring(4)]);
+
                 await conn.query(`insert into admin_university values(?, ?, ?)`, [req.user.u_id, uniId.insertId, 'create'])
 
                 res.json({ "message": false });
@@ -92,9 +92,10 @@ router.post("/adduni", isLoggedIn, isAdmin, upload.single('univer'), async funct
             else {
                 const [uniId, _] = await conn.query(
                     `insert into university (uni_name, province_id, u_created_date, u_created_by, u_edited_date, u_edited_by, file_path) 
-                    values (?, ?, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP, 1, ?)`,
-                    [req.body.uni_name, req.body.province, 'images\\university.png']);
+                    values (?, ?, CURRENT_TIMESTAMP, ?, CURRENT_TIMESTAMP, ?, ?)`,
+                    [req.body.uni_name, req.body.province, req.user.u_id, req.user.u_id, 'images\\university.png']);
                 await conn.query(`insert into admin_university values(?, ?, ?)`, [req.user.u_id, uniId.insertId, 'create'])
+                console.log('add')
 
                 res.json({ "message": false });
             }
@@ -166,13 +167,13 @@ router.put("/edituni", isLoggedIn, isAdmin, upload.single('resume'), async funct
             if (req.file) {
                 console.log('file')
                 await conn.query(`update university set uni_name = ?, province_id = ?, u_edited_date = CURRENT_TIMESTAMP, u_edited_by = ?, file_path = ? where uni_id = ?`,
-                    [req.body.uni_name, req.body.province, 1, req.file.path.substring(4), req.body.uniId]);
+                    [req.body.uni_name, req.body.province, req.user.u_id, req.file.path.substring(4), req.body.uniId]);
                 res.json({ "message": false });
             }
             else {
                 console.log('no file')
                 await conn.query(`update university set uni_name = ?, province_id = ?, u_edited_date = CURRENT_TIMESTAMP, u_edited_by = ? where uni_id = ?`,
-                    [req.body.uni_name, req.body.province, 1, req.body.uniId]);
+                    [req.body.uni_name, req.body.province, req.user.u_id, req.body.uniId]);
                 res.json({ "message": false });
             }
         }
@@ -209,9 +210,9 @@ router.delete("/deleteUniversity/:uniId", async function (req, res, next) {
                 await conn.query(`DELETE FROM r_pat WHERE r_id = ?`, [round.r_id]);
                 await conn.query(`DELETE FROM r_specific WHERE r_id = ?`, [round.r_id]);
                 await conn.query(`DELETE FROM r_sub WHERE r_id = ?`, [round.r_id]);
-                await conn.query(`DELETE FROM round WHERE r_id = ?`, [round.r_id]);
             })
         })
+        await conn.query(`DELETE FROM admin_university WHERE uni_id = ?`, [req.params.uniId]);
         await conn.query(`DELETE FROM round WHERE uni_id = ?`, [req.params.uniId]);
         await conn.query(`DELETE FROM faculty WHERE uni_id = ?`, [req.params.uniId]);
         await conn.query(`DELETE FROM university WHERE uni_id = ?`, [req.params.uniId]);
