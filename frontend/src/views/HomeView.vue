@@ -113,7 +113,7 @@ export default {
         rewindByDrag: true,
         arrows: false,
         // duration change slide
-        interval: 5 * 1000,
+        interval: 3  * 1000,
       },
       recommendCamps: [],
       recommendUniversities: [],

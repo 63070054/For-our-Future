@@ -63,8 +63,11 @@ router.post("/addnews", isLoggedIn, isAdmin, upload.single('news'), async functi
     const allcate = JSON.parse(req.body.news_cat);
     const allref = JSON.parse(req.body.news_ref);
     try {
+
+        var id
+        
         if (req.file) {
-            const [id, _] = await conn.query(`insert into news(news_title, news_desc, news_picture, news_created_date, news_created_by, news_edited_date, news_edited_by)
+            [id, _] = await conn.query(`insert into news(news_title, news_desc, news_picture, news_created_date, news_created_by, news_edited_date, news_edited_by)
                 values (?, ?, ?, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP, 1)`,
                 [req.body.news_title, req.body.news_des, req.file.path.substring(4)]);
             // console.log(id)
@@ -77,7 +80,7 @@ router.post("/addnews", isLoggedIn, isAdmin, upload.single('news'), async functi
             res.json({ "message": "add news file" });
         }
         else {
-            const [id, _] = await conn.query(`insert into news(news_title, news_desc, news_picture, news_created_date, news_created_by, news_edited_date, news_edited_by)
+            [id, _] = await conn.query(`insert into news(news_title, news_desc, news_picture, news_created_date, news_created_by, news_edited_date, news_edited_by)
                 values (?, ?, ?, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP, 1)`,
                 [req.body.news_title, req.body.news_des, 'images\\news.png']);
 
@@ -89,6 +92,8 @@ router.post("/addnews", isLoggedIn, isAdmin, upload.single('news'), async functi
             }
             res.json({ "message": "add news no file" });
         }
+
+        await conn.query(`insert into admin_news values(?, ?, ?)`, [req.user.u_id, id.insertId, 'create'])
 
         conn.commit()
     } catch (e) {

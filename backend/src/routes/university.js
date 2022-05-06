@@ -81,17 +81,21 @@ router.post("/adduni", isLoggedIn, isAdmin, upload.single('univer'), async funct
         const [uni, _] = await conn.query('SELECT COUNT(uni_name) `ucount` FROM university where lower(university.uni_name) = ?', [req.body.uni_name])
         if (uni[0].ucount === 0) {
             if (req.file) {
-                await conn.query(
+                const [uniId, _] = await conn.query(
                     `insert into university (uni_name, province_id, u_created_date, u_created_by, u_edited_date, u_edited_by, file_path) 
                     values (?, ?, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP, 1, ?)`,
                     [req.body.uni_name, req.body.province, req.file.path.substring(4)]);
+                await conn.query(`insert into admin_university values(?, ?, ?)`, [req.user.u_id, uniId.insertId, 'create'])
+
                 res.json({ "message": false });
             }
             else {
-                await conn.query(
+                const [uniId, _] = await conn.query(
                     `insert into university (uni_name, province_id, u_created_date, u_created_by, u_edited_date, u_edited_by, file_path) 
                     values (?, ?, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP, 1, ?)`,
                     [req.body.uni_name, req.body.province, 'images\\university.png']);
+                await conn.query(`insert into admin_university values(?, ?, ?)`, [req.user.u_id, uniId.insertId, 'create'])
+
                 res.json({ "message": false });
             }
 
